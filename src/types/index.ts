@@ -13,6 +13,13 @@ export interface CodeTab {
   code: string;
 }
 
+export interface CategoryMeta {
+  id: EffectCategory;
+  label: string;
+  tagline: string;
+  order: number;
+}
+
 export interface Effect {
   id: string;
   title: string;
