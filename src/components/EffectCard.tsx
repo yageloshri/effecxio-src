@@ -2,13 +2,16 @@
 
 import React, { Suspense } from 'react';
 import { Code2 } from 'lucide-react';
-import { cn, getDifficultyLabel } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import type { Effect } from '@/types';
 import previewMap from './previews';
+import DifficultyDots from '@/components/DifficultyDots';
+import QuickCopyButton from '@/components/QuickCopyButton';
 
 interface EffectCardProps {
   effect: Effect;
   onSelect: (effect: Effect) => void;
+  onCopy?: () => void;
 }
 
 function PreviewSkeleton() {
@@ -20,42 +23,35 @@ function PreviewSkeleton() {
   );
 }
 
-function getDifficultyColor(difficulty: string): string {
-  switch (difficulty) {
-    case 'beginner':
-      return 'var(--accent)';
-    case 'intermediate':
-      return 'var(--accent3)';
-    case 'advanced':
-      return 'var(--accent2)';
-    default:
-      return 'var(--muted)';
-  }
-}
-
-export default function EffectCard({ effect, onSelect }: EffectCardProps) {
+export default function EffectCard({ effect, onSelect, onCopy }: EffectCardProps) {
   const PreviewComponent = previewMap[effect.previewComponent];
-  const diffColor = getDifficultyColor(effect.difficulty);
 
   return (
     <div
-      className="rounded-xl overflow-hidden transition-all duration-300 cursor-pointer group"
+      className="group rounded-xl overflow-hidden transition-all duration-300 cursor-pointer"
       style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor =
-          'rgba(200, 245, 59, 0.3)';
+        const card = e.currentTarget as HTMLDivElement;
+        card.style.boxShadow = '0 0 30px var(--glow)';
+        card.style.borderColor = 'var(--border-hover)';
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)';
+        const card = e.currentTarget as HTMLDivElement;
+        card.style.boxShadow = 'none';
+        card.style.borderColor = 'var(--border)';
       }}
     >
       {/* Preview area */}
       <div
         className="relative overflow-hidden"
-        style={{ height: 180, background: 'var(--surface)' }}
+        style={{
+          height: 180,
+          borderRadius: 8,
+          background: 'linear-gradient(135deg, var(--surface), var(--surface-2))',
+        }}
       >
         {PreviewComponent ? (
           <Suspense fallback={<PreviewSkeleton />}>
@@ -74,6 +70,11 @@ export default function EffectCard({ effect, onSelect }: EffectCardProps) {
             Preview
           </div>
         )}
+
+        <QuickCopyButton
+          code={effect.codeTabs[0]?.code ?? ''}
+          onCopy={onCopy}
+        />
       </div>
 
       {/* Content area */}
@@ -89,18 +90,7 @@ export default function EffectCard({ effect, onSelect }: EffectCardProps) {
           >
             {effect.titleHe}
           </h3>
-          <span
-            className="text-xs px-2 py-0.5 rounded-full font-medium"
-            style={{
-              color: diffColor,
-              border: `1px solid ${diffColor}`,
-              background: `color-mix(in srgb, ${diffColor} 10%, transparent)`,
-              fontFamily: "'Heebo', sans-serif",
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {getDifficultyLabel(effect.difficulty)}
-          </span>
+          <DifficultyDots difficulty={effect.difficulty} />
         </div>
 
         {/* Description */}
@@ -138,23 +128,26 @@ export default function EffectCard({ effect, onSelect }: EffectCardProps) {
           className={cn(
             'w-full mt-1 py-2 rounded-lg text-sm font-medium',
             'flex items-center justify-center gap-2',
-            'transition-all duration-200',
           )}
           style={{
-            background: 'transparent',
+            backgroundImage:
+              'linear-gradient(90deg, var(--accent) 50%, transparent 50%)',
+            backgroundSize: '200% 100%',
+            backgroundPosition: '100% 0',
             border: '1px solid var(--accent)',
             color: 'var(--accent)',
             fontFamily: "'Heebo', sans-serif",
             cursor: 'pointer',
+            transition: 'background-position 0.4s ease, color 0.2s ease',
           }}
           onMouseEnter={(e) => {
             const btn = e.currentTarget as HTMLButtonElement;
-            btn.style.background = 'var(--accent)';
+            btn.style.backgroundPosition = '0% 0';
             btn.style.color = '#000';
           }}
           onMouseLeave={(e) => {
             const btn = e.currentTarget as HTMLButtonElement;
-            btn.style.background = 'transparent';
+            btn.style.backgroundPosition = '100% 0';
             btn.style.color = 'var(--accent)';
           }}
         >
