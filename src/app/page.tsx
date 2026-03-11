@@ -1,24 +1,25 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { EffectCategory, Effect } from '@/types';
 import { effects } from '@/data/effects';
+import { CATEGORY_ORDER, getEffectsByCategory } from '@/lib/categories';
+import type { Effect } from '@/types';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import ScrollProgress from '@/components/ScrollProgress';
+import FeaturedSection from '@/components/FeaturedSection';
 import FilterBar from '@/components/FilterBar';
-import EffectsGrid from '@/components/EffectsGrid';
+import CategorySection from '@/components/CategorySection';
+import ClosingCTA from '@/components/ClosingCTA';
+import Footer from '@/components/Footer';
 import CodeModal from '@/components/CodeModal';
 import ScrollVideoTool from '@/components/ScrollVideoTool';
 import Toast from '@/components/Toast';
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState<EffectCategory | 'all'>('all');
   const [selectedEffect, setSelectedEffect] = useState<Effect | null>(null);
   const [showToast, setShowToast] = useState(false);
-
-  const filtered = activeCategory === 'all'
-    ? effects
-    : effects.filter(e => e.categories.includes(activeCategory));
+  const categoryMap = getEffectsByCategory(effects);
 
   const handleCopy = useCallback(() => {
     setShowToast(true);
@@ -27,23 +28,32 @@ export default function Home() {
 
   return (
     <>
+      <ScrollProgress />
       <Header />
       <Hero />
-      <FilterBar active={activeCategory} onChange={setActiveCategory} />
-      <div style={{ padding: '40px 0 80px' }}>
-        <EffectsGrid effects={filtered} onSelect={setSelectedEffect} />
-      </div>
+      <FeaturedSection effects={effects} onSelect={setSelectedEffect} onCopy={handleCopy} />
+      <FilterBar />
+      {CATEGORY_ORDER.map(meta => {
+        const catEffects = categoryMap.get(meta.id);
+        if (!catEffects || catEffects.length === 0) return null;
+        return (
+          <CategorySection
+            key={meta.id}
+            id={meta.id}
+            label={meta.label}
+            tagline={meta.tagline}
+            count={catEffects.length}
+            effects={catEffects}
+            onSelect={setSelectedEffect}
+          />
+        );
+      })}
+      <ClosingCTA effects={effects} />
+      <Footer />
       {selectedEffect?.id === 'scrollvideo' ? (
-        <ScrollVideoTool
-          onClose={() => setSelectedEffect(null)}
-          onCopy={handleCopy}
-        />
+        <ScrollVideoTool onClose={() => setSelectedEffect(null)} onCopy={handleCopy} />
       ) : (
-        <CodeModal
-          effect={selectedEffect}
-          onClose={() => setSelectedEffect(null)}
-          onCopy={handleCopy}
-        />
+        <CodeModal effect={selectedEffect} onClose={() => setSelectedEffect(null)} onCopy={handleCopy} />
       )}
       <Toast show={showToast} />
     </>
