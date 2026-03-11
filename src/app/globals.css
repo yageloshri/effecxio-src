@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Heebo:wght@300;400;700;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --border: #1e1e1e;
+  --accent: #c8f53b;
+  --accent2: #ff3cac;
+  --accent3: #44aaff;
+  --text: #f0f0f0;
+  --muted: #555555;
+  --code-bg: #0d0d0d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Heebo', sans-serif;
+  direction: rtl;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 3px;
+}
