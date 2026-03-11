@@ -1,26 +1,18 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Copy } from 'lucide-react';
 import { FEATURED_LAYOUT } from '@/lib/featured';
 import { copyToClipboard } from '@/lib/utils';
 import type { Effect } from '@/types';
 import previewMap from '@/components/previews';
+import ViewportPreview from '@/components/ViewportPreview';
 
 interface FeaturedSectionProps {
   effects: Effect[];
   onSelect: (effect: Effect) => void;
   onCopy: () => void;
-}
-
-function PreviewSkeleton() {
-  return (
-    <div
-      className="w-full h-full animate-pulse"
-      style={{ background: 'var(--surface-2)' }}
-    />
-  );
 }
 
 export default function FeaturedSection({
@@ -108,23 +100,11 @@ export default function FeaturedSection({
                   background: 'var(--bg)',
                 }}
               >
-                {PreviewComponent ? (
-                  <Suspense fallback={<PreviewSkeleton />}>
-                    <PreviewComponent />
-                  </Suspense>
-                ) : (
-                  <div
-                    className="w-full h-full flex items-center justify-center"
-                    style={{
-                      background: 'var(--bg)',
-                      color: 'var(--muted)',
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: 14,
-                    }}
-                  >
-                    Preview
-                  </div>
-                )}
+                <ViewportPreview
+                  component={PreviewComponent}
+                  height={isLarge ? 280 : 200}
+                  margin="300px"
+                />
 
                 {/* Recommended badge for large cards */}
                 {isLarge && (

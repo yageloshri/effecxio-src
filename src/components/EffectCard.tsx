@@ -1,26 +1,18 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Code2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Effect } from '@/types';
 import previewMap from './previews';
 import DifficultyDots from '@/components/DifficultyDots';
 import QuickCopyButton from '@/components/QuickCopyButton';
+import ViewportPreview from '@/components/ViewportPreview';
 
 interface EffectCardProps {
   effect: Effect;
   onSelect: (effect: Effect) => void;
   onCopy?: () => void;
-}
-
-function PreviewSkeleton() {
-  return (
-    <div
-      className="w-full h-full animate-pulse"
-      style={{ background: 'var(--surface)' }}
-    />
-  );
 }
 
 export default function EffectCard({ effect, onSelect, onCopy }: EffectCardProps) {
@@ -55,23 +47,7 @@ export default function EffectCard({ effect, onSelect, onCopy }: EffectCardProps
           transition: 'transform 0.3s ease 0.05s',
         }}
       >
-        {PreviewComponent ? (
-          <Suspense fallback={<PreviewSkeleton />}>
-            <PreviewComponent />
-          </Suspense>
-        ) : (
-          <div
-            className="w-full h-full flex items-center justify-center"
-            style={{
-              background: 'var(--bg)',
-              color: 'var(--muted)',
-              fontFamily: "'Space Mono', monospace",
-              fontSize: 14,
-            }}
-          >
-            Preview
-          </div>
-        )}
+        <ViewportPreview component={PreviewComponent} height={180} />
 
         <QuickCopyButton
           code={effect.codeTabs[0]?.code ?? ''}

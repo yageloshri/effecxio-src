@@ -10,6 +10,7 @@ import ScrollProgress from '@/components/ScrollProgress';
 import FeaturedSection from '@/components/FeaturedSection';
 import FilterBar from '@/components/FilterBar';
 import CategorySection from '@/components/CategorySection';
+import DeferredSection from '@/components/DeferredSection';
 import ClosingCTA from '@/components/ClosingCTA';
 import Footer from '@/components/Footer';
 import CodeModal from '@/components/CodeModal';
@@ -33,10 +34,10 @@ export default function Home() {
       <Hero />
       <FeaturedSection effects={effects} onSelect={setSelectedEffect} onCopy={handleCopy} />
       <FilterBar />
-      {CATEGORY_ORDER.map(meta => {
+      {CATEGORY_ORDER.map((meta, index) => {
         const catEffects = categoryMap.get(meta.id);
         if (!catEffects || catEffects.length === 0) return null;
-        return (
+        const section = (
           <CategorySection
             key={meta.id}
             id={meta.id}
@@ -46,6 +47,13 @@ export default function Home() {
             effects={catEffects}
             onSelect={setSelectedEffect}
           />
+        );
+        // First 2 categories render immediately; rest are deferred
+        if (index < 2) return section;
+        return (
+          <DeferredSection key={meta.id} id={`cat-${meta.id}`} height={600}>
+            {section}
+          </DeferredSection>
         );
       })}
       <ClosingCTA effects={effects} />
