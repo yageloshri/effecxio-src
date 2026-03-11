@@ -28,10 +28,11 @@ export default function EffectCard({ effect, onSelect, onCopy }: EffectCardProps
 
   return (
     <div
-      className="group rounded-xl overflow-hidden transition-all duration-300 cursor-pointer"
+      className="group rounded-xl overflow-hidden cursor-pointer"
       style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
+        transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
       }}
       onMouseEnter={(e) => {
         const card = e.currentTarget as HTMLDivElement;
@@ -46,11 +47,12 @@ export default function EffectCard({ effect, onSelect, onCopy }: EffectCardProps
     >
       {/* Preview area */}
       <div
-        className="relative overflow-hidden"
+        className="relative overflow-hidden group-hover:scale-[1.02]"
         style={{
           height: 180,
           borderRadius: 8,
           background: 'linear-gradient(135deg, var(--surface), var(--surface-2))',
+          transition: 'transform 0.3s ease 0.05s',
         }}
       >
         {PreviewComponent ? (
