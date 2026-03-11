@@ -7,12 +7,13 @@ export default function Header() {
     <header
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
       style={{
-        background: 'rgba(8, 8, 8, 0.8)',
+        background: 'rgba(5, 5, 5, 0.85)',
         borderBottom: '1px solid var(--border)',
         height: 64,
       }}
     >
-      <div className="flex items-center justify-between h-full px-6 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between h-full px-6 mx-auto"
+        style={{ maxWidth: 1360 }}>
         <div className="flex items-center gap-4">
           <motion.a
             href="/"
