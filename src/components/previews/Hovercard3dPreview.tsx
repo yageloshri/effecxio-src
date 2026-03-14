@@ -1,9 +1,11 @@
 'use client';
 import { memo, useRef, useCallback, useEffect, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function Hovercard3dPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const cardRef = useRef<HTMLDivElement>(null);
   const spotRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
@@ -13,6 +15,10 @@ function Hovercard3dPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const animate = () => {
       const t = targetRef.current;
       const c = currentRef.current;
@@ -32,7 +38,7 @@ function Hovercard3dPreview() {
     };
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   const handleMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {

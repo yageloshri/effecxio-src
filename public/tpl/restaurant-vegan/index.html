@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprout | Plant-Based Kitchen</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F4F9F0;--surface:#FFF;--border:#D6E4C8;--fg:#1A2E0A;--fg-muted:#5C7A3A;--green:#2D6A1E;--green-light:#E8F5E0;--serif:'DM Serif Display',serif;--sans:'Outfit',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1000px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--serif);font-size:1.4rem;color:var(--green);display:flex;align-items:center;gap:6px}
+.nav-logo svg{width:22px;height:22px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--green);color:#fff;padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:600;text-decoration:none}
+/* Hero */
+.hero{max-width:1000px;margin:0 auto;padding:40px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--green-light);border-radius:50px;font-size:.72rem;font-weight:600;color:var(--green);margin-bottom:20px}
+.hero h1{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1.15;margin-bottom:14px}
+.hero h1 .green{color:var(--green)}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:480px;margin:0 auto 28px;line-height:1.7;font-weight:300}
+.hero-btns{display:flex;gap:10px;justify-content:center;margin-bottom:40px}
+.btn-green{padding:12px 28px;background:var(--green);color:#fff;border:none;border-radius:50px;font-weight:600;font-size:.88rem;font-family:var(--sans);cursor:pointer}
+.btn-outline{padding:12px 28px;border:2px solid var(--border);border-radius:50px;font-weight:500;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-img{border-radius:20px;overflow:hidden;max-width:800px;margin:0 auto}
+.hero-img img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+/* Menu */
+.menu{max-width:1000px;margin:0 auto;padding:60px 40px}
+.menu-header{text-align:center;margin-bottom:40px}
+.menu-header .tag{font-size:.72rem;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.menu-header h2{font-family:var(--serif);font-size:1.6rem}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.menu-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;transition:transform .3s}
+.menu-card:hover{transform:translateY(-2px)}
+.menu-card img{width:140px;min-height:100%;object-fit:cover;flex-shrink:0}
+.menu-card .info{padding:16px;flex:1}
+.menu-card .info .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.menu-card .info h3{font-family:var(--serif);font-size:1rem}
+.menu-card .info .price{font-weight:700;color:var(--green);font-size:.88rem}
+.menu-card .info p{font-size:.78rem;color:var(--fg-muted);line-height:1.5}
+.menu-card .info .tags{display:flex;gap:4px;margin-top:8px}
+.menu-card .info .tags span{font-size:.6rem;padding:2px 6px;background:var(--green-light);border-radius:4px;color:var(--green);font-weight:600}
+/* Values */
+.values{max-width:1000px;margin:0 auto;padding:60px 40px}
+.val-header{text-align:center;margin-bottom:40px}
+.val-header h2{font-family:var(--serif);font-size:1.4rem}
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.val-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center}
+.val-card .emoji{font-size:1.8rem;margin-bottom:10px}
+.val-card h3{font-size:.92rem;font-weight:700;margin-bottom:4px}
+.val-card p{font-size:.78rem;color:var(--fg-muted);line-height:1.5}
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:40px;text-align:center}
+.cta-box{background:var(--green);border-radius:20px;padding:44px;color:#fff}
+.cta-box h2{font-family:var(--serif);font-size:1.4rem;margin-bottom:8px}
+.cta-box p{opacity:.85;margin-bottom:20px;font-size:.88rem;font-weight:300}
+.cta-box button{background:#fff;color:var(--green);padding:12px 28px;border:none;border-radius:50px;font-weight:700;font-family:var(--sans);font-size:.88rem;cursor:pointer}
+.footer{max-width:1000px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.menu-grid,.val-grid{grid-template-columns:1fr}.menu-card{flex-direction:column}.menu-card img{width:100%;aspect-ratio:16/9}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo"><svg viewBox="0 0 22 22" fill="none"><path d="M11 2c-3 4-7 6-7 10a7 7 0 0014 0c0-4-4-6-7-10z" stroke="#2D6A1E" stroke-width="1.5" fill="#E8F5E0"/></svg>Sprout</div><div class="nav-links"><a href="#">Menu</a><a href="#">Story</a><a href="#">Catering</a><a href="#">Contact</a></div><a class="nav-btn" href="#">Reserve</a></nav>
+
+<section class="hero reveal">
+<div class="hero-badge">&#127793; 100% Plant-Based</div>
+<h1>Eat <span class="green">plants</span>, feel amazing</h1>
+<p>Sprout serves vibrant, whole-food, plant-based dishes that prove vegan food can be the most exciting thing on your plate.</p>
+<div class="hero-btns"><button class="btn-green">View Menu</button><button class="btn-outline">Reserve a Table</button></div>
+<div class="hero-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=450&fit=crop" alt="" loading="lazy"></div>
+</section>
+
+<section class="menu">
+<div class="menu-header reveal"><div class="tag">Our Menu</div><h2>Seasonal favorites</h2></div>
+<div class="menu-grid">
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=280&h=200&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>Rainbow Bowl</h3><span class="price">$18</span></div><p>Quinoa, roasted sweet potato, avocado, tahini dressing</p><div class="tags"><span>GF</span><span>High Protein</span></div></div></div>
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1543339308-d595c3a6e2d1?w=280&h=200&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>Mushroom Risotto</h3><span class="price">$22</span></div><p>Wild mushroom medley, truffle oil, cashew parmesan</p><div class="tags"><span>GF</span><span>Chef's Pick</span></div></div></div>
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1540914124281-342587941389?w=280&h=200&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>BBQ Jackfruit Tacos</h3><span class="price">$16</span></div><p>Pulled jackfruit, mango slaw, chipotle aioli, corn tortillas</p><div class="tags"><span>Popular</span></div></div></div>
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=280&h=200&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>Chocolate Lava Cake</h3><span class="price">$14</span></div><p>Rich cacao, coconut cream, raspberry coulis</p><div class="tags"><span>GF</span><span>Dessert</span></div></div></div>
+</div>
+</section>
+
+<section class="values">
+<div class="val-header reveal"><h2>What we stand for</h2></div>
+<div class="val-grid">
+<div class="val-card reveal"><div class="emoji">&#127807;</div><h3>Locally Sourced</h3><p>90% of our ingredients come from local organic farms within 50km.</p></div>
+<div class="val-card reveal"><div class="emoji">&#9752;&#65039;</div><h3>Zero Waste</h3><p>Compostable packaging, no single-use plastics, food waste composting.</p></div>
+<div class="val-card reveal"><div class="emoji">&#129505;</div><h3>Community First</h3><p>10% of profits donated to local food banks and environmental nonprofits.</p></div>
+</div>
+</section>
+
+<section class="cta"><div class="cta-box reveal"><h2>Reserve your table</h2><p>Walk-ins welcome, but reservations recommended on weekends.</p><button>Book a Table &rarr;</button></div></section>
+
+<footer class="footer">&copy; 2025 Sprout Kitchen. Ben Yehuda 24, Tel Aviv.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 interface FireParticle {
   x: number;
@@ -17,6 +18,7 @@ const PARTICLE_COUNT = 60; /* fewer particles for small preview */
 
 function FireeffectPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
@@ -58,6 +60,13 @@ function FireeffectPreview() {
 
     const particles: FireParticle[] = Array.from({ length: PARTICLE_COUNT }, createParticle);
 
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return () => {
+        canvas.remove();
+      };
+    }
+
     const animate = () => {
       ctx.clearRect(0, 0, W, H);
 
@@ -97,7 +106,7 @@ function FireeffectPreview() {
       observer.disconnect();
       canvas.remove();
     };
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   if (prefersReduced) {
     return (

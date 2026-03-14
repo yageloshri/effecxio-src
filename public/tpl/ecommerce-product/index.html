@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AeroDesk | The Standing Desk Reimagined</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFF;--surface:#F5F5F5;--border:#E5E5E5;--fg:#0A0A0A;--fg-muted:#737373;--blue:#0066FF;--blue-light:#EBF4FF;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.2rem;letter-spacing:-.5px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--blue);color:#fff;padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;text-decoration:none}
+.hero{max-width:1100px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero-text .badge{display:inline-block;padding:6px 12px;background:var(--blue-light);color:var(--blue);font-size:.72rem;font-weight:700;border-radius:50px;margin-bottom:16px}
+.hero-text h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px}
+.hero-price{display:flex;align-items:baseline;gap:10px;margin-bottom:24px}
+.hero-price .current{font-size:2rem;font-weight:800}
+.hero-price .old{font-size:1.1rem;color:var(--fg-muted);text-decoration:line-through}
+.hero-price .save{background:#DCFCE7;color:#166534;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:4px}
+.hero-btns{display:flex;gap:10px}
+.btn-blue{padding:14px 32px;background:var(--blue);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:.95rem;font-family:var(--sans);cursor:pointer}
+.btn-out{padding:14px 32px;border:2px solid var(--border);border-radius:50px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-img{position:relative}
+.hero-img img{width:100%;border-radius:20px;aspect-ratio:1;object-fit:cover}
+.features{max-width:1100px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feat{text-align:center;padding:24px;background:var(--surface);border-radius:14px}
+.feat .icon{font-size:1.6rem;margin-bottom:10px}
+.feat h3{font-size:.88rem;font-weight:700;margin-bottom:4px}
+.feat p{font-size:.75rem;color:var(--fg-muted);line-height:1.5}
+.specs{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.specs-img img{width:100%;border-radius:16px}
+.specs-list h2{font-size:1.4rem;font-weight:800;margin-bottom:20px}
+.spec-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.spec-row .label{color:var(--fg-muted)}
+.spec-row .value{font-weight:600}
+.reviews{max-width:1100px;margin:0 auto;padding:60px 40px}
+.rev-header{text-align:center;margin-bottom:30px}
+.rev-header h2{font-size:1.3rem;font-weight:800}
+.rev-header .rating{font-size:1rem;color:var(--blue);margin-top:4px}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rev-card{background:var(--surface);border-radius:12px;padding:20px}
+.rev-card .stars{color:#F59E0B;font-size:.82rem;margin-bottom:8px}
+.rev-card p{font-size:.82rem;line-height:1.6;margin-bottom:10px}
+.rev-card .author{font-size:.72rem;font-weight:700}
+.rev-card .date{font-size:.65rem;color:var(--fg-muted)}
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta h2{font-size:1.5rem;font-weight:800;margin-bottom:8px}
+.cta p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.features{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.hero,.specs{grid-template-columns:1fr}.features,.rev-grid{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">AeroDesk</div><div class="nav-links"><a href="#">Features</a><a href="#">Specs</a><a href="#">Reviews</a><a href="#">FAQ</a></div><a class="nav-btn" href="#">Buy Now</a></nav>
+<section class="hero"><div class="hero-text reveal"><div class="badge">&#127942; Best Standing Desk 2025</div><h1>The standing desk that moves with you</h1><p>Ultra-quiet motor. Memory presets. Cable management built in. AeroDesk is the last desk you'll ever need.</p><div class="hero-price"><span class="current">$699</span><span class="old">$899</span><span class="save">Save $200</span></div><div class="hero-btns"><button class="btn-blue">Order Now</button><button class="btn-out">Compare Models</button></div></div><div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=500&h=500&fit=crop" alt="" loading="lazy"></div></section>
+<div class="features reveal">
+<div class="feat"><div class="icon">&#9889;</div><h3>Ultra Quiet</h3><p>Whisper-quiet motor at just 38dB</p></div>
+<div class="feat"><div class="icon">&#128187;</div><h3>Memory Presets</h3><p>4 programmable height positions</p></div>
+<div class="feat"><div class="icon">&#128230;</div><h3>Cable Management</h3><p>Built-in cable tray and USB-C port</p></div>
+<div class="feat"><div class="icon">&#128170;</div><h3>300lb Capacity</h3><p>Steel frame supports heavy setups</p></div>
+</div>
+<section class="specs"><div class="specs-img reveal"><img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=500&h=400&fit=crop" alt="" loading="lazy"></div><div class="specs-list reveal"><h2>Specifications</h2><div class="spec-row"><span class="label">Dimensions</span><span class="value">140 x 70 cm</span></div><div class="spec-row"><span class="label">Height Range</span><span class="value">62 — 127 cm</span></div><div class="spec-row"><span class="label">Lift Speed</span><span class="value">38mm/sec</span></div><div class="spec-row"><span class="label">Weight Capacity</span><span class="value">136 kg</span></div><div class="spec-row"><span class="label">Noise Level</span><span class="value">&lt; 38dB</span></div><div class="spec-row"><span class="label">Warranty</span><span class="value">10 years</span></div></div></section>
+<section class="reviews"><div class="rev-header reveal"><h2>Customer reviews</h2><div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.9/5 from 1,247 reviews</div></div><div class="rev-grid">
+<div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Best desk I've ever owned. The motor is so quiet you can barely hear it."</p><div class="author">Dan R.</div><div class="date">Verified Buyer &bull; Feb 2025</div></div>
+<div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Cable management alone is worth the upgrade. My setup has never looked this clean."</p><div class="author">Noa S.</div><div class="date">Verified Buyer &bull; Jan 2025</div></div>
+<div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Solid build quality. Assembly took 20 minutes. Memory presets are a game changer."</p><div class="author">Alex M.</div><div class="date">Verified Buyer &bull; Jan 2025</div></div>
+</div></section>
+<section class="cta reveal"><h2>Ready to level up your workspace?</h2><p>Free shipping. 30-day money-back guarantee. 10-year warranty.</p><button class="btn-blue">Order AeroDesk &rarr;</button></section>
+<footer class="footer">&copy; 2025 AeroDesk Inc.</footer>
+<script>const isPreview=(self!==top);const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel | Digital Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFF;--surface:#F7F7F8;--border:#E5E5E7;--fg:#111;--fg-muted:#6B6B6B;--blue:#2563EB;--blue-light:#EFF6FF;--sans:'Manrope',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1200px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:800;font-size:1.2rem}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:600}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--blue);color:#fff;padding:10px 20px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none}
+/* Hero */
+.hero{max-width:1200px;margin:0 auto;padding:80px 40px 40px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;margin-bottom:16px}
+.hero h1 .blue{color:var(--blue)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:520px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-blue{padding:14px 28px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer}
+.btn-ghost{padding:14px 28px;background:transparent;border:2px solid var(--border);border-radius:10px;font-weight:600;font-size:.92rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+/* Logos */
+.logos{padding:40px;text-align:center}
+.logos .label{font-size:.72rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px}
+.logos-row{display:flex;justify-content:center;gap:48px;opacity:.3;font-weight:800;font-size:1rem;flex-wrap:wrap}
+/* Work showcase */
+.showcase{max-width:1200px;margin:0 auto;padding:60px 40px}
+.sc-header{text-align:center;margin-bottom:40px}
+.sc-header .tag{font-size:.72rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.sc-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em}
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sc-card{border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--border);transition:transform .3s,box-shadow .3s}
+.sc-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.sc-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.sc-card .info{padding:18px}
+.sc-card .info h3{font-size:.92rem;font-weight:700;margin-bottom:4px}
+.sc-card .info p{font-size:.78rem;color:var(--fg-muted)}
+/* Services */
+.services{max-width:1200px;margin:0 auto;padding:60px 40px}
+.svc-header{text-align:center;margin-bottom:40px}
+.svc-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.svc-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;transition:border-color .3s}
+.svc-item:hover{border-color:var(--blue)}
+.svc-item .icon{width:48px;height:48px;border-radius:12px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.svc-item .icon svg{width:22px;height:22px}
+.svc-item h3{font-size:.88rem;font-weight:700;margin-bottom:4px}
+.svc-item p{font-size:.75rem;color:var(--fg-muted);line-height:1.5}
+/* Stats */
+.stats{max-width:1200px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{text-align:center;padding:20px}
+.stat .num{font-size:2.2rem;font-weight:800;color:var(--blue)}
+.stat .label{font-size:.78rem;color:var(--fg-muted);margin-top:4px}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--blue);border-radius:24px;padding:52px;color:#fff}
+.cta-box h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;margin-bottom:12px}
+.cta-box p{opacity:.85;margin-bottom:24px}
+.cta-box button{background:#fff;color:var(--blue);padding:14px 32px;border:none;border-radius:10px;font-weight:700;font-family:var(--sans);font-size:.92rem;cursor:pointer}
+.footer{max-width:1200px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.sc-grid,.svc-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">pixel<span>.</span></div><div class="nav-links"><a href="#">Work</a><a href="#">Services</a><a href="#">About</a><a href="#">Blog</a></div><a class="nav-btn" href="#">Get a Quote</a></nav>
+
+<section class="hero reveal">
+<h1>We build <span class="blue">digital products</span> that grow businesses</h1>
+<p>Pixel is a full-service digital agency specializing in web development, design, and digital marketing for ambitious brands.</p>
+<div class="hero-btns"><button class="btn-blue">Start a Project</button><button class="btn-ghost">View Our Work</button></div>
+</section>
+
+<div class="logos reveal"><div class="label">Trusted by innovative brands</div><div class="logos-row"><span>Wix</span><span>Monday</span><span>Fiverr</span><span>Gett</span><span>Lemonade</span></div></div>
+
+<section class="showcase">
+<div class="sc-header reveal"><div class="tag">Our Work</div><h2>Recent projects</h2></div>
+<div class="sc-grid">
+<div class="sc-card reveal"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=480&h=300&fit=crop" alt="" loading="lazy"><div class="info"><h3>SaaS Dashboard</h3><p>Web App &bull; React &bull; Design System</p></div></div>
+<div class="sc-card reveal"><img src="https://images.unsplash.com/photo-1555421689-d68471e189f2?w=480&h=300&fit=crop" alt="" loading="lazy"><div class="info"><h3>E-Commerce Redesign</h3><p>Shopify Plus &bull; UX Audit</p></div></div>
+<div class="sc-card reveal"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=480&h=300&fit=crop" alt="" loading="lazy"><div class="info"><h3>Fitness App</h3><p>Mobile &bull; React Native</p></div></div>
+</div>
+</section>
+
+<section class="services">
+<div class="svc-header reveal"><h2>What we do</h2></div>
+<div class="svc-grid">
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#2563EB" stroke-width="1.5"/><path d="M3 9h16" stroke="#2563EB" stroke-width="1.5"/></svg></div><h3>Web Development</h3><p>Custom websites and web apps with modern stacks</p></div>
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#2563EB" stroke-width="1.5"/><path d="M8 11l2 2 4-4" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>UI/UX Design</h3><p>Research-backed design that converts visitors</p></div>
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><path d="M4 15l5-6 3 4 6-8" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Digital Marketing</h3><p>SEO, PPC, and content that drives real growth</p></div>
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><rect x="6" y="3" width="10" height="16" rx="2" stroke="#2563EB" stroke-width="1.5"/><circle cx="11" cy="16" r="1" fill="#2563EB"/></svg></div><h3>Mobile Apps</h3><p>Native and cross-platform mobile development</p></div>
+</div>
+</section>
+
+<div class="stats reveal">
+<div class="stat"><div class="num">150+</div><div class="label">Projects Delivered</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Years in Business</div></div>
+<div class="stat"><div class="num">35</div><div class="label">Team Members</div></div>
+<div class="stat"><div class="num">96%</div><div class="label">Client Satisfaction</div></div>
+</div>
+
+<section class="cta"><div class="cta-box reveal"><h2>Let's build something great</h2><p>Tell us about your project and get a free estimate within 24 hours.</p><button>Get Free Estimate &rarr;</button></div></section>
+
+<footer class="footer">&copy; 2025 Pixel Digital Agency.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

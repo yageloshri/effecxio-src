@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quill | AI Content Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FEFDFB;--surface:#FFF;--surface2:#F9F7F4;--border:#EAE5DD;
+--fg:#1F1E1B;--fg-muted:#6E6D66;
+--ink:#2D3436;--ink-light:#DFE6E9;--gold:#D4A574;--gold-light:#FFF5EB;
+--serif:'Lora',serif;--sans:'Manrope',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--gold);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(254,253,251,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);text-decoration:none;font-style:italic}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--ink);color:#fff;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:900px;margin:0 auto;padding:160px 40px 60px;text-align:center}
+.hero h1{font-family:var(--serif);font-size:clamp(2.5rem,5.5vw,4rem);font-weight:700;line-height:1.15;margin-bottom:18px}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:480px;margin:0 auto 32px;line-height:1.8}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-d{background:var(--ink);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem;transition:transform .2s}
+.btn-d:hover{transform:translateY(-2px)}
+.btn-o{border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+/* Content types */
+.content-types{max-width:900px;margin:40px auto;padding:0 40px}
+.ct-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ct-chip{background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:8px 18px;font-size:.8rem;font-weight:600;color:var(--fg-muted);transition:all .2s;cursor:default}
+.ct-chip:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-light)}
+
+/* Demo section */
+.demo{max-width:800px;margin:60px auto;padding:0 40px}
+.demo-frame{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.03)}
+.demo-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--border)}
+.demo-bar .dots{display:flex;gap:6px}
+.demo-bar .dot{width:8px;height:8px;border-radius:50%}
+.demo-bar .tab{font-size:.75rem;font-weight:600;color:var(--fg-muted)}
+.demo-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.demo-input{padding:24px;border-left:1px solid var(--border)}
+.demo-input .prompt-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:8px}
+.demo-input .prompt-text{font-family:var(--serif);font-size:.9rem;line-height:1.7;color:var(--fg-muted);font-style:italic}
+.demo-output{padding:24px;background:var(--surface2)}
+.demo-output .out-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink);margin-bottom:8px}
+.demo-output .out-text{font-family:var(--serif);font-size:.9rem;line-height:1.8}
+
+/* Features */
+.features{max-width:1000px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .3s}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.04)}
+.feat-card h3{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:6px}
+.feat-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Testimonial */
+.testimonial{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.testimonial blockquote{font-family:var(--serif);font-size:1.4rem;font-style:italic;line-height:1.6;margin-bottom:16px}
+.testimonial cite{font-style:normal;font-size:.85rem;color:var(--gold);font-weight:600}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--ink);border-radius:16px;padding:50px;color:#fff}
+.cta-box h2{font-family:var(--serif);font-size:2rem;margin-bottom:10px}
+.cta-box p{opacity:.7;margin-bottom:24px}
+.cta-box a{display:inline-block;background:var(--gold);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:40px;text-align:center;font-family:var(--serif);font-size:.85rem;font-style:italic;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}.demo-body{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Quill</a>
+<div class="nav-links"><a href="#features">Features</a><a href="#" class="nav-cta">Start Writing</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Write Content That<br><em>Actually Converts</em></h1>
+<p class="reveal">AI-powered content studio for marketers, writers, and teams. Generate blog posts, emails, ads, and social content that sounds like you.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-d">Start Free &rarr;</a><a href="#features" class="btn-o">See Features</a></div>
+</section>
+
+<div class="content-types reveal">
+<div class="ct-row">
+<div class="ct-chip">Blog Posts</div><div class="ct-chip">Email Campaigns</div><div class="ct-chip">Social Media</div><div class="ct-chip">Ad Copy</div><div class="ct-chip">Landing Pages</div><div class="ct-chip">Product Descriptions</div><div class="ct-chip">Press Releases</div><div class="ct-chip">Newsletters</div>
+</div>
+</div>
+
+<div class="demo reveal">
+<div class="demo-frame">
+<div class="demo-bar"><div class="dots"><div class="dot" style="background:#FF5F57"></div><div class="dot" style="background:#FEBC2E"></div><div class="dot" style="background:#28C840"></div></div><div class="tab">Blog Post Generator</div></div>
+<div class="demo-body">
+<div class="demo-input"><div class="prompt-label">Your Prompt</div><div class="prompt-text">"Write a blog post about the future of remote work. Tone: conversational but insightful. Length: 800 words. Include 3 actionable tips."</div></div>
+<div class="demo-output"><div class="out-label">Generated Content</div><div class="out-text">The office as we know it is dead. But that's not the story — the real story is what comes next.<br><br>After three years of the great remote work experiment, we're finally moving past the debate of "remote vs. office" and into something far more interesting: how do we build companies that work <em>better</em> because they're distributed?<br><br>Here's what the smartest teams are doing...</div></div>
+</div>
+</div>
+</div>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Your Content, Amplified</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><h3>Brand Voice AI</h3><p>Train Quill on your existing content and it writes in your exact brand voice.</p></div>
+<div class="feat-card reveal"><h3>SEO Optimization</h3><p>Built-in keyword research, meta descriptions, and content scoring for search.</p></div>
+<div class="feat-card reveal"><h3>Multilingual</h3><p>Generate and translate content in 25+ languages with native fluency.</p></div>
+<div class="feat-card reveal"><h3>Team Workflows</h3><p>Assign, review, and approve content with built-in collaboration tools.</p></div>
+<div class="feat-card reveal"><h3>Plagiarism Check</h3><p>Every piece of content is checked for originality before delivery.</p></div>
+<div class="feat-card reveal"><h3>Integrations</h3><p>Publish directly to WordPress, HubSpot, Mailchimp, and social platforms.</p></div>
+</div>
+</section>
+
+<div class="testimonial reveal">
+<blockquote>"Quill cut our content production time by 80%. We went from 4 blog posts a month to 20 — without hiring a single writer."</blockquote>
+<cite>Liora Tal, Head of Marketing at ScaleUp</cite>
+</div>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start Creating Content</h2>
+<p>5,000 free words per month. No credit card required.</p>
+<a href="#">Try Quill Free &rarr;</a>
+</div>
+</div>
+
+<footer>Quill &copy; 2025. Write smarter.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

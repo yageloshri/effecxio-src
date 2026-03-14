@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const leftItems = [
   { text: 'עיצוב', color: 'var(--accent)' },
@@ -26,6 +27,7 @@ const rightDuped = [...rightItems, ...rightItems, ...rightItems];
 
 const SplitscrollPreview = memo(function SplitscrollPreview() {
   const shouldReduceMotion = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
@@ -37,6 +39,10 @@ const SplitscrollPreview = memo(function SplitscrollPreview() {
     const leftCol = leftColRef.current;
     const rightCol = rightColRef.current;
     if (!el || !leftCol || !rightCol || shouldReduceMotion) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const leftSpeed = 0.4;
     const rightSpeed = 0.7;
@@ -67,7 +73,7 @@ const SplitscrollPreview = memo(function SplitscrollPreview() {
     return () => {
       cancelAnimationFrame(rafRef.current);
     };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, previewState]);
 
   return (
     <div

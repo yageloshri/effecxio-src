@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Marquee Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAFAFA;--fg:#18181B;--fg-muted:#71717A;--border:#E5E5E5;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);padding:80px 0}
+.section{max-width:900px;margin:0 auto;padding:0 40px;margin-bottom:80px}
+.s-center{text-align:center;margin-bottom:30px}
+.s-label{font-size:.82rem;color:var(--fg-muted);font-weight:500}
+/* Marquee */
+.marquee-wrap{overflow:hidden;position:relative;padding:20px 0}
+.marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:1}
+.marquee-wrap::before{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.marquee-wrap::after{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.marquee-track{display:flex;gap:60px;animation:marquee 30s linear infinite;width:max-content}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-track .logo{font-size:1.2rem;font-weight:700;color:var(--fg);opacity:.25;white-space:nowrap;letter-spacing:1px;transition:opacity .3s}
+.marquee-track .logo:hover{opacity:.6}
+/* Variant 2: Dark with SVG logos */
+.section-dark{background:#09090B;border-radius:20px;padding:40px;margin:0 40px 80px;max-width:none}
+.section-dark .s-label{color:#71717A}
+.section-dark .marquee-wrap::before{background:linear-gradient(to left,#09090B,transparent)}
+.section-dark .marquee-wrap::after{background:linear-gradient(to right,#09090B,transparent)}
+.section-dark .marquee-track .logo{color:#FAFAFA;opacity:.2}
+.section-dark .marquee-track .logo:hover{opacity:.5}
+/* Variant 3: Grid layout */
+.logo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;max-width:700px;margin:0 auto}
+.logo-grid .logo-cell{background:var(--bg);padding:24px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:var(--fg);opacity:.3;transition:all .2s}
+.logo-grid .logo-cell:hover{opacity:.8;background:#fff}
+@media(max-width:768px){.logo-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<!-- Variant 1: Light marquee -->
+<div class="section">
+<div class="s-center"><div class="s-label">Trusted by leading companies</div></div>
+<div class="marquee-wrap">
+<div class="marquee-track" id="track1">
+<div class="logo">Stripe</div><div class="logo">Vercel</div><div class="logo">Linear</div><div class="logo">Notion</div><div class="logo">Figma</div><div class="logo">Shopify</div><div class="logo">Slack</div><div class="logo">GitHub</div><div class="logo">Airbnb</div><div class="logo">Netflix</div>
+</div>
+</div>
+</div>
+
+<!-- Variant 2: Dark marquee -->
+<div class="section-dark">
+<div class="s-center"><div class="s-label">Powering the best teams in tech</div></div>
+<div class="marquee-wrap">
+<div class="marquee-track" style="animation-direction:reverse" id="track2">
+<div class="logo">Google</div><div class="logo">Microsoft</div><div class="logo">Amazon</div><div class="logo">Apple</div><div class="logo">Meta</div><div class="logo">Tesla</div><div class="logo">Spotify</div><div class="logo">Discord</div><div class="logo">Twitch</div><div class="logo">Reddit</div>
+</div>
+</div>
+</div>
+
+<!-- Variant 3: Grid -->
+<div class="section">
+<div class="s-center"><div class="s-label">Our partners</div></div>
+<div class="logo-grid">
+<div class="logo-cell">Stripe</div><div class="logo-cell">Vercel</div><div class="logo-cell">Linear</div><div class="logo-cell">Notion</div><div class="logo-cell">Figma</div>
+<div class="logo-cell">Shopify</div><div class="logo-cell">Slack</div><div class="logo-cell">GitHub</div><div class="logo-cell">Airbnb</div><div class="logo-cell">Netflix</div>
+</div>
+</div>
+
+<script>
+const isPreview=(self!==top);
+// Duplicate marquee content for seamless loop
+['track1','track2'].forEach(id=>{const t=document.getElementById(id);if(t)t.innerHTML+=t.innerHTML});
+</script>
+</body>
+</html>

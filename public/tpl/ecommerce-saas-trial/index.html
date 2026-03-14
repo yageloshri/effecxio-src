@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TryFirst | Start Free, Scale Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F8FAFC;--surface:#FFF;--border:#E2E8F0;--fg:#0F172A;--fg-muted:#64748B;--primary:#6366F1;--primary-light:#EEF2FF;--green:#10B981;--orange:#F59E0B;--sans:'Satoshi',sans-serif;--mono:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.banner{background:var(--primary);color:#fff;text-align:center;padding:10px;font-size:.78rem;font-weight:600}
+.banner span{background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px;font-family:var(--mono);margin:0 6px}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:8px}
+.nav-logo svg{width:24px;height:24px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btns{display:flex;gap:8px}
+.nav-btns a{font-size:.82rem;text-decoration:none;padding:8px 16px;border-radius:8px;font-weight:600}
+.nav-btns .ghost{color:var(--fg)}.nav-btns .solid{background:var(--primary);color:#fff}
+.hero{max-width:1100px;margin:0 auto;padding:60px 40px 40px;text-align:center}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--primary-light);color:var(--primary);font-size:.75rem;font-weight:700;border-radius:50px;margin-bottom:16px}
+.hero .eyebrow .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}
+.hero h1 span{background:linear-gradient(135deg,var(--primary),#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:520px;margin:0 auto 28px;line-height:1.7}
+.hero-cta{display:flex;gap:12px;justify-content:center;align-items:center}
+.btn-primary{padding:14px 28px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn-ghost{padding:14px 28px;color:var(--fg);font-size:.88rem;font-weight:600;font-family:var(--sans);cursor:pointer;border:none;background:none;display:inline-flex;align-items:center;gap:6px}
+.hero-proof{display:flex;gap:24px;justify-content:center;margin-top:20px;font-size:.78rem;color:var(--fg-muted)}
+.hero-proof .item{display:flex;align-items:center;gap:6px}
+.hero-proof svg{width:16px;height:16px;color:var(--green)}
+.screenshot{max-width:900px;margin:40px auto 0;padding:0 40px}
+.screenshot img{width:100%;border-radius:14px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.plans{max-width:1100px;margin:0 auto;padding:60px 40px}
+.plans-header{text-align:center;margin-bottom:40px}
+.plans-header h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.plans-header p{font-size:.88rem;color:var(--fg-muted)}
+.toggle{display:flex;gap:0;justify-content:center;margin-bottom:32px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;margin-left:auto;margin-right:auto}
+.toggle button{padding:8px 20px;border:none;border-radius:8px;font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;background:transparent;color:var(--fg-muted)}
+.toggle button.active{background:var(--primary);color:#fff}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;transition:border-color .3s}
+.plan-card:hover{border-color:var(--primary)}
+.plan-card.pop{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+.plan-card.pop::before{content:'Most Popular';position:absolute;top:-10px;right:20px;background:var(--primary);color:#fff;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:4px}
+.plan-card .name{font-size:.82rem;font-weight:700;color:var(--primary);margin-bottom:4px}
+.plan-card .price{font-size:2rem;font-weight:800;margin-bottom:4px}
+.plan-card .price span{font-size:.82rem;font-weight:500;color:var(--fg-muted)}
+.plan-card .desc{font-size:.78rem;color:var(--fg-muted);margin-bottom:16px}
+.plan-card ul{list-style:none;margin-bottom:20px}
+.plan-card li{font-size:.78rem;padding:5px 0;display:flex;align-items:center;gap:8px}
+.plan-card li svg{width:14px;height:14px;color:var(--green);flex-shrink:0}
+.plan-card button{width:100%;padding:11px;border-radius:8px;font-family:var(--sans);font-weight:700;font-size:.82rem;cursor:pointer}
+.plan-card .btn-fill{background:var(--primary);color:#fff;border:none}
+.plan-card .btn-line{background:transparent;border:2px solid var(--border);color:var(--fg)}
+.features{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.feat .icon{width:40px;height:40px;background:var(--primary-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.feat .icon svg{width:20px;height:20px;color:var(--primary)}
+.feat h3{font-size:.88rem;font-weight:700;margin-bottom:4px}
+.feat p{font-size:.78rem;color:var(--fg-muted);line-height:1.5}
+.logos{max-width:1100px;margin:0 auto;padding:40px;text-align:center}
+.logos p{font-size:.75rem;color:var(--fg-muted);margin-bottom:16px;font-weight:500}
+.logo-row{display:flex;justify-content:center;gap:40px;align-items:center;opacity:.4}
+.logo-row span{font-size:1.1rem;font-weight:800;letter-spacing:-.5px}
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--fg);border-radius:20px;padding:44px;color:#fff}
+.cta-box h2{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.cta-box p{opacity:.65;margin-bottom:20px;font-size:.88rem}
+.cta-box button{background:#fff;color:var(--fg);padding:14px 28px;border:none;border-radius:10px;font-weight:700;font-family:var(--sans);cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.plan-grid,.features{grid-template-columns:1fr}.nav-links,.nav-btns .ghost{display:none}.hero-proof{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<div class="banner">Limited time — get <span>3 months free</span> on annual plans</div>
+<nav class="nav">
+<div class="nav-logo"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TryFirst</div>
+<div class="nav-links"><a href="#">Product</a><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Blog</a></div>
+<div class="nav-btns"><a class="ghost" href="#">Log in</a><a class="solid" href="#">Start Free Trial</a></div>
+</nav>
+
+<section class="hero reveal">
+<div class="eyebrow"><span class="dot"></span> No credit card required</div>
+<h1>The all-in-one platform for <span>growing teams</span></h1>
+<p>Project management, time tracking, and team collaboration — all in one place. Start free and upgrade when you're ready.</p>
+<div class="hero-cta">
+<button class="btn-primary">Start Free Trial <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button class="btn-ghost"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 5.5l4 2.5-4 2.5z" fill="currentColor"/></svg> Watch demo</button>
+</div>
+<div class="hero-proof">
+<div class="item"><svg viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 14-day free trial</div>
+<div class="item"><svg viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> No credit card</div>
+<div class="item"><svg viewBox="0 0 16 16" fill="none"><path d="M4 8l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Cancel anytime</div>
+</div>
+</section>
+
+<div class="screenshot reveal"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&h=500&fit=crop" alt="" loading="lazy"></div>
+
+<section class="plans">
+<div class="plans-header reveal"><h2>Simple, transparent pricing</h2><p>Every plan includes a 14-day free trial. No credit card needed.</p></div>
+<div class="toggle"><button class="active">Monthly</button><button>Annual (save 20%)</button></div>
+<div class="plan-grid">
+<div class="plan-card reveal">
+<div class="name">Starter</div>
+<div class="price">$0 <span>/mo</span></div>
+<div class="desc">For individuals getting started</div>
+<ul>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Up to 3 projects</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Basic time tracking</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 1 GB storage</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Email support</li>
+</ul>
+<button class="btn-line">Get Started Free</button>
+</div>
+<div class="plan-card pop reveal">
+<div class="name">Pro</div>
+<div class="price">$19 <span>/mo</span></div>
+<div class="desc">For growing teams up to 20</div>
+<ul>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Unlimited projects</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Advanced analytics</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 50 GB storage</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Priority support</li>
+</ul>
+<button class="btn-fill">Start Free Trial</button>
+</div>
+<div class="plan-card reveal">
+<div class="name">Enterprise</div>
+<div class="price">$49 <span>/mo</span></div>
+<div class="desc">For large organizations</div>
+<ul>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Everything in Pro</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> SSO & SAML</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Unlimited storage</li>
+<li><svg viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Dedicated CSM</li>
+</ul>
+<button class="btn-line">Contact Sales</button>
+</div>
+</div>
+</section>
+
+<div class="features">
+<div class="feat reveal">
+<div class="icon"><svg viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 10h8M6 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<h3>Project Boards</h3>
+<p>Kanban, list, and timeline views to manage work your way.</p>
+</div>
+<div class="feat reveal">
+<div class="icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<h3>Time Tracking</h3>
+<p>Built-in timer with automatic timesheet generation.</p>
+</div>
+<div class="feat reveal">
+<div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 15V5a2 2 0 012-2h8a2 2 0 012 2v10l-6-3-6 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+<h3>Smart Reports</h3>
+<p>Real-time dashboards with exportable PDF reports.</p>
+</div>
+</div>
+
+<div class="logos reveal">
+<p>Trusted by 2,000+ teams worldwide</p>
+<div class="logo-row"><span>Vercel</span><span>Linear</span><span>Notion</span><span>Figma</span><span>Stripe</span></div>
+</div>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Start building with your team today</h2>
+<p>Free 14-day trial. No credit card. No strings attached.</p>
+<button>Start Free Trial &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 TryFirst, Inc. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+document.querySelectorAll('.toggle button').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.toggle button').forEach(x=>x.classList.remove('active'));b.classList.add('active')})});
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

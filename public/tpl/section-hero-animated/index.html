@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Hero Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080C;--fg:#F4F4F8;--fg-muted:#6A6A80;--violet:#8B5CF6;--pink:#EC4899;--sans:'Syne',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero{max-width:900px;margin:0 auto;padding:40px;text-align:center;position:relative;z-index:1}
+.hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:800;line-height:1;letter-spacing:-.04em;margin-bottom:20px}
+.hero h1 .line{display:block;opacity:0;transform:translateY(40px);animation:slideUp .8s ease forwards}
+.hero h1 .line:nth-child(2){animation-delay:.2s}
+.hero h1 .line:nth-child(3){animation-delay:.4s}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+.hero h1 .gradient{background:linear-gradient(90deg,var(--violet),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--fg-muted);max-width:440px;margin:0 auto 36px;line-height:1.7;opacity:0;animation:fadeIn .8s ease .6s forwards}
+@keyframes fadeIn{to{opacity:1}}
+.hero-btns{display:flex;gap:12px;justify-content:center;opacity:0;animation:fadeIn .8s ease .8s forwards}
+.btn-grad{background:linear-gradient(90deg,var(--violet),var(--pink));color:#fff;padding:14px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:1rem;transition:transform .2s}
+.btn-grad:hover{transform:scale(1.05)}
+.btn-o{border:1px solid rgba(255,255,255,.15);color:var(--fg);padding:14px 32px;border-radius:50px;font-weight:600;text-decoration:none;font-size:.95rem}
+canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+@media(max-width:768px){.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<section class="hero">
+<h1><span class="line">Build</span><span class="line"><span class="gradient">Something</span></span><span class="line">Beautiful.</span></h1>
+<p>The animated hero section that grabs attention. Particle background, staggered text reveal, and gradient accents.</p>
+<div class="hero-btns"><a href="#" class="btn-grad">Get Started</a><a href="#" class="btn-o">Learn More</a></div>
+</section>
+<script>
+const isPreview=(self!==top);
+const c=document.getElementById('bg'),ctx=c.getContext('2d');
+let w,h,particles=[];
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
+resize();window.addEventListener('resize',resize);
+class P{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.5;this.a=Math.random()*.3+.1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(139,92,246,${this.a})`;ctx.fill()}}
+for(let i=0;i<80;i++)particles.push(new P());
+function loop(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.update();p.draw()});
+for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(139,92,246,${.08*(1-d/120)})`;ctx.stroke()}}
+requestAnimationFrame(loop)}loop();
+</script>
+</body>
+</html>

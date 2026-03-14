@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viral | Social Media Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFF;--surface:#F9FAFB;--border:#E5E7EB;--fg:#111;--fg-muted:#6B7280;--gradient:linear-gradient(135deg,#EC4899,#8B5CF6,#3B82F6);--pink:#EC4899;--purple:#8B5CF6;--sans:'Sora',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.2rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:600}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--gradient);color:#fff;padding:10px 20px;border-radius:50px;font-size:.82rem;font-weight:700;text-decoration:none;border:none;font-family:var(--sans)}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:80px 40px 40px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
+.hero h1 .grad{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:500px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center;margin-bottom:40px}
+.btn-grad{padding:14px 28px;background:var(--gradient);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer}
+.btn-outline{padding:14px 28px;border:2px solid var(--border);border-radius:50px;font-weight:600;font-size:.92rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+/* Social cards mock */
+.social-mock{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.soc-card{width:180px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;transition:transform .3s}
+.soc-card:hover{transform:translateY(-4px)}
+.soc-card .platform{font-size:.7rem;color:var(--fg-muted);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.soc-card .num{font-size:1.6rem;font-weight:800}
+.soc-card .label{font-size:.72rem;color:var(--fg-muted)}
+.soc-card .growth{font-size:.72rem;color:#22C55E;font-weight:700;margin-top:4px}
+/* Services */
+.services{max-width:1100px;margin:0 auto;padding:60px 40px}
+.sec-header{text-align:center;margin-bottom:40px}
+.sec-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s}
+.svc-card:hover{border-color:var(--pink);transform:translateY(-2px)}
+.svc-card .emoji{font-size:1.6rem;margin-bottom:12px}
+.svc-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.svc-card p{font-size:.82rem;color:var(--fg-muted);line-height:1.6}
+/* Results */
+.results{max-width:1100px;margin:0 auto;padding:40px}
+.res-header{text-align:center;margin-bottom:30px}
+.res-header h2{font-size:1.3rem;font-weight:800}
+.res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.res-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;gap:16px;align-items:start}
+.res-card img{width:60px;height:60px;border-radius:12px;object-fit:cover;flex-shrink:0}
+.res-card .brand{font-weight:700;font-size:.88rem;margin-bottom:2px}
+.res-card .desc{font-size:.78rem;color:var(--fg-muted);line-height:1.5;margin-bottom:8px}
+.res-card .metrics{display:flex;gap:16px}
+.res-card .metrics .m{font-size:.72rem}.res-card .metrics .m strong{color:var(--pink)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--gradient);border-radius:24px;padding:52px;color:#fff}
+.cta-box h2{font-size:1.5rem;font-weight:800;margin-bottom:12px}
+.cta-box p{opacity:.9;margin-bottom:24px;font-size:.9rem}
+.cta-box button{background:#fff;color:var(--pink);padding:14px 28px;border:none;border-radius:50px;font-weight:700;font-family:var(--sans);font-size:.9rem;cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.svc-grid,.res-grid{grid-template-columns:1fr}.social-mock{flex-direction:column;align-items:center}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">viral</div><div class="nav-links"><a href="#">Services</a><a href="#">Results</a><a href="#">Pricing</a><a href="#">Blog</a></div><button class="nav-btn">Book a Call</button></nav>
+
+<section class="hero reveal">
+<h1>Make your brand <span class="grad">go viral</span></h1>
+<p>Viral is a social media agency that helps D2C and tech brands build massive audiences and drive real revenue through organic and paid social.</p>
+<div class="hero-btns"><button class="btn-grad">Get Started</button><button class="btn-outline">See Our Work</button></div>
+<div class="social-mock">
+<div class="soc-card reveal"><div class="platform">Instagram</div><div class="num">842K</div><div class="label">Followers</div><div class="growth">+124% YoY</div></div>
+<div class="soc-card reveal"><div class="platform">TikTok</div><div class="num">2.1M</div><div class="label">Followers</div><div class="growth">+340% YoY</div></div>
+<div class="soc-card reveal"><div class="platform">YouTube</div><div class="num">456K</div><div class="label">Subscribers</div><div class="growth">+89% YoY</div></div>
+<div class="soc-card reveal"><div class="platform">LinkedIn</div><div class="num">128K</div><div class="label">Followers</div><div class="growth">+67% YoY</div></div>
+</div>
+</section>
+
+<section class="services">
+<div class="sec-header reveal"><h2>What we do</h2></div>
+<div class="svc-grid">
+<div class="svc-card reveal"><div class="emoji">&#128248;</div><h3>Content Creation</h3><p>Scroll-stopping reels, carousels, and stories. We handle ideation, shooting, editing, and posting.</p></div>
+<div class="svc-card reveal"><div class="emoji">&#128640;</div><h3>Paid Social Ads</h3><p>Data-driven ad campaigns across Meta, TikTok, and LinkedIn that deliver measurable ROI.</p></div>
+<div class="svc-card reveal"><div class="emoji">&#128200;</div><h3>Growth Strategy</h3><p>Audience research, content calendars, and growth playbooks tailored to your brand.</p></div>
+<div class="svc-card reveal"><div class="emoji">&#129309;</div><h3>Influencer Marketing</h3><p>Identify, negotiate, and manage creator partnerships that feel authentic to your audience.</p></div>
+<div class="svc-card reveal"><div class="emoji">&#127916;</div><h3>Video Production</h3><p>Short-form and long-form video content optimized for each platform's algorithm.</p></div>
+<div class="svc-card reveal"><div class="emoji">&#128172;</div><h3>Community Management</h3><p>Engage your audience daily. We handle comments, DMs, and community building.</p></div>
+</div>
+</section>
+
+<section class="results">
+<div class="res-header reveal"><h2>Client results</h2></div>
+<div class="res-grid">
+<div class="res-card reveal"><img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=120&h=120&fit=crop" alt="" loading="lazy"><div><div class="brand">GlowSkin</div><div class="desc">D2C skincare brand. Grew from 12K to 450K followers in 8 months.</div><div class="metrics"><div class="m"><strong>37x</strong> Growth</div><div class="m"><strong>$2.4M</strong> Revenue</div></div></div></div>
+<div class="res-card reveal"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=120&h=120&fit=crop" alt="" loading="lazy"><div><div class="brand">TechStart</div><div class="desc">B2B SaaS. LinkedIn strategy generated 800+ qualified leads in 6 months.</div><div class="metrics"><div class="m"><strong>800+</strong> Leads</div><div class="m"><strong>12x</strong> ROAS</div></div></div></div>
+</div>
+</section>
+
+<section class="cta"><div class="cta-box reveal"><h2>Ready to go viral?</h2><p>Book a free strategy call and get a custom growth roadmap for your brand.</p><button>Book Free Call &rarr;</button></div></section>
+
+<footer class="footer">&copy; 2025 Viral Social Media Agency.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

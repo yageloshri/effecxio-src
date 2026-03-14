@@ -1,9 +1,11 @@
 'use client';
 import { memo, useRef, useCallback, useEffect, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const TiltPreview = memo(function TiltPreview() {
   const shouldReduceMotion = useReducedMotion();
+  const previewState = usePreviewState();
   const cardRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
@@ -13,6 +15,10 @@ const TiltPreview = memo(function TiltPreview() {
 
   useEffect(() => {
     if (shouldReduceMotion) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const animate = () => {
       const t = targetRef.current;
@@ -38,7 +44,7 @@ const TiltPreview = memo(function TiltPreview() {
     return () => {
       cancelAnimationFrame(rafRef.current);
     };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, previewState]);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {

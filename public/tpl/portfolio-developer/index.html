@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevFolio | Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0D1117;--surface:#161B22;--border:#30363D;--fg:#C9D1D9;--fg-muted:#8B949E;
+--accent:#58A6FF;--green:#3FB950;--purple:#BC8CFF;--orange:#D29922;--red:#F85149;
+--pink:#DB61A2;
+--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Top Nav */
+.topbar{
+position:fixed;top:0;width:100%;height:62px;background:var(--surface);border-bottom:1px solid var(--border);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;
+}
+.topbar-logo{display:flex;align-items:center;gap:12px}
+.topbar-logo svg{width:32px;height:32px;fill:var(--fg)}
+.topbar-nav{display:flex;gap:20px}
+.topbar-nav a{color:var(--fg-muted);font-size:.875rem;font-weight:500;text-decoration:none;padding:4px 8px;border-radius:6px;transition:color .2s}
+.topbar-nav a:hover{color:var(--fg)}
+.topbar-nav a.active{color:var(--fg);font-weight:600}
+.topbar-search{
+background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 12px;
+color:var(--fg-muted);font-size:.8rem;font-family:var(--sans);width:260px;
+display:flex;align-items:center;gap:8px;
+}
+.topbar-search kbd{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:0 6px;font-size:.7rem;font-family:var(--mono)}
+
+/* Profile Section */
+.profile-area{
+max-width:1200px;margin:0 auto;padding:90px 24px 0;
+display:grid;grid-template-columns:296px 1fr;gap:24px;
+}
+.profile-sidebar{position:sticky;top:86px;align-self:start}
+.avatar{width:296px;height:296px;border-radius:50%;border:1px solid var(--border);overflow:hidden;background:var(--surface)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.profile-name{font-size:1.625rem;font-weight:600;margin-top:16px}
+.profile-handle{font-size:1.25rem;font-weight:300;color:var(--fg-muted);font-family:var(--mono)}
+.profile-bio{margin-top:16px;font-size:.9rem;color:var(--fg-muted);line-height:1.6}
+.profile-stats{display:flex;gap:12px;margin-top:16px;font-size:.875rem;color:var(--fg-muted)}
+.profile-stats strong{color:var(--fg);font-weight:600}
+.profile-meta{margin-top:16px;display:flex;flex-direction:column;gap:6px;font-size:.875rem;color:var(--fg-muted)}
+.profile-meta span{display:flex;align-items:center;gap:8px}
+.profile-meta svg{width:16px;height:16px;fill:var(--fg-muted)}
+.follow-btn{
+width:100%;padding:6px 16px;background:var(--surface);border:1px solid var(--border);
+color:var(--fg);border-radius:6px;font-size:.875rem;font-weight:500;cursor:pointer;
+margin-top:16px;transition:border-color .2s;font-family:var(--sans);
+}
+.follow-btn:hover{border-color:var(--fg-muted)}
+
+.profile-main{min-width:0}
+
+/* Tab Nav */
+.tab-nav{
+display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px;
+position:sticky;top:62px;background:var(--bg);z-index:50;
+}
+.tab-nav a{
+padding:8px 16px;font-size:.875rem;color:var(--fg-muted);text-decoration:none;
+border-bottom:2px solid transparent;display:flex;align-items:center;gap:6px;
+}
+.tab-nav a:hover{color:var(--fg)}
+.tab-nav a.active{color:var(--fg);font-weight:600;border-bottom-color:var(--orange)}
+.tab-count{background:var(--surface);border-radius:10px;padding:0 8px;font-size:.75rem;font-weight:500}
+
+/* Contribution Graph */
+.contrib-section{margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px}
+.contrib-title{font-size:.875rem;margin-bottom:12px;color:var(--fg-muted)}
+.contrib-title strong{color:var(--fg)}
+.contrib-graph{display:flex;gap:3px;overflow-x:auto;direction:ltr}
+.contrib-col{display:flex;flex-direction:column;gap:3px}
+.contrib-cell{width:11px;height:11px;border-radius:2px;background:var(--surface);outline:1px solid rgba(27,31,35,.06)}
+.contrib-cell.l1{background:#0E4429}
+.contrib-cell.l2{background:#006D32}
+.contrib-cell.l3{background:#26A641}
+.contrib-cell.l4{background:#39D353}
+.contrib-legend{display:flex;align-items:center;gap:4px;margin-top:8px;font-size:.7rem;color:var(--fg-muted);justify-content:flex-end;direction:ltr}
+.contrib-legend .contrib-cell{width:11px;height:11px}
+
+/* Pinned Repos */
+.pinned-section{margin-bottom:24px}
+.pinned-section h3{font-size:.875rem;color:var(--fg-muted);margin-bottom:12px}
+.pinned-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.repo-card{
+background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px;
+transition:border-color .2s;
+}
+.repo-card:hover{border-color:var(--accent)}
+.repo-card .repo-name{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.repo-card .repo-name svg{width:16px;height:16px;fill:var(--fg-muted)}
+.repo-card .repo-name a{font-family:var(--mono);font-size:.875rem;font-weight:600;color:var(--accent)}
+.repo-card .repo-desc{font-size:.75rem;color:var(--fg-muted);margin-bottom:12px;line-height:1.5}
+.repo-card .repo-meta{display:flex;gap:16px;font-size:.75rem;color:var(--fg-muted)}
+.repo-card .repo-meta span{display:flex;align-items:center;gap:4px}
+.lang-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.lang-ts{background:#3178C6}
+.lang-py{background:#3572A5}
+.lang-rs{background:#DEA584}
+.lang-go{background:#00ADD8}
+.lang-js{background:#F1E05A}
+.lang-rb{background:#701516}
+
+/* README Section */
+.readme-section{background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:24px;overflow:hidden}
+.readme-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:.875rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.readme-header svg{width:16px;height:16px;fill:var(--fg-muted)}
+.readme-body{padding:24px 32px;font-size:.9rem;line-height:1.8}
+.readme-body h1{font-size:2rem;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:16px}
+.readme-body h2{font-size:1.5rem;border-bottom:1px solid var(--border);padding-bottom:6px;margin:24px 0 12px}
+.readme-body p{margin-bottom:12px;color:var(--fg-muted)}
+.readme-body code{background:rgba(110,118,129,.4);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.85em}
+.readme-body .badge{display:inline-block;height:20px;margin:0 4px 4px 0}
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tech-pill{
+background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.3);color:var(--accent);
+padding:4px 12px;border-radius:16px;font-size:.8rem;font-family:var(--mono);
+}
+
+/* Activity Feed */
+.activity-section{margin-bottom:24px}
+.activity-section h3{font-size:.875rem;color:var(--fg-muted);margin-bottom:12px}
+.activity-item{
+display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:.85rem;
+}
+.activity-icon{
+width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+flex-shrink:0;
+}
+.activity-icon.commit{background:rgba(63,185,80,.15)}
+.activity-icon.commit svg{fill:var(--green)}
+.activity-icon.pr{background:rgba(188,140,255,.15)}
+.activity-icon.pr svg{fill:var(--purple)}
+.activity-icon.star{background:rgba(210,153,34,.15)}
+.activity-icon.star svg{fill:var(--orange)}
+.activity-icon.issue{background:rgba(63,185,80,.15)}
+.activity-icon.issue svg{fill:var(--green)}
+.activity-content{color:var(--fg-muted)}
+.activity-content strong{color:var(--fg);font-weight:600}
+.activity-time{color:var(--fg-muted);font-size:.75rem;margin-top:2px}
+
+/* Footer */
+.site-footer{
+max-width:1200px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);
+display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--fg-muted);
+}
+.site-footer a{color:var(--fg-muted)}
+
+/* Responsive */
+@media(max-width:900px){
+.profile-area{grid-template-columns:1fr}
+.profile-sidebar{position:static;display:flex;flex-direction:column;align-items:center;text-align:center}
+.avatar{width:200px;height:200px}
+.profile-stats,.profile-meta{justify-content:center;align-items:center}
+.pinned-grid{grid-template-columns:1fr}
+.topbar-search{display:none}
+}
+@media(max-width:640px){
+.topbar-nav{display:none}
+.tab-nav{overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="topbar">
+<div class="topbar-logo">
+<svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</div>
+<nav class="topbar-nav">
+<a href="#" class="active">Overview</a>
+<a href="#">Repositories</a>
+<a href="#">Projects</a>
+<a href="#">Packages</a>
+<a href="#">Stars</a>
+</nav>
+<div class="topbar-search">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"/></svg>
+Type to search <kbd>/</kbd>
+</div>
+</header>
+
+<div class="profile-area">
+<!-- Sidebar -->
+<aside class="profile-sidebar">
+<div class="avatar">
+<img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop&crop=face" alt="Avatar">
+</div>
+<div class="profile-name">Yonatan Raz</div>
+<div class="profile-handle">@yonatanraz</div>
+<div class="profile-bio">Full-stack developer. Open source enthusiast. Building tools that make developers' lives easier. TypeScript & Rust advocate.</div>
+<button class="follow-btn">Follow</button>
+<div class="profile-stats">
+<span><strong>1.2k</strong> followers</span>
+<span><strong>89</strong> following</span>
+</div>
+<div class="profile-meta">
+<span>
+<svg viewBox="0 0 16 16"><path d="M1.75 8a6.25 6.25 0 1112.5 0 6.25 6.25 0 01-12.5 0zM8 0a8 8 0 100 16A8 8 0 008 0zM5 8a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zM5.32 9.636a.75.75 0 011.038.175l.007.009c.103.118.22.222.35.31.264.178.683.37 1.285.37.602 0 1.02-.192 1.285-.371.13-.088.247-.192.35-.31l.007-.008a.75.75 0 011.222.87l-.614-.431c.614.43.614.431.613.431v.001l-.001.002-.002.003-.005.007-.014.019a1.984 1.984 0 01-.184.213c-.803.806-2.082 1.244-3.657.73a3.45 3.45 0 01-.717-.394 2.877 2.877 0 01-.184-.213l-.014-.019-.005-.007-.002-.003v-.002h-.001l.613-.432-.614.43a.75.75 0 01.183-1.044z"/></svg>
+Tel Aviv, Israel
+</span>
+<span>
+<svg viewBox="0 0 16 16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+yonatanraz.dev
+</span>
+<span>
+<svg viewBox="0 0 16 16"><path d="M5.5.75a.75.75 0 00-1.5 0V2H2.75A1.75 1.75 0 001 3.75v10.5c0 .966.784 1.75 1.75 1.75h10.5A1.75 1.75 0 0015 14.25V3.75A1.75 1.75 0 0013.25 2H12V.75a.75.75 0 00-1.5 0V2h-5V.75zm-3 4.75a.25.25 0 01.25-.25h10.5a.25.25 0 01.25.25v9a.25.25 0 01-.25.25H2.75a.25.25 0 01-.25-.25v-9z"/></svg>
+Joined March 2019
+</span>
+</div>
+</aside>
+
+<!-- Main Content -->
+<div class="profile-main">
+<nav class="tab-nav">
+<a href="#" class="active">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.75A.75.75 0 01.75 1h4.253c1.227 0 2.317.59 3 1.501A3.744 3.744 0 0111.006 1h4.245a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75h-4.507a2.25 2.25 0 00-1.591.659l-.622.621a.75.75 0 01-1.06 0l-.622-.621A2.25 2.25 0 005.258 13H.75a.75.75 0 01-.75-.75V1.75z"/></svg>
+Overview
+</a>
+<a href="#">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z"/></svg>
+Repositories <span class="tab-count">42</span>
+</a>
+<a href="#">Stars <span class="tab-count">156</span></a>
+</nav>
+
+<!-- Contribution Graph -->
+<div class="contrib-section">
+<div class="contrib-title"><strong>847</strong> contributions in the last year</div>
+<div class="contrib-graph" id="contrib-graph"></div>
+<div class="contrib-legend">
+Less
+<div class="contrib-cell"></div>
+<div class="contrib-cell l1"></div>
+<div class="contrib-cell l2"></div>
+<div class="contrib-cell l3"></div>
+<div class="contrib-cell l4"></div>
+More
+</div>
+</div>
+
+<!-- Pinned Repos -->
+<div class="pinned-section">
+<h3>Pinned</h3>
+<div class="pinned-grid">
+<div class="repo-card">
+<div class="repo-name">
+<svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z" fill="var(--fg-muted)"/></svg>
+<a href="#">velo-bundler</a>
+</div>
+<div class="repo-desc">A blazing-fast JavaScript bundler written in Rust. Zero-config, tree-shaking, HMR.</div>
+<div class="repo-meta">
+<span><span class="lang-dot lang-rs"></span> Rust</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 2.4k</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878z"/></svg> 189</span>
+</div>
+</div>
+<div class="repo-card">
+<div class="repo-name">
+<svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z" fill="var(--fg-muted)"/></svg>
+<a href="#">nexus-orm</a>
+</div>
+<div class="repo-desc">Type-safe ORM for TypeScript. Auto-generated queries, migrations, and schemas.</div>
+<div class="repo-meta">
+<span><span class="lang-dot lang-ts"></span> TypeScript</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 1.8k</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878z"/></svg> 312</span>
+</div>
+</div>
+<div class="repo-card">
+<div class="repo-name">
+<svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z" fill="var(--fg-muted)"/></svg>
+<a href="#">devtools-kit</a>
+</div>
+<div class="repo-desc">A collection of CLI tools for modern web development. Linting, formatting, testing.</div>
+<div class="repo-meta">
+<span><span class="lang-dot lang-go"></span> Go</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 956</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878z"/></svg> 67</span>
+</div>
+</div>
+<div class="repo-card">
+<div class="repo-name">
+<svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z" fill="var(--fg-muted)"/></svg>
+<a href="#">pixel-motion</a>
+</div>
+<div class="repo-desc">WebGL animation library for interactive UI effects. 60fps particle systems and shaders.</div>
+<div class="repo-meta">
+<span><span class="lang-dot lang-ts"></span> TypeScript</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 743</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878z"/></svg> 128</span>
+</div>
+</div>
+<div class="repo-card">
+<div class="repo-name">
+<svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z" fill="var(--fg-muted)"/></svg>
+<a href="#">schema-validate</a>
+</div>
+<div class="repo-desc">Ultra-fast JSON schema validation. 10x faster than alternatives with zero dependencies.</div>
+<div class="repo-meta">
+<span><span class="lang-dot lang-rs"></span> Rust</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 534</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878z"/></svg> 41</span>
+</div>
+</div>
+<div class="repo-card">
+<div class="repo-name">
+<svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9z" fill="var(--fg-muted)"/></svg>
+<a href="#">dotfiles</a>
+</div>
+<div class="repo-desc">My personal dotfiles. Neovim, tmux, zsh, alacritty configs. Automated setup script.</div>
+<div class="repo-meta">
+<span><span class="lang-dot" style="background:#89E051"></span> Shell</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> 287</span>
+<span><svg width="16" height="16" viewBox="0 0 16 16" fill="var(--fg-muted)"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878z"/></svg> 54</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- README -->
+<div class="readme-section">
+<div class="readme-header">
+<svg viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 01.75 1h4.253c1.227 0 2.317.59 3 1.501A3.744 3.744 0 0111.006 1h4.245a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75h-4.507a2.25 2.25 0 00-1.591.659l-.622.621a.75.75 0 01-1.06 0l-.622-.621A2.25 2.25 0 005.258 13H.75a.75.75 0 01-.75-.75V1.75z" fill="var(--fg-muted)"/></svg>
+README.md
+</div>
+<div class="readme-body">
+<h1>Hey, I'm Yonatan</h1>
+<p>I build open-source developer tools and love making complex systems simple. Currently focused on high-performance tooling in Rust and TypeScript.</p>
+<h2>Tech Stack</h2>
+<div class="tech-pills">
+<span class="tech-pill">TypeScript</span>
+<span class="tech-pill">Rust</span>
+<span class="tech-pill">Go</span>
+<span class="tech-pill">React</span>
+<span class="tech-pill">Node.js</span>
+<span class="tech-pill">PostgreSQL</span>
+<span class="tech-pill">Docker</span>
+<span class="tech-pill">AWS</span>
+<span class="tech-pill">WebAssembly</span>
+<span class="tech-pill">GraphQL</span>
+</div>
+<h2>Currently Working On</h2>
+<p><code>velo-bundler</code> &mdash; A next-gen JavaScript bundler that compiles 10x faster than existing tools. Written in Rust with a WebAssembly plugin system.</p>
+<p><code>nexus-orm</code> &mdash; Making database queries type-safe and enjoyable in TypeScript. Automatic migrations, zero boilerplate.</p>
+<h2>Stats</h2>
+<p>42 public repositories &bull; 6.7k total stars &bull; 1.2k followers &bull; 847 contributions this year</p>
+</div>
+</div>
+
+<!-- Activity Feed -->
+<div class="activity-section">
+<h3>Recent Activity</h3>
+<div class="activity-item">
+<div class="activity-icon commit">
+<svg width="16" height="16" viewBox="0 0 16 16"><path d="M11.93 8.5a4.002 4.002 0 01-7.86 0H.75a.75.75 0 010-1.5h3.32a4.002 4.002 0 017.86 0h3.32a.75.75 0 010 1.5h-3.32zm-1.43-.75a2.5 2.5 0 10-5 0 2.5 2.5 0 005 0z"/></svg>
+</div>
+<div class="activity-content">
+<div>Pushed 3 commits to <strong>velo-bundler</strong></div>
+<div class="activity-time">2 hours ago</div>
+</div>
+</div>
+<div class="activity-item">
+<div class="activity-icon pr">
+<svg width="16" height="16" viewBox="0 0 16 16"><path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"/></svg>
+</div>
+<div class="activity-content">
+<div>Merged PR #247 in <strong>nexus-orm</strong></div>
+<div class="activity-time">5 hours ago</div>
+</div>
+</div>
+<div class="activity-item">
+<div class="activity-icon star">
+<svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+</div>
+<div class="activity-content">
+<div>Starred <strong>denoland/deno</strong></div>
+<div class="activity-time">1 day ago</div>
+</div>
+</div>
+<div class="activity-item">
+<div class="activity-icon issue">
+<svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"/></svg>
+</div>
+<div class="activity-content">
+<div>Opened issue #89 in <strong>devtools-kit</strong></div>
+<div class="activity-time">2 days ago</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<footer class="site-footer">
+<span>&copy; 2025 Yonatan Raz</span>
+<a href="#">Terms</a>
+<a href="#">Privacy</a>
+<a href="#">Status</a>
+</footer>
+
+<script>
+const isPreview = (self !== top);
+
+// Generate contribution graph
+const graph = document.getElementById('contrib-graph');
+if(graph){
+  // Seeded random
+  function seededRandom(seed){
+    let s = seed;
+    return function(){
+      s = (s * 16807) % 2147483647;
+      return (s - 1) / 2147483646;
+    };
+  }
+  const rand = seededRandom(42);
+  const weeks = 52;
+  for(let w = 0; w < weeks; w++){
+    const col = document.createElement('div');
+    col.className = 'contrib-col';
+    for(let d = 0; d < 7; d++){
+      const cell = document.createElement('div');
+      cell.className = 'contrib-cell';
+      const v = rand();
+      if(v > 0.35) cell.classList.add('l1');
+      if(v > 0.55) cell.classList.add('l2');
+      if(v > 0.75) cell.classList.add('l3');
+      if(v > 0.9) cell.classList.add('l4');
+      col.appendChild(cell);
+    }
+    graph.appendChild(col);
+  }
+}
+
+// Scroll reveal for repo cards
+const cards = document.querySelectorAll('.repo-card, .activity-item');
+if(!isPreview){
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if(e.isIntersecting){
+        e.target.style.transition = 'opacity .5s ease ' + (i * 0.1) + 's, transform .5s ease ' + (i * 0.1) + 's';
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.1});
+  cards.forEach(c => {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(20px)';
+    obs.observe(c);
+  });
+}
+</script>
+</body>
+</html>

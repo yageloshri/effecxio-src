@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#09090B;--surface:#18181B;--border:#27272A;--fg:#FAFAFA;--fg-muted:#A1A1AA;--violet:#8B5CF6;--violet-dim:rgba(139,92,246,.1);--sans:'Outfit',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.section{max-width:900px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:60px}
+.s-tag{font-size:.75rem;color:var(--violet);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-.02em}
+.s-desc{font-size:1rem;color:var(--fg-muted);max-width:460px;margin:12px auto 0;line-height:1.7}
+/* Steps */
+.steps{position:relative}
+.steps::before{content:'';position:absolute;right:28px;top:40px;bottom:40px;width:2px;background:var(--border)}
+.step{display:grid;grid-template-columns:56px 1fr;gap:24px;margin-bottom:48px;position:relative}
+.step:last-child{margin-bottom:0}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--violet-dim);border:2px solid var(--violet);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:var(--violet);z-index:1}
+.step-content{padding-top:8px}
+.step-content h3{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+.step-content p{font-size:.92rem;color:var(--fg-muted);line-height:1.7;margin-bottom:14px}
+.step-visual{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;gap:10px;align-items:center}
+.step-visual .sv-icon{width:36px;height:36px;border-radius:8px;background:var(--violet-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-visual .sv-icon svg{width:18px;height:18px}
+.step-visual .sv-text{font-size:.82rem;color:var(--fg-muted)}
+.step-visual .sv-text strong{color:var(--fg)}
+/* Bottom CTA */
+.bottom-cta{text-align:center;margin-top:60px}
+.bottom-cta a{display:inline-block;background:var(--violet);color:#fff;padding:14px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:.95rem}
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.steps::before{display:none}.step{grid-template-columns:1fr}.step-num{margin:0 auto 12px}}
+</style>
+</head>
+<body>
+<section class="section">
+<div class="s-center"><div class="s-tag reveal">How It Works</div><div class="s-title reveal">Three Simple Steps</div><div class="s-desc reveal">Get started in minutes. No complex setup, no engineering required.</div></div>
+<div class="steps">
+<div class="step reveal"><div class="step-num">1</div><div class="step-content"><h3>Connect Your Data</h3><p>Link your existing tools and data sources. We support 200+ integrations out of the box.</p><div class="step-visual"><div class="sv-icon"><svg viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3v12" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sv-text"><strong>1-click integration</strong> with Slack, GitHub, Notion, and more</div></div></div></div>
+<div class="step reveal"><div class="step-num">2</div><div class="step-content"><h3>Configure Your Workflow</h3><p>Use our visual builder to create custom workflows. Drag, drop, and connect — no code needed.</p><div class="step-visual"><div class="sv-icon"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="5" height="5" rx="1" stroke="#8B5CF6" stroke-width="1.5"/><rect x="10" y="10" width="5" height="5" rx="1" stroke="#8B5CF6" stroke-width="1.5"/><path d="M8 5.5h2.5V10" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sv-text"><strong>Visual builder</strong> — average setup time: 4 minutes</div></div></div></div>
+<div class="step reveal"><div class="step-num">3</div><div class="step-content"><h3>Watch It Work</h3><p>Your workflows run automatically 24/7. Get real-time notifications and detailed analytics on every action.</p><div class="step-visual"><div class="sv-icon"><svg viewBox="0 0 18 18" fill="none"><path d="M3 12l4-4 3 3 5-7" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="sv-text"><strong>Avg. 78% time saved</strong> on manual tasks after setup</div></div></div></div>
+</div>
+<div class="bottom-cta reveal"><a href="#">Get Started Free &rarr;</a></div>
+</section>
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

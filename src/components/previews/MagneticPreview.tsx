@@ -2,9 +2,11 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function MagneticPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const btnRef = useRef<HTMLButtonElement>(null);
   const rafRef = useRef<number>(0);
   const currentRef = useRef({ x: 0, y: 0 });
@@ -40,6 +42,11 @@ function MagneticPreview() {
   }, []);
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
     let running = true;
     const tick = () => {
       if (!running) return;
@@ -55,7 +62,7 @@ function MagneticPreview() {
       running = false;
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [previewState]);
 
   return (
     <div

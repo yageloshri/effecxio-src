@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const LAYERS = [
   { speed: 0.02, width: 140, height: 60, radius: 12, color: 'var(--accent)', opacity: 0.25, y: 20 },
@@ -11,6 +12,7 @@ const LAYERS = [
 
 function ParallaxPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const currentRef = useRef({ x: 0, y: 0 });
@@ -33,6 +35,10 @@ function ParallaxPreview() {
   }, []);
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     let running = true;
     const tick = () => {
       if (!running) return;
@@ -48,7 +54,7 @@ function ParallaxPreview() {
       running = false;
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [previewState]);
 
   return (
     <div

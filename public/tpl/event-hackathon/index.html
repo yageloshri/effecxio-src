@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackNow | 48-Hour Global Hackathon</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A12;--surface:#12121C;--border:#1E1E30;--fg:#E8E8F0;--fg-muted:#6B6B88;--lime:#BFFF00;--lime-dim:rgba(191,255,0,.08);--cyan:#22D3EE;--sans:'Space Grotesk',sans-serif;--mono:'Fira Code',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.3}
+.content{position:relative;z-index:1}
+.nav{max-width:1100px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:700;font-size:1.1rem;font-family:var(--mono);color:var(--lime)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--lime);color:#000;padding:9px 18px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;font-family:var(--mono)}
+.hero{max-width:1100px;margin:0 auto;padding:80px 40px 40px;text-align:center}
+.hero .date-badge{display:inline-block;padding:6px 14px;border:1px solid var(--lime);color:var(--lime);font-size:.75rem;font-weight:600;border-radius:4px;font-family:var(--mono);margin-bottom:16px}
+.hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:700;line-height:1.05;letter-spacing:-.04em;margin-bottom:16px}
+.hero h1 span{color:var(--lime)}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:520px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-lime{padding:14px 32px;background:var(--lime);color:#000;border:none;border-radius:6px;font-weight:700;font-size:.95rem;font-family:var(--mono);cursor:pointer}
+.btn-outline{padding:14px 32px;border:1px solid var(--border);border-radius:6px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.countdown{max-width:600px;margin:40px auto 0;display:flex;gap:14px;justify-content:center}
+.cd-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 24px;text-align:center;min-width:80px}
+.cd-block .num{font-size:2rem;font-weight:700;font-family:var(--mono);color:var(--lime)}
+.cd-block .label{font-size:.65rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.tracks{max-width:1100px;margin:0 auto;padding:60px 40px}
+.tracks-header{text-align:center;margin-bottom:40px}
+.tracks-header h2{font-size:1.4rem;font-weight:700}
+.tracks-header p{color:var(--fg-muted);font-size:.88rem;margin-top:4px}
+.track-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.track-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .3s}
+.track-card:hover{border-color:var(--lime)}
+.track-card .icon{width:44px;height:44px;background:var(--lime-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.track-card .icon svg{width:22px;height:22px;color:var(--lime)}
+.track-card h3{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.track-card p{font-size:.78rem;color:var(--fg-muted);line-height:1.5}
+.track-card .prize{margin-top:10px;font-family:var(--mono);font-size:.82rem;color:var(--lime);font-weight:600}
+.timeline{max-width:800px;margin:0 auto;padding:40px}
+.tl-header{text-align:center;margin-bottom:30px}
+.tl-header h2{font-size:1.3rem;font-weight:700}
+.tl-list{position:relative;padding-right:30px}
+.tl-list::before{content:'';position:absolute;right:10px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-item{position:relative;padding:14px 40px 14px 0;border-bottom:1px solid var(--border)}
+.tl-item::after{content:'';position:absolute;right:4px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--lime);border:3px solid var(--bg)}
+.tl-item .time{font-family:var(--mono);font-size:.75rem;color:var(--lime);margin-bottom:2px}
+.tl-item h3{font-size:.88rem;font-weight:600}
+.tl-item p{font-size:.75rem;color:var(--fg-muted)}
+.prizes{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.prize-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center}
+.prize-card .rank{font-size:2rem;margin-bottom:8px}
+.prize-card .amount{font-size:1.6rem;font-weight:700;color:var(--lime);font-family:var(--mono)}
+.prize-card .place{font-size:.78rem;color:var(--fg-muted);margin-top:4px}
+.prize-card .perks{font-size:.72rem;color:var(--fg-muted);margin-top:10px;line-height:1.5}
+.sponsors{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center}
+.sponsors p{font-size:.75rem;color:var(--fg-muted);margin-bottom:14px}
+.sponsor-row{display:flex;justify-content:center;gap:40px;align-items:center;opacity:.4}
+.sponsor-row span{font-size:1rem;font-weight:700;font-family:var(--mono)}
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{border:1px solid var(--lime);border-radius:16px;padding:44px;background:var(--lime-dim)}
+.cta-box h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.track-grid,.prizes{grid-template-columns:1fr}.countdown{flex-wrap:wrap}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="content">
+<nav class="nav"><div class="nav-logo">&gt;_ HackNow</div><div class="nav-links"><a href="#">Tracks</a><a href="#">Schedule</a><a href="#">Prizes</a><a href="#">FAQ</a></div><a class="nav-btn" href="#">Register</a></nav>
+
+<section class="hero reveal">
+<div class="date-badge">March 28-30, 2025 &bull; Virtual + Tel Aviv</div>
+<h1>Build the <span>future</span> in 48 hours</h1>
+<p>1,500 hackers. $50K in prizes. Build anything — AI, blockchain, climate tech, or pure creativity. No limits.</p>
+<div class="hero-btns"><button class="btn-lime">Register Free</button><button class="btn-outline">View Tracks</button></div>
+</section>
+
+<div class="countdown reveal">
+<div class="cd-block"><div class="num" id="cd-d">16</div><div class="label">Days</div></div>
+<div class="cd-block"><div class="num" id="cd-h">08</div><div class="label">Hours</div></div>
+<div class="cd-block"><div class="num" id="cd-m">42</div><div class="label">Minutes</div></div>
+<div class="cd-block"><div class="num" id="cd-s">15</div><div class="label">Seconds</div></div>
+</div>
+
+<section class="tracks">
+<div class="tracks-header reveal"><h2>Hackathon tracks</h2><p>Choose your challenge. Mix tracks for bonus points.</p></div>
+<div class="track-grid">
+<div class="track-card reveal">
+<div class="icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M8 11h6M11 8v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<h3>AI / ML</h3>
+<p>Build intelligent solutions using LLMs, computer vision, or generative AI.</p>
+<div class="prize">$15,000 prize pool</div>
+</div>
+<div class="track-card reveal">
+<div class="icon"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="6" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 16v2M15 16v2M5 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<h3>Web3 / DeFi</h3>
+<p>Decentralized apps, smart contracts, and the future of finance.</p>
+<div class="prize">$15,000 prize pool</div>
+</div>
+<div class="track-card reveal">
+<div class="icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 3l2 4h4l-3.5 3 1.5 4.5L11 12l-4 2.5L8.5 10 5 7h4l2-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+<h3>Wild Card</h3>
+<p>Anything goes. Most creative hack wins. Surprise us.</p>
+<div class="prize">$20,000 prize pool</div>
+</div>
+</div>
+</section>
+
+<section class="timeline">
+<div class="tl-header reveal"><h2>Schedule</h2></div>
+<div class="tl-list reveal">
+<div class="tl-item"><div class="time">FRI 18:00</div><h3>Opening Ceremony</h3><p>Keynote, track intros, team formation</p></div>
+<div class="tl-item"><div class="time">FRI 20:00</div><h3>Hacking Begins</h3><p>48-hour clock starts</p></div>
+<div class="tl-item"><div class="time">SAT 12:00</div><h3>Workshop: AI APIs</h3><p>Hands-on with the latest AI tools</p></div>
+<div class="tl-item"><div class="time">SAT 22:00</div><h3>Midnight Snack Break</h3><p>Pizza, energy drinks, and vibes</p></div>
+<div class="tl-item"><div class="time">SUN 18:00</div><h3>Submissions Close</h3><p>Code freeze + demo prep</p></div>
+<div class="tl-item"><div class="time">SUN 20:00</div><h3>Demo & Awards</h3><p>Top 10 demo + winners announced</p></div>
+</div>
+</section>
+
+<div class="prizes reveal">
+<div class="prize-card"><div class="rank">&#129351;</div><div class="amount">$20,000</div><div class="place">1st Place</div><div class="perks">+ AWS credits + mentorship</div></div>
+<div class="prize-card"><div class="rank">&#129352;</div><div class="amount">$10,000</div><div class="place">2nd Place</div><div class="perks">+ Vercel Pro + swag</div></div>
+<div class="prize-card"><div class="rank">&#129353;</div><div class="amount">$5,000</div><div class="place">3rd Place</div><div class="perks">+ GitHub Pro + swag</div></div>
+</div>
+
+<div class="sponsors reveal">
+<p>Sponsored by</p>
+<div class="sponsor-row"><span>Vercel</span><span>AWS</span><span>GitHub</span><span>OpenAI</span><span>Stripe</span></div>
+</div>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Ready to hack?</h2>
+<p>Registration is free. Solo or team (up to 4). All skill levels welcome.</p>
+<button class="btn-lime">Register Now &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 HackNow. Organized with caffeine and ambition.</footer>
+</div>
+
+<script>
+const isPreview=(self!==top);
+// Particle background
+const c=document.getElementById('bg'),ctx=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+resize();window.addEventListener('resize',resize);
+const particles=[];for(let i=0;i<50;i++){particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*2+1})}
+function draw(){ctx.clearRect(0,0,c.width,c.height);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(191,255,0,.5)';ctx.fill()});requestAnimationFrame(draw)}
+draw();
+// Countdown
+function updateCD(){const t=new Date('2025-03-28T18:00:00').getTime()-Date.now();if(t<0)return;const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);document.getElementById('cd-d').textContent=String(d).padStart(2,'0');document.getElementById('cd-h').textContent=String(h).padStart(2,'0');document.getElementById('cd-m').textContent=String(m).padStart(2,'0');document.getElementById('cd-s').textContent=String(s).padStart(2,'0')}
+updateCD();setInterval(updateCD,1000);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

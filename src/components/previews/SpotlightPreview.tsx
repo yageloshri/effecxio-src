@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const COLS = 10;
 const ROWS = 6;
@@ -9,6 +10,7 @@ const GAP = 4;
 
 function SpotlightPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const smoothRef = useRef<{ x: number; y: number } | null>(null);
@@ -41,6 +43,11 @@ function SpotlightPreview() {
   }, []);
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
     let running = true;
     const curr = { x: 0, y: 0 };
     let hasValue = false;
@@ -71,7 +78,7 @@ function SpotlightPreview() {
       running = false;
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [previewState]);
 
   return (
     <div

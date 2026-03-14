@@ -37,7 +37,7 @@ function SuccessbuttonPreview() {
       }}
     >
       <button
-        onClick={handleClick}
+        onMouseEnter={handleClick}
         style={{
           position: 'relative',
           minWidth: done ? 50 : 160,

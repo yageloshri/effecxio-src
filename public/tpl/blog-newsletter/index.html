@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispatch | The Weekly Newsletter</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFFDF8;--surface:#FFF;--border:#E8E2D6;--fg:#1C1A16;--fg-muted:#7A756A;--red:#DC2626;--red-light:#FEF2F2;--serif:'Newsreader',serif;--sans:'Inter',sans-serif}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--red);color:#fff}
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,253,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--fg);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500}.nav-links a:hover{color:var(--red)}
+.nav-cta{background:var(--red);color:#fff;padding:9px 22px;border-radius:6px;font-size:.85rem;font-weight:700;text-decoration:none}
+.hero{max-width:700px;margin:0 auto;padding:180px 40px 60px;text-align:center}
+.hero .edition{font-size:.75rem;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.hero h1{font-family:var(--serif);font-size:clamp(2.5rem,6vw,4rem);font-weight:700;line-height:1.15;margin-bottom:18px}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:440px;margin:0 auto 32px;line-height:1.8}
+/* Subscribe */
+.sub-form{max-width:440px;margin:0 auto;display:flex;gap:8px}
+.sub-form input{flex:1;padding:13px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:.9rem;background:var(--surface)}
+.sub-form input:focus{outline:none;border-color:var(--red)}
+.sub-form button{background:var(--red);color:#fff;border:none;padding:13px 22px;border-radius:6px;font-family:var(--sans);font-weight:700;font-size:.85rem;cursor:pointer}
+.sub-note{text-align:center;font-size:.75rem;color:var(--fg-muted);margin-top:10px}
+/* Recent issues */
+.issues{max-width:700px;margin:0 auto;padding:60px 40px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-size:.75rem;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700}
+.issue-list{display:flex;flex-direction:column;gap:0}
+.issue-item{padding:20px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:60px 1fr;gap:16px;align-items:start}
+.issue-item:first-child{border-top:1px solid var(--border)}
+.issue-item .issue-num{font-family:var(--serif);font-size:1.4rem;color:var(--red);font-weight:700}
+.issue-item h3{font-family:var(--serif);font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.issue-item p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+.issue-item .issue-date{font-size:.72rem;color:var(--fg-muted);margin-top:6px}
+/* Topics */
+.topics{max-width:700px;margin:0 auto;padding:40px}
+.topic-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:8px 18px;font-size:.8rem;font-weight:600;color:var(--fg-muted);transition:all .2s}
+.topic-chip:hover{border-color:var(--red);color:var(--red);background:var(--red-light)}
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:var(--fg);border-radius:14px;padding:50px;color:#fff}
+.cta-box h2{font-family:var(--serif);font-size:2rem;margin-bottom:10px}
+.cta-box p{opacity:.7;margin-bottom:24px}
+.cta-box .sub-form input{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff}
+footer{padding:30px 40px;text-align:center;font-family:var(--serif);font-size:.85rem;font-style:italic;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.nav-links{display:none}.sub-form{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="nav"><a href="#" class="nav-brand">Dispatch</a><div class="nav-links"><a href="#issues">Archive</a><a href="#" class="nav-cta">Subscribe</a></div></nav>
+<section class="hero">
+<div class="edition reveal">Issue #147</div>
+<h1 class="reveal">Ideas Worth<br>Your Inbox</h1>
+<p class="reveal">A weekly newsletter on technology, design, and building things that matter. Read by 42,000+ makers.</p>
+<div class="sub-form reveal"><input type="email" placeholder="your@email.com"><button>Subscribe Free</button></div>
+<div class="sub-note reveal">Free forever. Unsubscribe anytime. No spam.</div>
+</section>
+<div class="topics reveal">
+<div class="topic-chips">
+<div class="topic-chip">Startups</div><div class="topic-chip">AI</div><div class="topic-chip">Design</div><div class="topic-chip">Engineering</div><div class="topic-chip">Product</div><div class="topic-chip">Careers</div><div class="topic-chip">Tools</div>
+</div>
+</div>
+<section class="issues" id="issues">
+<div class="s-center"><div class="s-tag reveal">Archive</div><div class="s-title reveal">Recent Issues</div></div>
+<div class="issue-list">
+<div class="issue-item reveal"><div class="issue-num">#147</div><div><h3>The AI Agents Are Coming</h3><p>Why 2025 is the year autonomous AI agents go mainstream, and what it means for how we build software.</p><div class="issue-date">March 8, 2025</div></div></div>
+<div class="issue-item reveal"><div class="issue-num">#146</div><div><h3>Death of the Dashboard</h3><p>Proactive interfaces are replacing reactive dashboards. The best product is the one you never have to open.</p><div class="issue-date">March 1, 2025</div></div></div>
+<div class="issue-item reveal"><div class="issue-num">#145</div><div><h3>Designing for Trust</h3><p>How the best fintech products use design patterns to build trust in the first 30 seconds.</p><div class="issue-date">Feb 22, 2025</div></div></div>
+<div class="issue-item reveal"><div class="issue-num">#144</div><div><h3>The Solo Founder Playbook</h3><p>5 founders share exactly how they built $1M+ ARR companies completely alone.</p><div class="issue-date">Feb 15, 2025</div></div></div>
+</div>
+</section>
+<div class="cta"><div class="cta-box reveal"><h2>Join 42,000 Readers</h2><p>Get the best ideas delivered to your inbox every Saturday morning.</p><div class="sub-form"><input type="email" placeholder="your@email.com"><button>Subscribe</button></div></div></div>
+<footer>Dispatch &copy; 2025. Words that matter.</footer>
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

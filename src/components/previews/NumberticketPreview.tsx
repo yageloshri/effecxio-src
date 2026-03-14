@@ -98,8 +98,7 @@ function NumberticketPreview() {
               animation:
                 prefersReduced || !rolling
                   ? 'none'
-                  : `numberticket-roll 0.6s cubic-bezier(0.33,1,0.68,1) forwards`,
-              animationDelay: `${i * 0.1}s`, /* 100ms stagger per digit */
+                  : `numberticket-roll 0.6s cubic-bezier(0.33,1,0.68,1) ${i * 0.1}s forwards`,
             }}
           >
             <span style={{ lineHeight: '64px', height: 64 }}>{d}</span>

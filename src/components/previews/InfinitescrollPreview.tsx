@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const ITEMS = Array.from({ length: 8 }, (_, i) => ({
   label: `Item #${i + 1}`,
@@ -8,12 +9,17 @@ const ITEMS = Array.from({ length: 8 }, (_, i) => ({
 
 function InfinitescrollPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const listRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const list = listRef.current;
     if (!list) return;
 
@@ -34,7 +40,7 @@ function InfinitescrollPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   const duped = [...ITEMS, ...ITEMS]; /* duplicate for seamless loop */
 

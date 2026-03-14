@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launchpad | #1 on Product Hunt</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFF;--surface:#F9FAFB;--border:#E5E7EB;--fg:#111827;--fg-muted:#6B7280;--orange:#EA580C;--orange-light:#FFF7ED;--sans:'Outfit',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.topbar{background:var(--orange);color:#fff;text-align:center;padding:10px;font-size:.82rem;font-weight:600}
+.topbar a{color:#fff;text-decoration:underline;margin-right:8px}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.3rem;display:flex;align-items:center;gap:8px}
+.nav-logo .rocket{width:28px;height:28px;background:var(--orange-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.85rem;color:var(--fg-muted);text-decoration:none;font-weight:600}.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--orange);color:#fff;padding:10px 20px;border-radius:50px;font-size:.85rem;font-weight:700;text-decoration:none;border:none;font-family:var(--sans);cursor:pointer}
+/* Hero */
+.hero{max-width:900px;margin:0 auto;padding:60px 40px;text-align:center}
+.ph-badge{display:inline-flex;align-items:center;gap:8px;background:var(--orange-light);border:2px solid var(--orange);border-radius:14px;padding:10px 18px;margin-bottom:28px}
+.ph-badge .cat-icon{font-size:1.4rem}
+.ph-badge .info{text-align:right}
+.ph-badge .info .title{font-size:.78rem;font-weight:700;color:var(--orange)}
+.ph-badge .info .sub{font-size:.65rem;color:var(--fg-muted)}
+.ph-badge .votes{background:var(--orange);color:#fff;padding:6px 12px;border-radius:8px;font-weight:800;font-size:.85rem;display:flex;align-items:center;gap:4px}
+.ph-badge .votes svg{width:12px;height:12px}
+.hero h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
+.hero h1 span{background:linear-gradient(135deg,var(--orange),#DC2626);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:500px;margin:0 auto 32px;line-height:1.7}
+.hero-form{display:flex;gap:8px;max-width:420px;margin:0 auto 16px}
+.hero-form input{flex:1;padding:14px 18px;border:2px solid var(--border);border-radius:12px;font-size:.9rem;font-family:var(--sans)}.hero-form input:focus{outline:none;border-color:var(--orange)}
+.hero-form button{padding:14px 24px;background:var(--orange);color:#fff;border:none;border-radius:12px;font-weight:700;font-family:var(--sans);cursor:pointer;white-space:nowrap}
+.hero-social{font-size:.78rem;color:var(--fg-muted);display:flex;align-items:center;justify-content:center;gap:16px}
+.hero-social .avatars{display:flex}.hero-social .avatars img{width:28px;height:28px;border-radius:50%;border:2px solid #fff;margin-right:-8px;object-fit:cover}
+/* Screenshot */
+.screenshot{max-width:900px;margin:0 auto;padding:0 40px 60px}
+.screenshot img{width:100%;border-radius:16px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.08)}
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:60px 40px}
+.feat-header{text-align:center;margin-bottom:50px}
+.feat-header .tag{font-size:.75rem;color:var(--orange);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.feat-header h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+.feat-list{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feat-item{text-align:center;padding:32px 20px}
+.feat-item .icon{width:56px;height:56px;border-radius:16px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.feat-item .icon svg{width:24px;height:24px}
+.feat-item h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.feat-item p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+/* Testimonials */
+.test{max-width:1100px;margin:0 auto;padding:60px 40px}
+.test-header{text-align:center;margin-bottom:40px}
+.test-header h2{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.test-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
+.test-card .stars{color:var(--orange);font-size:.85rem;margin-bottom:10px}
+.test-card p{font-size:.88rem;line-height:1.6;margin-bottom:14px}
+.test-card .author{display:flex;align-items:center;gap:10px}
+.test-card .author img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.test-card .author .name{font-size:.8rem;font-weight:700}
+.test-card .author .role{font-size:.68rem;color:var(--fg-muted)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--orange),#DC2626);border-radius:24px;padding:48px;color:#fff}
+.cta-box h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:12px}
+.cta-box p{opacity:.9;margin-bottom:24px}
+.cta-box button{background:#fff;color:var(--orange);padding:14px 32px;border:none;border-radius:12px;font-weight:700;font-family:var(--sans);font-size:.95rem;cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.78rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.feat-list,.test-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-form{flex-direction:column}.topbar{font-size:.72rem}}
+</style>
+</head>
+<body>
+<div class="topbar">&#127942; Voted #1 Product of the Day on Product Hunt <a href="#">See the launch &rarr;</a></div>
+<nav class="nav">
+<div class="nav-logo"><div class="rocket">&#128640;</div>Launchpad</div>
+<div class="nav-links"><a href="#">Features</a><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Changelog</a></div>
+<button class="nav-cta">Try Free</button>
+</nav>
+
+<section class="hero reveal">
+<div class="ph-badge">
+<div class="cat-icon">&#128049;</div>
+<div class="info"><div class="title">#1 Product of the Day</div><div class="sub">Product Hunt — March 2025</div></div>
+<div class="votes"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2l1.5 3 3.5.5-2.5 2.5.5 3.5L6 9.5 3 11.5l.5-3.5L1 5.5 4.5 5 6 2z" fill="#fff"/></svg>1,247</div>
+</div>
+<h1>The launch platform for <span>ambitious founders</span></h1>
+<p>Launchpad helps you validate ideas, build MVPs, and launch to thousands — all before writing a single line of code.</p>
+<div class="hero-form"><input type="email" placeholder="Enter your email"><button>Start Free &rarr;</button></div>
+<div class="hero-social">
+<div class="avatars">
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=56&h=56&fit=crop&crop=face" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=56&h=56&fit=crop&crop=face" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=56&h=56&fit=crop&crop=face" alt="" loading="lazy">
+</div>
+<span>Join 8,500+ founders already launching</span>
+</div>
+</section>
+
+<div class="screenshot reveal">
+<img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&h=500&fit=crop" alt="Dashboard" loading="lazy">
+</div>
+
+<section class="features">
+<div class="feat-header reveal"><div class="tag">Features</div><h2>Everything you need to launch</h2></div>
+<div class="feat-list">
+<div class="feat-item reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#EA580C" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="#EA580C" stroke-width="1.5"/><path d="M2 12l10 5 10-5" stroke="#EA580C" stroke-width="1.5"/></svg></div><h3>Landing Pages</h3><p>Beautiful, high-converting landing pages in minutes. No design skills needed.</p></div>
+<div class="feat-item reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 15l4-8 3 4 3-2 6 6H4z" stroke="#EA580C" stroke-width="1.5" stroke-linejoin="round"/></svg></div><h3>Validation Suite</h3><p>A/B testing, surveys, and fake-door tests to validate before building.</p></div>
+<div class="feat-item reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#EA580C" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Waitlist Management</h3><p>Collect emails, segment users, send updates. Built-in referral system.</p></div>
+<div class="feat-item reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 14l5-5 3 3 8-8" stroke="#EA580C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Launch Analytics</h3><p>Track signups, referrals, and conversion in real-time.</p></div>
+<div class="feat-item reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#EA580C" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="#EA580C" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Scheduled Launches</h3><p>Plan multi-channel launches with automated sequences.</p></div>
+<div class="feat-item reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="#EA580C" stroke-width="1.5"/><path d="M4 10h16" stroke="#EA580C" stroke-width="1.5"/></svg></div><h3>Integrations</h3><p>Connect Stripe, Mailchimp, Zapier, and 100+ more tools.</p></div>
+</div>
+</section>
+
+<section class="test">
+<div class="test-header reveal"><h2>Founders love Launchpad</h2></div>
+<div class="test-grid">
+<div class="test-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Launched my SaaS on Product Hunt using Launchpad. Got 1,200 signups on day one."</p><div class="author"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=64&h=64&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Tom Shafir</div><div class="role">Founder, PixelSync</div></div></div></div>
+<div class="test-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The validation tools saved me from building a product nobody wanted. Worth every penny."</p><div class="author"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=64&h=64&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Lena Müller</div><div class="role">CEO, GreenByte</div></div></div></div>
+<div class="test-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"I've launched 3 products with Launchpad. The waitlist + referral system is genius."</p><div class="author"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Amit Patel</div><div class="role">Serial Founder</div></div></div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Ready to launch your next big thing?</h2>
+<p>Join 8,500+ founders. Free to start, upgrade when you're ready.</p>
+<button>Start Your Launch &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Launchpad Technologies, Inc.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

@@ -8,7 +8,6 @@ import { effects } from '@/data/effects';
 export default function FilterBar() {
   const [active, setActive] = useState<string>('all');
 
-  // Count effects per category
   const counts = useMemo(() => {
     const map: Record<string, number> = {};
     for (const cat of CATEGORY_ORDER) {
@@ -18,34 +17,47 @@ export default function FilterBar() {
     return map;
   }, []);
 
-  // Scroll sync via IntersectionObserver
   useEffect(() => {
     const sectionIds = CATEGORY_ORDER.map((cat) => cat.id);
-    const observers: IntersectionObserver[] = [];
+    const tracked = new Map<string, Element>();
 
-    for (const id of sectionIds) {
-      const el = document.getElementById(id);
-      if (!el) continue;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              setActive(entry.target.id);
-            }
+    // Single observer for all category sections
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
           }
-        },
-        { threshold: 0.3 },
-      );
+        }
+      },
+      { threshold: 0.3 },
+    );
 
-      observer.observe(el);
-      observers.push(observer);
+    // Scan DOM for category sections — picks up deferred sections after mount
+    function scan() {
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (tracked.get(id) === el) continue; // already observing this element
+        const prev = tracked.get(id);
+        if (prev) io.unobserve(prev);
+        io.observe(el);
+        tracked.set(id, el);
+      }
     }
 
-    // Also observe #featured for the "all" state
+    scan();
+
+    // Re-scan when DeferredSection swaps placeholder → real content
+    const mo = new MutationObserver(() => {
+      if (tracked.size < sectionIds.length) scan();
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    // Featured section
     const featuredEl = document.getElementById('featured');
     if (featuredEl) {
-      const featuredObserver = new IntersectionObserver(
+      const featuredIo = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             if (entry.isIntersecting) {
@@ -55,23 +67,26 @@ export default function FilterBar() {
         },
         { threshold: 0.3 },
       );
-      featuredObserver.observe(featuredEl);
-      observers.push(featuredObserver);
+      featuredIo.observe(featuredEl);
+
+      return () => {
+        io.disconnect();
+        featuredIo.disconnect();
+        mo.disconnect();
+      };
     }
 
     return () => {
-      for (const obs of observers) {
-        obs.disconnect();
-      }
+      io.disconnect();
+      mo.disconnect();
     };
   }, []);
 
   const handleClick = (id: string) => {
-    const targetId = id === 'all' ? 'featured' : id;
+    const targetId = id === 'all' ? CATEGORY_ORDER[0].id : id;
     document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Build pill list: "הכל" first, then categories in order
   const pills: { id: string; label: string; count: number }[] = [
     { id: 'all', label: 'הכל', count: counts['all'] },
     ...CATEGORY_ORDER.map((cat) => ({
@@ -83,21 +98,22 @@ export default function FilterBar() {
 
   return (
     <div
-      className="sticky z-40 backdrop-blur-lg"
+      className="sticky z-40 backdrop-blur-xl"
       style={{
         top: 64,
-        background: 'rgba(5, 5, 5, 0.85)',
+        background: 'rgba(5, 5, 5, 0.8)',
         borderBottom: '1px solid var(--border)',
       }}
     >
       <div
-        className="filter-scroll flex gap-2 overflow-x-auto"
+        className="filter-scroll flex items-center gap-3 overflow-x-auto"
         style={{
           maxWidth: 1360,
           margin: '0 auto',
-          padding: '12px 24px',
+          padding: '16px 24px',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
+          direction: 'rtl',
         }}
       >
         <style>{`
@@ -112,38 +128,46 @@ export default function FilterBar() {
               key={pill.id}
               onClick={() => handleClick(pill.id)}
               whileTap={{ scale: 0.95 }}
-              className="rounded-full px-4 py-2 text-sm whitespace-nowrap transition-colors duration-200"
               style={{
-                border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
-                color: isActive ? 'var(--accent)' : 'var(--muted)',
-                background: isActive ? 'rgba(200, 245, 59, 0.1)' : 'transparent',
-                boxShadow: isActive ? '0 0 12px var(--glow)' : 'none',
+                position: 'relative',
+                border: 'none',
+                borderRadius: 8,
+                padding: '8px 18px',
+                color: isActive ? '#000' : 'var(--muted)',
+                background: isActive ? 'var(--accent)' : 'rgba(255, 255, 255, 0.05)',
                 fontFamily: "'Heebo', sans-serif",
+                fontSize: 14,
+                fontWeight: isActive ? 700 : 500,
                 cursor: 'pointer',
                 outline: 'none',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.2s ease',
+                boxShadow: isActive ? '0 0 20px var(--glow)' : 'none',
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  (e.currentTarget as HTMLButtonElement).style.borderColor =
-                    'var(--muted)';
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.background = 'rgba(255, 255, 255, 0.1)';
+                  btn.style.color = 'var(--text)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  (e.currentTarget as HTMLButtonElement).style.borderColor =
-                    'var(--border)';
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.background = 'rgba(255, 255, 255, 0.05)';
+                  btn.style.color = 'var(--muted)';
                 }
               }}
             >
-              {pill.label}{' '}
+              {pill.label}
               <span
                 style={{
-                  color: 'var(--muted)',
-                  fontSize: '0.75rem',
-                  opacity: 0.7,
+                  marginRight: 6,
+                  fontSize: 12,
+                  opacity: isActive ? 0.7 : 0.5,
                 }}
               >
-                ({pill.count})
+                {pill.count}
               </span>
             </motion.button>
           );

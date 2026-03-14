@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 /* Trail point coordinates along a figure-8 path */
 function getFigure8(t: number, w: number, h: number) {
@@ -16,12 +17,17 @@ function getFigure8(t: number, w: number, h: number) {
 
 function CursortrailcolorPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -67,7 +73,7 @@ function CursortrailcolorPreview() {
     return () => {
       cancelAnimationFrame(rafRef.current);
     };
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   if (prefersReduced) {
     return (

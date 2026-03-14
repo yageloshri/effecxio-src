@@ -75,7 +75,18 @@ export default function TemplatesPage() {
                 <div className="browser-dot" style={{ background: '#28c840' }} />
               </div>
               <div className="template-preview-mobile">
-                <img src={`/tpl/${template.id}/thumb.webp`} alt={template.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                <iframe
+                  src={template.previewFile}
+                  style={{
+                    position: 'absolute', top: 0, left: 0,
+                    width: '1200px', height: '900px', border: 'none',
+                    transform: 'scale(0.29)', transformOrigin: 'top left',
+                    pointerEvents: 'none',
+                  }}
+                  sandbox="allow-same-origin allow-scripts"
+                  title={template.titleEn}
+                  loading="lazy"
+                />
               </div>
               <div className="template-actions-mobile">
                 <button className="template-prompt-btn tappable" onClick={() => handleMobileCopy(template)}>

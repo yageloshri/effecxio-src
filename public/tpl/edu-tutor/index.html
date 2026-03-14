@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sage | Private Tutoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FAFAF7;--surface:#FFF;--surface2:#F5F3EE;--border:#E5E2DA;
+--fg:#1C1C1A;--fg-muted:#6B6B63;
+--emerald:#059669;--emerald-light:#ECFDF5;--warm:#92400E;
+--serif:'Fraunces',serif;--sans:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--emerald);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,247,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--emerald);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500}
+.nav-links a:hover{color:var(--emerald)}
+.nav-cta{background:var(--emerald);color:#fff;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:900px;margin:0 auto;padding:160px 40px 60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.2;margin-bottom:16px}
+.hero-text h1 em{font-style:italic;color:var(--emerald)}
+.hero-text p{font-size:1rem;color:var(--fg-muted);line-height:1.8;margin-bottom:24px}
+.hero-text .btns{display:flex;gap:12px}
+.btn-e{background:var(--emerald);color:#fff;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+.btn-o{border:1px solid var(--border);color:var(--fg);padding:12px 24px;border-radius:8px;font-weight:500;text-decoration:none;font-size:.9rem}
+
+.hero-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.04)}
+.hero-card .tutor-info{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.hero-card .tutor-img{width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--surface2)}
+.hero-card .tutor-img img{width:100%;height:100%;object-fit:cover}
+.hero-card .tutor-name{font-weight:700;font-size:.95rem}
+.hero-card .tutor-sub{font-size:.8rem;color:var(--emerald)}
+.hero-card .rating{display:flex;align-items:center;gap:4px;font-size:.8rem;color:var(--warm);margin-bottom:14px}
+.hero-card .booking{background:var(--emerald-light);border-radius:10px;padding:14px}
+.hero-card .booking .b-label{font-size:.7rem;font-weight:600;color:var(--emerald);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.hero-card .booking .slots{display:flex;gap:6px;flex-wrap:wrap}
+.hero-card .booking .slot{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:.75rem;font-weight:600;cursor:default;transition:all .2s}
+.hero-card .booking .slot:hover{border-color:var(--emerald);color:var(--emerald)}
+
+/* Subjects */
+.subjects{max-width:900px;margin:0 auto;padding:60px 40px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-size:.75rem;color:var(--emerald);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700}
+.subj-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.subj-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;transition:all .3s}
+.subj-item:hover{border-color:var(--emerald);transform:translateY(-3px)}
+.subj-item .si-icon{margin-bottom:8px}
+.subj-item .si-icon svg{width:28px;height:28px}
+.subj-item h3{font-size:.85rem;font-weight:600;margin-bottom:2px}
+.subj-item p{font-size:.7rem;color:var(--fg-muted)}
+
+/* How it works */
+.how{max-width:800px;margin:0 auto;padding:60px 40px}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.how-step{text-align:center}
+.how-step .num{font-family:var(--serif);font-size:2rem;color:var(--emerald);font-weight:700;margin-bottom:8px}
+.how-step h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.how-step p{font-size:.82rem;color:var(--fg-muted);line-height:1.6}
+
+/* Testimonials */
+.testimonials{max-width:900px;margin:0 auto;padding:60px 40px}
+.test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.test-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.test-card blockquote{font-family:var(--serif);font-size:.95rem;font-style:italic;line-height:1.6;margin-bottom:12px}
+.test-card cite{font-style:normal;font-size:.8rem;color:var(--emerald);font-weight:600}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:var(--fg);border-radius:16px;padding:50px;color:#fff}
+.cta-box h2{font-family:var(--serif);font-size:2rem;margin-bottom:10px}
+.cta-box p{opacity:.7;margin-bottom:24px}
+.cta-box a{display:inline-block;background:var(--emerald);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:30px 40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.subj-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.hero{grid-template-columns:1fr;text-align:center}.hero-text .btns{justify-content:center}.subj-list,.how-grid,.test-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Sage</a>
+<div class="nav-links"><a href="#subjects">Subjects</a><a href="#how">How It Works</a><a href="#" class="nav-cta">Find a Tutor</a></div>
+</nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<h1>Find Your Perfect <em>Tutor</em></h1>
+<p>Connect with expert tutors for one-on-one lessons. Online or in-person, on your schedule.</p>
+<div class="btns"><a href="#" class="btn-e">Get Matched &rarr;</a><a href="#subjects" class="btn-o">Browse Subjects</a></div>
+</div>
+<div class="hero-card reveal">
+<div class="tutor-info">
+<div class="tutor-img"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=112&h=112&fit=crop&crop=face" alt="" loading="lazy"></div>
+<div><div class="tutor-name">Dr. Noa Shapira</div><div class="tutor-sub">Mathematics &bull; 12 years exp</div></div>
+</div>
+<div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.9 (312 reviews)</div>
+<div class="booking">
+<div class="b-label">Available This Week</div>
+<div class="slots">
+<div class="slot">Mon 16:00</div><div class="slot">Tue 10:00</div><div class="slot">Wed 14:00</div><div class="slot">Thu 18:00</div><div class="slot">Fri 11:00</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="subjects" id="subjects">
+<div class="s-center"><div class="s-tag reveal">Subjects</div><div class="s-title reveal">What Would You Like to Learn?</div></div>
+<div class="subj-list">
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M8 20V10l6-4 6 4v10" stroke="#059669" stroke-width="1.5"/><path d="M12 16h4M14 12v8" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Mathematics</h3><p>460 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="8" stroke="#059669" stroke-width="1.5"/><path d="M10 14h8M14 10v8" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Physics</h3><p>280 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M7 21h14M10 21V10h8v11" stroke="#059669" stroke-width="1.5"/><path d="M13 15h2M13 12h2" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>English</h3><p>520 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M7 10c0-2 3-4 7-4s7 2 7 4-3 4-7 4-7-2-7-4z" stroke="#059669" stroke-width="1.5"/><path d="M7 10v8c0 2 3 4 7 4s7-2 7-4v-8" stroke="#059669" stroke-width="1.5"/></svg></div><h3>Chemistry</h3><p>190 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><rect x="6" y="8" width="16" height="12" rx="2" stroke="#059669" stroke-width="1.5"/><path d="M10 14l3 2 5-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Computer Science</h3><p>340 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="#059669" stroke-width="1.5"/><path d="M14 5v18M5 14h18" stroke="#059669" stroke-width="1"/><path d="M6 10h16M6 18h16" stroke="#059669" stroke-width="1"/></svg></div><h3>History</h3><p>210 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M14 6l2 4 4.5.7-3.2 3.1.8 4.5L14 16l-4.1 2.3.8-4.5L7.5 10.7 12 10z" stroke="#059669" stroke-width="1.5"/></svg></div><h3>SAT/ACT Prep</h3><p>150 tutors</p></div>
+<div class="subj-item reveal"><div class="si-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M8 22V8l4 3 4-3 4 3V22l-4-3-4 3-4-3z" stroke="#059669" stroke-width="1.5"/></svg></div><h3>Languages</h3><p>380 tutors</p></div>
+</div>
+</section>
+
+<section class="how" id="how">
+<div class="s-center"><div class="s-tag reveal">How It Works</div><div class="s-title reveal">Simple as 1-2-3</div></div>
+<div class="how-grid">
+<div class="how-step reveal"><div class="num">01</div><h3>Tell Us Your Goals</h3><p>Share the subject, level, and what you want to achieve. We'll match you in under 24 hours.</p></div>
+<div class="how-step reveal"><div class="num">02</div><h3>Meet Your Tutor</h3><p>Free intro session to make sure it's a perfect fit. No commitment until you're happy.</p></div>
+<div class="how-step reveal"><div class="num">03</div><h3>Start Learning</h3><p>Schedule weekly sessions, track progress, and watch your grades improve.</p></div>
+</div>
+</section>
+
+<section class="testimonials">
+<div class="s-center"><div class="s-tag reveal">Reviews</div><div class="s-title reveal">Trusted by Families</div></div>
+<div class="test-grid">
+<div class="test-card reveal"><blockquote>"My son raised his math grade from 65 to 92 in just two months with Sage. The tutor matching was spot on."</blockquote><cite>David K., Parent</cite></div>
+<div class="test-card reveal"><blockquote>"As a college student, Sage helped me finally understand organic chemistry. The tutors are incredibly patient."</blockquote><cite>Tali R., Student</cite></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Find Your Tutor Today</h2>
+<p>First lesson free. 100% satisfaction guaranteed.</p>
+<a href="#">Get Matched Free &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Sage. Learn smarter, not harder.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

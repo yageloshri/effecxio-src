@@ -59,7 +59,7 @@ function ElasticbuttonPreview() {
       }}
     >
       <button
-        onClick={handleClick}
+        onMouseEnter={handleClick}
         onAnimationEnd={() => setBouncing(false)}
         style={{
           padding: '14px 40px',

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realm | Epic Fantasy RPG</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0510;--surface:#110B1E;--border:#221640;--fg:#E8E0F5;--fg-muted:#7A6B96;--gold:#F59E0B;--gold-dim:rgba(245,158,11,.08);--purple:#A855F7;--display:'Cinzel',serif;--sans:'Rajdhani',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 50% 30%,rgba(168,85,247,.1) 0%,transparent 60%);pointer-events:none;z-index:0}
+.content{position:relative;z-index:1}
+.nav{max-width:1100px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:3px;color:var(--gold)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.85rem;color:var(--fg-muted);text-decoration:none;font-weight:600}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:linear-gradient(135deg,var(--gold),#D97706);color:#000;padding:10px 22px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;font-family:var(--display);letter-spacing:1px}
+.hero{max-width:1100px;margin:0 auto;padding:80px 40px 40px;text-align:center}
+.hero .tag{font-family:var(--display);font-size:.72rem;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:var(--display);font-size:clamp(2.5rem,6vw,4.5rem);line-height:1;letter-spacing:2px;margin-bottom:16px;background:linear-gradient(180deg,var(--fg),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:500px;margin:0 auto 28px;line-height:1.7;font-weight:500}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-gold{padding:14px 32px;background:linear-gradient(135deg,var(--gold),#D97706);color:#000;border:none;border-radius:6px;font-weight:700;font-size:.95rem;font-family:var(--display);cursor:pointer;letter-spacing:1px}
+.btn-ghost{padding:14px 32px;border:1px solid var(--border);border-radius:6px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-img{max-width:900px;margin:40px auto 0;padding:0 40px}
+.hero-img img{width:100%;border-radius:14px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(168,85,247,.15)}
+.classes{max-width:1100px;margin:0 auto;padding:60px 40px}
+.cls-header{text-align:center;margin-bottom:40px}
+.cls-header h2{font-family:var(--display);font-size:1.6rem;letter-spacing:2px}
+.cls-header p{color:var(--fg-muted);font-size:.88rem;margin-top:4px}
+.cls-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cls-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-align:center;transition:border-color .3s}
+.cls-card:hover{border-color:var(--gold)}
+.cls-card img{width:100%;aspect-ratio:1;object-fit:cover}
+.cls-card .info{padding:14px}
+.cls-card h3{font-family:var(--display);font-size:.88rem;letter-spacing:1px;margin-bottom:2px}
+.cls-card .role{font-size:.68rem;color:var(--gold);font-weight:600}
+.cls-card p{font-size:.68rem;color:var(--fg-muted);margin-top:4px}
+.features{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:14px;text-align:center}
+.feat .emoji{font-size:1.8rem;margin-bottom:10px}
+.feat h3{font-family:var(--display);font-size:.88rem;letter-spacing:1px;margin-bottom:4px}
+.feat p{font-size:.72rem;color:var(--fg-muted);line-height:1.5}
+.trailer{max-width:800px;margin:0 auto;padding:40px;text-align:center}
+.trailer h2{font-family:var(--display);font-size:1.4rem;letter-spacing:2px;margin-bottom:20px}
+.trailer-video{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.trailer-video img{width:100%;aspect-ratio:16/9;object-fit:cover;filter:brightness(.6)}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:rgba(245,158,11,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.play-btn svg{width:24px;height:24px;color:#000;margin-right:-2px}
+.reviews{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rev{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.rev .score{font-family:var(--display);font-size:2rem;color:var(--gold);margin-bottom:4px}
+.rev .source{font-size:.78rem;font-weight:600;margin-bottom:4px}
+.rev .quote{font-size:.7rem;color:var(--fg-muted);font-style:italic}
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--gold);border-radius:16px;padding:44px}
+.cta-box h2{font-family:var(--display);font-size:1.3rem;letter-spacing:2px;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.cls-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.cls-grid,.features,.reviews{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<div class="content">
+<nav class="nav"><div class="nav-logo">REALM</div><div class="nav-links"><a href="#">World</a><a href="#">Classes</a><a href="#">Media</a><a href="#">News</a></div><a class="nav-btn" href="#">Play Free</a></nav>
+
+<section class="hero reveal">
+<div class="tag">Season 3 — Shadows of Eternity</div>
+<h1>ENTER THE REALM</h1>
+<p>A vast open-world fantasy RPG where every choice shapes the world. Forge alliances, battle ancient evils, and write your legend.</p>
+<div class="hero-btns"><button class="btn-gold">Play Free Now</button><button class="btn-ghost">Watch Trailer</button></div>
+</section>
+
+<div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&h=450&fit=crop" alt="" loading="lazy"></div>
+
+<section class="classes">
+<div class="cls-header reveal"><h2>CHOOSE YOUR CLASS</h2><p>Four unique classes, each with distinct playstyles and abilities.</p></div>
+<div class="cls-grid">
+<div class="cls-card reveal"><img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=250&h=250&fit=crop" alt="" loading="lazy"><div class="info"><h3>WARRIOR</h3><div class="role">Tank / Melee</div><p>Heavy armor. Devastating blows.</p></div></div>
+<div class="cls-card reveal"><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=250&h=250&fit=crop" alt="" loading="lazy"><div class="info"><h3>MAGE</h3><div class="role">Ranged / DPS</div><p>Elemental spells. Area damage.</p></div></div>
+<div class="cls-card reveal"><img src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=250&h=250&fit=crop" alt="" loading="lazy"><div class="info"><h3>RANGER</h3><div class="role">Ranged / Stealth</div><p>Precision arrows. Beast companions.</p></div></div>
+<div class="cls-card reveal"><img src="https://images.unsplash.com/photo-1533134486753-c833f0ed4866?w=250&h=250&fit=crop" alt="" loading="lazy"><div class="info"><h3>HEALER</h3><div class="role">Support / Magic</div><p>Restoration. Shields. Buffs.</p></div></div>
+</div>
+</section>
+
+<div class="features">
+<div class="feat reveal"><div class="emoji">&#9876;&#65039;</div><h3>EPIC BATTLES</h3><p>Real-time combat with skill-based mechanics and combo chains.</p></div>
+<div class="feat reveal"><div class="emoji">&#127758;</div><h3>OPEN WORLD</h3><p>300+ hours of content across 5 continents and 12 biomes.</p></div>
+<div class="feat reveal"><div class="emoji">&#128101;</div><h3>MULTIPLAYER</h3><p>Co-op dungeons, PvP arenas, and 40-player raids.</p></div>
+</div>
+
+<section class="trailer reveal">
+<h2>WATCH THE TRAILER</h2>
+<div class="trailer-video">
+<img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=450&fit=crop" alt="" loading="lazy">
+<div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+</div>
+</section>
+
+<div class="reviews reveal">
+<div class="rev"><div class="score">9.2</div><div class="source">IGN</div><div class="quote">"A masterpiece of the genre"</div></div>
+<div class="rev"><div class="score">95%</div><div class="source">Steam</div><div class="quote">"Overwhelmingly Positive"</div></div>
+<div class="rev"><div class="score">4.8</div><div class="source">App Store</div><div class="quote">"Best RPG on mobile"</div></div>
+</div>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>YOUR LEGEND AWAITS</h2>
+<p>Free to play. Available on PC, iOS, and Android.</p>
+<button class="btn-gold">Play Free Now &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Realm Studios. All rights reserved.</footer>
+</div>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

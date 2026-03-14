@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 interface Drop {
   x: number;
@@ -24,6 +25,7 @@ const SPLASH_LIFE = 10;   /* frames a splash lives */
 
 function RaindropPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
@@ -60,6 +62,13 @@ function RaindropPreview() {
     }));
 
     const splashes: Splash[] = [];
+
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return () => {
+        canvas.remove();
+      };
+    }
 
     const animate = () => {
       ctx.clearRect(0, 0, W, H);
@@ -116,7 +125,7 @@ function RaindropPreview() {
       observer.disconnect();
       canvas.remove();
     };
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   if (prefersReduced) {
     return (

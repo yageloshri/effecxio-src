@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const LIQUID_KEYFRAMES = `
 @keyframes liquid-morph {
@@ -21,6 +22,7 @@ const LIQUID_KEYFRAMES = `
 
 function LiquidPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const [isHovered, setIsHovered] = useState(false);
   const styleRef = useRef<HTMLStyleElement | null>(null);
   const rafRef = useRef<number>(0);
@@ -46,6 +48,11 @@ function LiquidPreview() {
   }, [isHovered]);
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
     let running = true;
     const tick = () => {
       if (!running) return;
@@ -60,7 +67,7 @@ function LiquidPreview() {
       running = false;
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [previewState]);
 
   const handleEnter = useCallback(() => setIsHovered(true), []);
   const handleLeave = useCallback(() => setIsHovered(false), []);
@@ -69,7 +76,7 @@ function LiquidPreview() {
     <div
       style={{
         width: '100%',
-        height: 220,
+        height: '220px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -78,7 +85,7 @@ function LiquidPreview() {
       }}
     >
       {/* SVG filter definition */}
-      <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden>
+      <svg style={{ position: 'absolute', width: '0', height: '0' }} aria-hidden>
         <defs>
           <filter id="liquid-goo">
             <feTurbulence

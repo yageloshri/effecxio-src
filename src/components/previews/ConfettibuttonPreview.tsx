@@ -36,13 +36,13 @@ function ConfettibuttonPreview() {
     };
   }, []);
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleHover = useCallback(
+    () => {
       if (prefersReduced || !containerRef.current) return;
       const container = containerRef.current;
       const rect = container.getBoundingClientRect();
-      const cx = e.clientX - rect.left;
-      const cy = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
       const PARTICLE_COUNT = 24; /* confetti particles per burst */
 
       for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -92,7 +92,7 @@ function ConfettibuttonPreview() {
       }}
     >
       <button
-        onClick={handleClick}
+        onMouseEnter={handleHover}
         style={{
           position: 'relative',
           padding: '14px 40px',

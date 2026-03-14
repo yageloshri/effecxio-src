@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya Stern | UI/UX Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800&family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Cabinet Grotesk';src:local('Cabinet Grotesk')}
+@font-face{font-family:'Satoshi';src:local('Satoshi')}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#F8F6F3;--surface:#FFF;--fg:#1A1A1A;--fg-muted:#777;
+--peach:#FF8F6B;--violet:#7C5CFC;--mint:#00D4AA;--yellow:#FFD60A;
+--border:#E8E4DE;
+--display:'Plus Jakarta Sans',sans-serif;--sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;cursor:none}
+::selection{background:var(--violet);color:#fff}
+
+/* Magnifier Cursor */
+.mag-cursor{
+position:fixed;width:100px;height:100px;border-radius:50%;
+border:2px solid var(--fg);pointer-events:none;z-index:10000;
+transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s;
+mix-blend-mode:difference;background:transparent;
+}
+.mag-cursor.small{width:20px;height:20px;border-color:var(--violet)}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 50px;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+.nav.scrolled{background:rgba(248,246,243,.92);backdrop-filter:blur(12px)}
+.nav-name{font-family:var(--display);font-size:1.1rem;font-weight:800;color:var(--fg);text-decoration:none}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--fg);color:var(--bg);padding:9px 22px;border-radius:24px;font-size:.85rem;font-weight:600;text-decoration:none}
+
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:160px 40px 100px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-tag{font-size:.8rem;color:var(--violet);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-family:var(--display);font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.1;margin-bottom:16px}
+.hero h1 .wave{display:inline-block;animation:wave .6s ease-in-out infinite alternate;font-style:normal}
+@keyframes wave{0%{transform:rotate(0)}100%{transform:rotate(20deg)}}
+.hero p{color:var(--fg-muted);font-size:1rem;line-height:1.7;margin-bottom:28px}
+.hero-btns{display:flex;gap:12px}
+.btn-fill{background:var(--fg);color:var(--bg);padding:13px 28px;border-radius:24px;font-size:.9rem;font-weight:600;text-decoration:none;transition:transform .2s}
+.btn-fill:hover{transform:translateY(-2px)}
+.btn-outline{border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:24px;font-size:.9rem;font-weight:600;text-decoration:none;transition:border-color .2s}
+.btn-outline:hover{border-color:var(--violet)}
+
+.hero-visual{position:relative}
+.hero-img{width:100%;aspect-ratio:1;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,var(--peach),var(--violet));position:relative}
+.hero-img img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;opacity:.8}
+.floating-badge{
+position:absolute;background:var(--surface);border-radius:14px;padding:12px 18px;
+box-shadow:0 8px 30px rgba(0,0,0,.08);font-size:.8rem;font-weight:600;
+display:flex;align-items:center;gap:8px;
+}
+.fb-1{top:20px;left:-20px;animation:float 3s ease-in-out infinite}
+.fb-2{bottom:30px;right:-20px;animation:float 3s ease-in-out infinite .5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* Work */
+.work{max-width:1100px;margin:0 auto;padding:100px 40px}
+.s-center{text-align:center;margin-bottom:60px}
+.s-tag{font-size:.8rem;color:var(--violet);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.s-title{font-family:var(--display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800}
+
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.work-card{border-radius:16px;overflow:hidden;background:var(--surface);transition:transform .3s}
+.work-card:hover{transform:translateY(-6px)}
+.work-card .card-img{aspect-ratio:4/3;overflow:hidden;position:relative}
+.work-card .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.work-card:hover .card-img img{transform:scale(1.05)}
+.work-card .card-body{padding:24px}
+.work-card .card-tags{display:flex;gap:8px;margin-bottom:10px}
+.work-card .card-tags span{font-size:.7rem;padding:3px 10px;border-radius:12px;background:var(--bg);color:var(--fg-muted)}
+.work-card h3{font-family:var(--display);font-size:1.2rem;font-weight:700;margin-bottom:6px}
+.work-card p{font-size:.85rem;color:var(--fg-muted)}
+
+/* Skills */
+.skills{padding:80px 40px;background:var(--surface)}
+.skills-inner{max-width:1100px;margin:0 auto}
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+.skill-item{background:var(--bg);border-radius:16px;padding:28px;text-align:center;transition:all .3s}
+.skill-item:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.skill-item .skill-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.5rem}
+.skill-item h4{font-family:var(--display);font-size:.95rem;font-weight:700;margin-bottom:4px}
+.skill-item span{font-size:.8rem;color:var(--fg-muted)}
+
+/* Testimonial */
+.testimonial{max-width:800px;margin:0 auto;padding:100px 40px;text-align:center}
+.testimonial blockquote{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:500;line-height:1.5;margin-bottom:24px}
+.testimonial .author{display:flex;align-items:center;justify-content:center;gap:12px}
+.testimonial .author img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.testimonial .author .name{font-weight:700;font-size:.9rem}
+.testimonial .author .role{font-size:.8rem;color:var(--fg-muted)}
+
+/* CTA */
+.cta{max-width:900px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{
+background:linear-gradient(135deg,var(--peach),var(--violet));border-radius:24px;
+padding:60px;color:#fff;position:relative;overflow:hidden;
+}
+.cta-box::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:rgba(255,255,255,.1);border-radius:50%}
+.cta-box h2{font-family:var(--display);font-size:2.2rem;font-weight:800;margin-bottom:12px;position:relative}
+.cta-box p{opacity:.85;margin-bottom:28px;position:relative}
+.cta-box a{display:inline-block;background:#fff;color:var(--fg);padding:14px 32px;border-radius:24px;font-weight:700;text-decoration:none;position:relative}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.hero{grid-template-columns:1fr}.work-grid{grid-template-columns:1fr}.skill-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.skill-grid{grid-template-columns:1fr 1fr}body{cursor:auto}.mag-cursor{display:none}}
+</style>
+</head>
+<body>
+
+<div class="mag-cursor" id="magCursor"></div>
+
+<nav class="nav" id="navbar">
+<a href="#" class="nav-name">Maya Stern</a>
+<div class="nav-links">
+<a href="#work">Work</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+<a href="#" class="nav-cta">Hire Me</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<div class="hero-tag reveal">UI/UX Designer</div>
+<h1 class="reveal">I Design<br>Digital Products<br>People <em class="wave">Love</em></h1>
+<p class="reveal">Product designer with 8+ years of experience crafting intuitive interfaces for startups and Fortune 500 companies.</p>
+<div class="hero-btns reveal">
+<a href="#work" class="btn-fill">View Work</a>
+<a href="#contact" class="btn-outline">Get in Touch</a>
+</div>
+</div>
+<div class="hero-visual reveal">
+<div class="hero-img">
+<img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=600&fit=crop&crop=face" alt="Maya Stern">
+</div>
+<div class="floating-badge fb-1">
+<span style="color:var(--peach)">&#9733;</span> 4.9/5 Client Rating
+</div>
+<div class="floating-badge fb-2">
+<span style="color:var(--violet)">&#10004;</span> 120+ Projects Done
+</div>
+</div>
+</section>
+
+<section class="work" id="work">
+<div class="s-center">
+<div class="s-tag reveal">Selected Work</div>
+<div class="s-title reveal">Recent Projects</div>
+</div>
+<div class="work-grid">
+<div class="work-card reveal">
+<div class="card-img"><img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=450&fit=crop" alt="Project" loading="lazy"></div>
+<div class="card-body">
+<div class="card-tags"><span>Mobile App</span><span>Fintech</span></div>
+<h3>Nova Banking App</h3>
+<p>Complete redesign of a mobile banking experience for 2M+ users.</p>
+</div>
+</div>
+<div class="work-card reveal">
+<div class="card-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=450&fit=crop" alt="Project" loading="lazy"></div>
+<div class="card-body">
+<div class="card-tags"><span>Dashboard</span><span>SaaS</span></div>
+<h3>Prism Analytics Dashboard</h3>
+<p>Data-dense analytics dashboard for enterprise growth teams.</p>
+</div>
+</div>
+<div class="work-card reveal">
+<div class="card-img"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=450&fit=crop" alt="Project" loading="lazy"></div>
+<div class="card-body">
+<div class="card-tags"><span>E-commerce</span><span>Fashion</span></div>
+<h3>Maison Fashion Store</h3>
+<p>Premium e-commerce experience with a focus on editorial storytelling.</p>
+</div>
+</div>
+<div class="work-card reveal">
+<div class="card-img"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=450&fit=crop" alt="Project" loading="lazy"></div>
+<div class="card-body">
+<div class="card-tags"><span>Health</span><span>iOS</span></div>
+<h3>Sattva Wellness App</h3>
+<p>Meditation and yoga app with personalized wellness journeys.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="skills" id="skills">
+<div class="skills-inner">
+<div class="s-center">
+<div class="s-tag reveal">Skills & Tools</div>
+<div class="s-title reveal">What I Do Best</div>
+</div>
+<div class="skill-grid">
+<div class="skill-item reveal"><div class="skill-icon" style="background:rgba(124,92,252,.1)">&#127912;</div><h4>UI Design</h4><span>Figma, Sketch</span></div>
+<div class="skill-item reveal"><div class="skill-icon" style="background:rgba(255,143,107,.1)">&#128300;</div><h4>UX Research</h4><span>User Testing, Analytics</span></div>
+<div class="skill-item reveal"><div class="skill-icon" style="background:rgba(0,212,170,.1)">&#128187;</div><h4>Prototyping</h4><span>Framer, Principle</span></div>
+<div class="skill-item reveal"><div class="skill-icon" style="background:rgba(255,214,10,.1)">&#9889;</div><h4>Design Systems</h4><span>Tokens, Components</span></div>
+</div>
+</div>
+</section>
+
+<div class="testimonial">
+<blockquote class="reveal">"Maya transformed our product from a clunky tool into something our users genuinely love. Her attention to detail is unmatched."</blockquote>
+<div class="author reveal">
+<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=88&h=88&fit=crop&crop=face" alt="">
+<div><div class="name">David Rubin</div><div class="role">CEO, Nova Fintech</div></div>
+</div>
+</div>
+
+<div class="cta" id="contact">
+<div class="cta-box reveal">
+<h2>Let's Create Something Amazing</h2>
+<p>Available for freelance projects and full-time roles</p>
+<a href="mailto:maya@stern.design">Get in Touch &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Maya Stern. Designed with care in Tel Aviv.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Magnifier cursor
+const mag=document.getElementById('magCursor');
+if(mag&&!isPreview&&window.innerWidth>768){
+  document.addEventListener('mousemove',e=>{mag.style.left=e.clientX+'px';mag.style.top=e.clientY+'px'});
+  document.querySelectorAll('a,button,.work-card,.skill-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>mag.classList.add('small'));
+    el.addEventListener('mouseleave',()=>mag.classList.remove('small'));
+  });
+}else{document.body.style.cursor='auto';if(mag)mag.style.display='none'}
+// Navbar
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+// Reveal
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

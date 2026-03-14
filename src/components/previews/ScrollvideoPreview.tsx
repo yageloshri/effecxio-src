@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const FRAME_COUNT = 16;
 const CYCLE_MS = 4000;
@@ -9,12 +10,17 @@ const COLORS = ['var(--accent)', 'var(--accent2)', 'var(--accent3)'];
 
 function ScrollvideoPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const [frame, setFrame] = useState(0);
   const rafRef = useRef<number>(0);
   const startRef = useRef(0);
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     startRef.current = performance.now();
 
@@ -27,7 +33,7 @@ function ScrollvideoPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   const displayFrame = prefersReduced ? 0 : frame;
   const progressPct = ((displayFrame + 1) / FRAME_COUNT) * 100;

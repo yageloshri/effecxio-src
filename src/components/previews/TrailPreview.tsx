@@ -1,11 +1,13 @@
 'use client';
 import { memo, useEffect, useRef, useCallback } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const TRAIL_LENGTH = 12;
 
 const TrailPreview = memo(function TrailPreview() {
   const shouldReduceMotion = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<{ x: number; y: number }[]>([]);
   const mouseRef = useRef({ x: 110, y: 110 });
@@ -47,6 +49,13 @@ const TrailPreview = memo(function TrailPreview() {
       trailRef.current[i] = { x: 110, y: 110 };
     }
 
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return () => {
+        dots.forEach((dot) => dot.remove());
+      };
+    }
+
     const animate = () => {
       const trail = trailRef.current;
       const mouse = mouseRef.current;
@@ -77,7 +86,7 @@ const TrailPreview = memo(function TrailPreview() {
       cancelAnimationFrame(rafRef.current);
       dots.forEach((dot) => dot.remove());
     };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, previewState]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

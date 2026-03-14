@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const ORIGINAL = 'EFFECTS';
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';
@@ -10,6 +11,7 @@ const FRAME_MS = 40;
 
 function ScrambletextPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const [displayed, setDisplayed] = useState(ORIGINAL);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -21,11 +23,15 @@ function ScrambletextPreview() {
   }, []);
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      cleanup();
+      return;
+    }
     return cleanup;
-  }, [cleanup]);
+  }, [cleanup, previewState]);
 
   const handleEnter = useCallback(() => {
-    if (prefersReduced) return;
+    if (prefersReduced || previewState !== 'active') return;
     cleanup();
     let iteration = 0;
     const total = ORIGINAL.length * CYCLES_PER_LETTER;
@@ -41,7 +47,7 @@ function ScrambletextPreview() {
       iteration++;
       if (iteration > total) cleanup();
     }, FRAME_MS);
-  }, [prefersReduced, cleanup]);
+  }, [prefersReduced, previewState, cleanup]);
 
   const handleLeave = useCallback(() => {
     cleanup();

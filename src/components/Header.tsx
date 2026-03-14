@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -12,64 +13,110 @@ export default function Header() {
         height: 64,
       }}
     >
-      <div className="flex items-center justify-between h-full px-6 mx-auto"
-        style={{ maxWidth: 1360 }}>
-        <div className="flex items-center gap-4">
-          <motion.a
-            href="/"
-            className="flex items-center gap-0 no-underline"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontWeight: 700,
-                fontSize: 22,
-                color: '#fff',
-                letterSpacing: '-0.5px',
-              }}
-            >
-              effects
-            </span>
-            <span
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontWeight: 700,
-                fontSize: 22,
-                color: 'var(--accent)',
-              }}
-            >
-              .
-            </span>
-            <span
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontWeight: 700,
-                fontSize: 22,
-                color: '#fff',
-                letterSpacing: '-0.5px',
-              }}
-            >
-              lab
-            </span>
-          </motion.a>
-
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          padding: '0 32px',
+          gap: '28px',
+          direction: 'ltr',
+        }}
+      >
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <Link
+            href="/effects"
             style={{
-              color: 'var(--muted)',
-              fontSize: 13,
-              fontFamily: "'Space Mono', monospace",
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 500,
+              transition: 'opacity 0.2s',
             }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
           >
-            {/* ספריית אפקטים לאתרים */}
-            {'// ספריית אפקטים לאתרים'}
-          </motion.span>
-        </div>
+            אפקטים
+          </Link>
+          <Link
+            href="/templates"
+            style={{
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 500,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            תבניות
+          </Link>
+        </nav>
+
+        <motion.a
+          href="/"
+          className="no-underline"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            fontWeight: 700,
+            fontSize: 22,
+            color: '#fff',
+            letterSpacing: '-0.5px',
+            textDecoration: 'none',
+          }}
+        >
+          Effec<span style={{ color: 'var(--accent)' }}>x</span>io
+        </motion.a>
+
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <Link
+            href="/icons"
+            style={{
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 500,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            אייקונים
+          </Link>
+          <Link
+            href="/fonts"
+            style={{
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 500,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            פונטים
+          </Link>
+          <Link
+            href="/libraries"
+            style={{
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 500,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            ספריות
+          </Link>
+        </nav>
       </div>
     </header>
   );

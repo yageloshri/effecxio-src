@@ -9,7 +9,6 @@ import Hero from '@/components/Hero';
 import DevTestimonials from '@/components/DevTestimonials';
 import SpotlightCard from '@/components/home/SpotlightCard';
 import HowItWorks from '@/components/home/HowItWorks';
-import MagneticButton from '@/components/home/MagneticButton';
 import CountUp from '@/components/home/CountUp';
 import Footer from '@/components/Footer';
 import { useIsMobile } from '@/hooks/useIsMobile';
@@ -46,50 +45,9 @@ function PreviewShell() {
 export default function HomePage() {
   const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return (
-      <div className="mobile-page">
-        <div className="home-hero-mobile">
-          <h1>
-            תבנה יפה ומהר,<br />
-            <span style={{ color: 'var(--accent)' }}>בלי להתפשר.</span>
-          </h1>
-          <p>כל מה שצריך לבנות אתר מרשים — מאורגן, מוכן להעתקה, ועובד עם כל AI.</p>
-        </div>
-
-        <div style={{ padding: '0 24px 8px' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.4)', marginBottom: 12 }}>
-            4 כלים בswipe:
-          </div>
-        </div>
-
-        <div className="tools-scroll" data-scroll-horizontal>
-          {[
-            { href: '/effects', title: 'אפקטים', desc: '110+ אפקטי CSS ו-JS', color: 'var(--accent)' },
-            { href: '/templates', title: 'טמפלייטים', desc: '100 תבניות מוכנות', color: 'var(--accent2)' },
-            { href: '/icons', title: 'אייקונים', desc: '480+ SVG מקוריים', color: 'var(--accent3)' },
-            { href: '/fonts', title: 'פונטים', desc: '30+ זוגות עבריים', color: '#ff6b6b' },
-          ].map((tool, i) => (
-            <a key={tool.href} href={tool.href} className="tool-card-mobile card-reveal" style={{ animationDelay: `${i * 0.05}s` }}>
-              <div className="tool-mini-demo" style={{ borderColor: tool.color }}>
-                <div style={{ width: '100%', height: '100%', background: `linear-gradient(135deg, ${tool.color}15, transparent)` }} />
-              </div>
-              <div style={{ fontWeight: 700, fontSize: 15, fontFamily: "'Heebo', sans-serif" }}>{tool.title}</div>
-              <div style={{ fontSize: 12, opacity: 0.5 }}>{tool.desc}</div>
-            </a>
-          ))}
-        </div>
-
-        <a href="/effects" className="home-cta-mobile tappable">
-          התחל חינם →
-        </a>
-      </div>
-    );
-  }
-
-  return (
+  const content = (
     <>
-      <FilmGrain />
+      {!isMobile && <FilmGrain />}
 
       <style>{`
           @keyframes aurora-blob {
@@ -625,6 +583,7 @@ export default function HomePage() {
           `}</style>
 
           <motion.div
+            className="home-cta-grid"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -759,4 +718,10 @@ export default function HomePage() {
       <Footer />
     </>
   );
+
+  if (isMobile) {
+    return <div className="mobile-page">{content}</div>;
+  }
+
+  return content;
 }

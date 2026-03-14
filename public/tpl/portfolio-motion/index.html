@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frame | Motion Design Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A0A;--surface:#141414;--border:#222;--fg:#F5F5F5;--fg-muted:#777;--red:#EF4444;--red-dim:rgba(239,68,68,.1);--display:'Archivo Black',sans-serif;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1200px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--display);font-size:1.3rem;letter-spacing:1px}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{border:1px solid var(--red);color:var(--red);padding:8px 18px;border-radius:6px;font-size:.82rem;font-weight:600;text-decoration:none}
+/* Hero */
+.hero{max-width:1200px;margin:0 auto;padding:100px 40px 60px;position:relative}
+.hero h1{font-family:var(--display);font-size:clamp(3rem,8vw,7rem);line-height:.9;letter-spacing:1px;margin-bottom:20px}
+.hero h1 .line{display:block}
+.hero h1 .red{color:var(--red)}
+.hero .sub{font-size:1rem;color:var(--fg-muted);max-width:400px;line-height:1.7;margin-bottom:32px}
+.play-btn{display:inline-flex;align-items:center;gap:12px;padding:14px 28px;background:var(--red);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:.9rem;font-family:var(--sans);cursor:pointer}
+.play-btn svg{width:20px;height:20px}
+/* Reel */
+.reel{max-width:1200px;margin:0 auto;padding:60px 40px}
+.reel-video{width:100%;aspect-ratio:16/9;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative}
+.reel-video img{width:100%;height:100%;object-fit:cover}
+.reel-video .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)}
+.reel-video .play-circle{width:72px;height:72px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s}
+.reel-video .play-circle:hover{transform:scale(1.1)}
+.reel-video .play-circle svg{width:28px;height:28px;margin-right:-2px}
+/* Projects */
+.projects{max-width:1200px;margin:0 auto;padding:60px 40px}
+.proj-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.proj-header h2{font-family:var(--display);font-size:1.5rem;letter-spacing:1px}
+.proj-header a{font-size:.82rem;color:var(--red);text-decoration:none;font-weight:600}
+.proj-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.proj-item{position:relative;border-radius:12px;overflow:hidden;cursor:pointer;aspect-ratio:4/3}
+.proj-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.proj-item:hover img{transform:scale(1.08)}
+.proj-item .label{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent)}
+.proj-item .label h3{font-size:.88rem;font-weight:700}
+.proj-item .label p{font-size:.7rem;color:rgba(255,255,255,.6)}
+/* Clients */
+.clients{max-width:1200px;margin:0 auto;padding:60px 40px}
+.cl-header{text-align:center;margin-bottom:30px}
+.cl-header h2{font-family:var(--display);font-size:1.3rem;letter-spacing:1px}
+.cl-grid{display:flex;justify-content:center;gap:48px;opacity:.3;flex-wrap:wrap}
+.cl-grid .cl{font-size:1.1rem;font-weight:700;letter-spacing:1px}
+/* Services */
+.services{max-width:1200px;margin:0 auto;padding:60px 40px}
+.svc-header{margin-bottom:32px}
+.svc-header h2{font-family:var(--display);font-size:1.3rem;letter-spacing:1px}
+.svc-list{display:flex;flex-direction:column;gap:0}
+.svc-row{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:padding .3s}
+.svc-row:hover{padding-right:12px}
+.svc-row h3{font-size:1.05rem;font-weight:700}
+.svc-row .arrow{font-size:1.2rem;color:var(--red);opacity:0;transition:opacity .3s}
+.svc-row:hover .arrow{opacity:1}
+/* CTA */
+.cta{max-width:1200px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta h2{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);letter-spacing:1px;margin-bottom:16px}
+.cta p{color:var(--fg-muted);margin-bottom:28px}
+.cta-btn{display:inline-block;padding:16px 36px;background:var(--red);color:#fff;border-radius:50px;font-weight:700;font-size:.95rem;text-decoration:none}
+.footer{max-width:1200px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:#444;border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.proj-row{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">FRAME<span>.</span></div><div class="nav-links"><a href="#">Work</a><a href="#">Services</a><a href="#">About</a><a href="#">Contact</a></div><a class="nav-btn" href="#">Start a Project</a></nav>
+
+<section class="hero reveal">
+<h1><span class="line">WE MAKE</span><span class="line">THINGS <span class="red">MOVE</span></span></h1>
+<div class="sub">Award-winning motion design studio creating title sequences, brand animations, and explainer videos for the world's boldest brands.</div>
+<button class="play-btn"><svg viewBox="0 0 20 20" fill="none"><polygon points="5,3 17,10 5,17" fill="#fff"/></svg>Play Showreel</button>
+</section>
+
+<section class="reel reveal">
+<div class="reel-video">
+<img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1200&h=675&fit=crop" alt="" loading="lazy">
+<div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 28 28" fill="none"><polygon points="10,5 24,14 10,23" fill="#fff"/></svg></div></div>
+</div>
+</section>
+
+<section class="projects">
+<div class="proj-header reveal"><h2>SELECTED WORK</h2><a href="#">View All &rarr;</a></div>
+<div class="proj-row">
+<div class="proj-item reveal"><img src="https://images.unsplash.com/photo-1626544827763-d516dce335e2?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="label"><h3>Spotify Wrapped 2024</h3><p>Title Sequence &bull; Motion</p></div></div>
+<div class="proj-item reveal"><img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="label"><h3>Nike Air — Redefine</h3><p>Brand Film &bull; 60s Spot</p></div></div>
+<div class="proj-item reveal"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="label"><h3>Arcade — Launch Video</h3><p>Explainer &bull; Product</p></div></div>
+</div>
+</section>
+
+<section class="clients reveal">
+<div class="cl-header"><h2>TRUSTED BY</h2></div>
+<div class="cl-grid"><div class="cl">Netflix</div><div class="cl">Spotify</div><div class="cl">Nike</div><div class="cl">Apple</div><div class="cl">Google</div><div class="cl">Meta</div></div>
+</section>
+
+<section class="services">
+<div class="svc-header reveal"><h2>SERVICES</h2></div>
+<div class="svc-row reveal"><h3>Motion Graphics</h3><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><h3>Title Sequences</h3><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><h3>Brand Animation</h3><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><h3>Explainer Videos</h3><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><h3>3D & VFX</h3><span class="arrow">&rarr;</span></div>
+</section>
+
+<section class="cta reveal">
+<h2>LET'S CREATE<br>SOMETHING</h2>
+<p>We're currently booking for Q2 2025.</p>
+<a class="cta-btn" href="#">Get in Touch &rarr;</a>
+</section>
+
+<footer class="footer">&copy; 2025 Frame Studio. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

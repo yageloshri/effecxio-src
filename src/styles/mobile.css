@@ -664,4 +664,16 @@
   }
   .variant-selector-mobile::-webkit-scrollbar { display: none; }
 
+  /* ── Home page responsive overrides ── */
+  .home-cta-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 0 16px;
+  }
+
+  /* Reduce section padding on mobile */
+  .hero-section {
+    min-height: 55vh !important;
+  }
+
 } /* end @media (max-width: 768px) */

@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@tanstack/react-virtual": "^3.13.22",
     "framer-motion": "^12.35.2",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.577.0",

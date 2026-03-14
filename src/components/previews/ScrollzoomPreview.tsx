@@ -1,9 +1,11 @@
 'use client';
 import { memo, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function ScrollzoomPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const rafRef = useRef<number>(0);
   const tRef = useRef(0);
   const dirRef = useRef(1);
@@ -12,6 +14,10 @@ function ScrollzoomPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const speed = 0.005;
 
@@ -32,7 +38,7 @@ function ScrollzoomPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

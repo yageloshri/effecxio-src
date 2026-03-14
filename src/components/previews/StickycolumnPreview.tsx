@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const SECTIONS = [
   'React',
@@ -15,12 +16,17 @@ const duped = [...SECTIONS, ...SECTIONS];
 
 function StickycolumnPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const colRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const col = colRef.current;
     if (!col) return;
 
@@ -40,7 +46,7 @@ function StickycolumnPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

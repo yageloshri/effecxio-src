@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relay | B2B Enterprise Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=General+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAFBFC;--surface:#FFF;--border:#E2E8F0;--fg:#0F172A;--fg-muted:#64748B;--navy:#1E293B;--blue:#2563EB;--blue-light:#EFF6FF;--sans:'General Sans',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,251,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-weight:700;font-size:1.1rem;color:var(--navy);display:flex;align-items:center;gap:8px}
+.nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:.88rem;color:var(--fg-muted);text-decoration:none;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.nav-cta .btn-ghost{font-size:.85rem;color:var(--fg-muted);text-decoration:none;font-weight:500}
+.nav-cta .btn-solid{font-size:.85rem;background:var(--blue);color:#fff;padding:8px 18px;border-radius:8px;text-decoration:none;font-weight:600}
+/* Hero */
+.hero{max-width:1200px;margin:0 auto;padding:140px 40px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--blue-light);border:1px solid rgba(37,99,235,.15);border-radius:50px;font-size:.78rem;font-weight:600;color:var(--blue);margin-bottom:20px}
+.hero-badge .pulse{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2.2rem,3.5vw,3.2rem);font-weight:700;line-height:1.15;letter-spacing:-.03em;color:var(--navy);margin-bottom:18px}
+.hero h1 span{color:var(--blue)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);line-height:1.7;margin-bottom:28px;max-width:480px}
+.hero-actions{display:flex;gap:12px;align-items:center}
+.btn-primary{padding:14px 28px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.95rem;font-family:var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn-outline{padding:14px 28px;background:transparent;border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.95rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+.hero-visual{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.05)}
+.hv-topbar{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.hv-topbar .dot{width:8px;height:8px;border-radius:50%;background:#E2E8F0}
+.hv-topbar .dot.r{background:#FCA5A5}.hv-topbar .dot.y{background:#FCD34D}.hv-topbar .dot.g{background:#86EFAC}
+.hv-metric{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.hv-metric .card{background:var(--bg);border-radius:10px;padding:16px}
+.hv-metric .card .label{font-size:.72rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.hv-metric .card .val{font-size:1.5rem;font-weight:700;font-family:var(--mono)}
+.hv-metric .card .val.up{color:#16A34A}
+.hv-metric .card .val.blue{color:var(--blue)}
+.hv-chart{height:80px;background:var(--bg);border-radius:10px;overflow:hidden;position:relative}
+.hv-chart canvas{width:100%;height:100%}
+/* Logos */
+.logos{max-width:1200px;margin:0 auto;padding:40px;text-align:center}
+.logos .label{font-size:.78rem;color:var(--fg-muted);font-weight:500;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px}
+.logos-row{display:flex;justify-content:center;gap:48px;align-items:center;flex-wrap:wrap;opacity:.35}
+.logos-row .logo{font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+/* Features */
+.features{max-width:1200px;margin:0 auto;padding:80px 40px}
+.section-header{text-align:center;margin-bottom:60px}
+.section-header .tag{font-size:.75rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;letter-spacing:-.02em}
+.section-header p{font-size:1rem;color:var(--fg-muted);margin-top:10px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .2s,box-shadow .2s}
+.feat-card:hover{border-color:var(--blue);box-shadow:0 8px 30px rgba(37,99,235,.08)}
+.feat-card .icon{width:44px;height:44px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-card .icon svg{width:20px;height:20px}
+.feat-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:.88rem;color:var(--fg-muted);line-height:1.6}
+/* Social proof */
+.proof{max-width:1200px;margin:0 auto;padding:80px 40px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.proof-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px}
+.proof-card .stars{color:#F59E0B;margin-bottom:12px;font-size:.9rem}
+.proof-card blockquote{font-size:.92rem;line-height:1.6;color:var(--fg);margin-bottom:16px;font-style:italic}
+.proof-card .author{display:flex;align-items:center;gap:10px}
+.proof-card .author img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.proof-card .author .name{font-weight:600;font-size:.82rem}
+.proof-card .author .role{font-size:.72rem;color:var(--fg-muted)}
+/* CTA */
+.cta{max-width:1200px;margin:0 auto;padding:80px 40px}
+.cta-box{background:var(--navy);border-radius:20px;padding:60px;text-align:center;color:#fff}
+.cta-box h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:12px}
+.cta-box p{color:#94A3B8;margin-bottom:28px;font-size:1rem}
+.cta-box .btn-white{padding:14px 32px;background:#fff;color:var(--navy);border:none;border-radius:10px;font-weight:700;font-size:.95rem;font-family:var(--sans);cursor:pointer}
+/* Footer */
+.footer{max-width:1200px;margin:0 auto;padding:40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--fg-muted)}
+.footer a{color:var(--fg-muted);text-decoration:none}.footer a:hover{color:var(--fg)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.hero{grid-template-columns:1fr;text-align:center}.hero p{margin:0 auto 28px}.hero-actions{justify-content:center}.feat-grid,.proof-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid,.proof-grid{grid-template-columns:1fr}.hero-actions{flex-direction:column}.hv-metric{grid-template-columns:1fr}.footer{flex-direction:column;gap:10px;text-align:center}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+<div class="nav-logo"><div class="dot"></div>Relay</div>
+<ul class="nav-links"><a href="#">Platform</a><a href="#">Solutions</a><a href="#">Pricing</a><a href="#">Resources</a></ul>
+<div class="nav-cta"><a class="btn-ghost" href="#">Sign in</a><a class="btn-solid" href="#">Start Free Trial</a></div>
+</div></nav>
+
+<section class="hero">
+<div>
+<div class="hero-badge"><div class="pulse"></div>Now in General Availability</div>
+<h1>The enterprise platform that <span>connects</span> your teams</h1>
+<p>Relay unifies your B2B workflows, from lead management to customer success. Automate handoffs, eliminate silos, and close deals 3x faster.</p>
+<div class="hero-actions"><button class="btn-primary">Request a Demo <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></button><button class="btn-outline">Watch 2-min Video</button></div>
+</div>
+<div class="hero-visual">
+<div class="hv-topbar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+<div class="hv-metric">
+<div class="card"><div class="label">Monthly Revenue</div><div class="val blue">$284K</div></div>
+<div class="card"><div class="label">Growth Rate</div><div class="val up">+32.4%</div></div>
+</div>
+<div class="hv-chart"><canvas id="miniChart"></canvas></div>
+</div>
+</section>
+
+<div class="logos reveal">
+<div class="label">Trusted by 500+ enterprise teams</div>
+<div class="logos-row"><div class="logo">Salesforce</div><div class="logo">HubSpot</div><div class="logo">Zendesk</div><div class="logo">Atlassian</div><div class="logo">Datadog</div><div class="logo">Twilio</div></div>
+</div>
+
+<section class="features">
+<div class="section-header reveal"><div class="tag">Platform</div><h2>Everything your team needs</h2><p>One platform. Zero context switching.</p></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2v16M2 10h16" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Pipeline Automation</h3><p>Auto-route leads to the right rep based on territory, company size, and engagement signals.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1.5" stroke="#2563EB" stroke-width="1.5"/><rect x="11" y="11" width="6" height="6" rx="1.5" stroke="#2563EB" stroke-width="1.5"/><path d="M9 6h2v5h-2" stroke="#2563EB" stroke-width="1.5"/></svg></div><h3>Smart Handoffs</h3><p>Seamlessly transfer context between sales, onboarding, and CS teams with zero information loss.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M3 15l4-5 3 3 7-9" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Revenue Intelligence</h3><p>Real-time dashboards showing pipeline health, forecast accuracy, and rep performance.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#2563EB" stroke-width="1.5"/><path d="M10 7v3l2 2" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Meeting Intelligence</h3><p>AI-powered call recording, transcription, and action item extraction from every meeting.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12v12H4z" stroke="#2563EB" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 8h12M8 8v8" stroke="#2563EB" stroke-width="1.5"/></svg></div><h3>Integration Hub</h3><p>Connect 200+ tools you already use. Bi-directional sync with Salesforce, HubSpot, and more.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10a5 5 0 0110 0" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="2" stroke="#2563EB" stroke-width="1.5"/></svg></div><h3>Security & Compliance</h3><p>SOC 2 Type II certified. GDPR compliant. SSO and SCIM provisioning out of the box.</p></div>
+</div>
+</section>
+
+<section class="proof">
+<div class="section-header reveal"><div class="tag">Customers</div><h2>Trusted by revenue leaders</h2></div>
+<div class="proof-grid">
+<div class="proof-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"Relay cut our sales cycle from 45 days to 18 days. The pipeline automation alone paid for itself in the first month."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">David Park</div><div class="role">VP Sales, CloudScale</div></div></div></div>
+<div class="proof-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"The handoff feature between our sales and CS teams eliminated 90% of our customer onboarding delays."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Rachel Kim</div><div class="role">CRO, DataBridge</div></div></div></div>
+<div class="proof-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"Finally, a platform that understands B2B complexity. Revenue intelligence gives us the visibility we never had."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Marcus Chen</div><div class="role">CEO, FinOps Pro</div></div></div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Ready to accelerate your revenue?</h2>
+<p>Join 500+ enterprise teams shipping faster with Relay.</p>
+<button class="btn-white">Start Your Free Trial &rarr;</button>
+</div>
+</section>
+
+<footer class="footer"><span>&copy; 2025 Relay, Inc. All rights reserved.</span><div><a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Security</a></div></footer>
+
+<script>
+const isPreview=(self!==top);
+// Mini chart
+const c=document.getElementById('miniChart');if(c){const ctx=c.getContext('2d');c.width=c.offsetWidth*2;c.height=c.offsetHeight*2;ctx.scale(2,2);const w=c.offsetWidth,h=c.offsetHeight;const pts=[20,35,28,45,40,55,48,62,58,52,65,72,68,78,85];ctx.beginPath();ctx.moveTo(0,h);for(let i=0;i<pts.length;i++){const x=(i/(pts.length-1))*w;const y=h-(pts[i]/100)*h;if(i===0)ctx.lineTo(x,y);else ctx.lineTo(x,y)}ctx.lineTo(w,h);ctx.closePath();const grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,'rgba(37,99,235,.15)');grad.addColorStop(1,'rgba(37,99,235,0)');ctx.fillStyle=grad;ctx.fill();ctx.beginPath();for(let i=0;i<pts.length;i++){const x=(i/(pts.length-1))*w;const y=h-(pts[i]/100)*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle='#2563EB';ctx.lineWidth=2;ctx.stroke()}
+// Reveals
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

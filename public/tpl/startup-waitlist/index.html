@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stealth | Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#030303;--surface:#0A0A0A;--border:#1A1A1A;--fg:#F5F5F5;--fg-muted:#666;--accent:#C4B5FD;--accent-dim:rgba(196,181,253,.08);--serif:'Instrument Serif',serif;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);min-height:100vh;overflow-x:hidden;position:relative}
+/* Grain */
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+/* Glow */
+.glow{position:fixed;top:30%;left:50%;width:500px;height:500px;background:radial-gradient(circle,rgba(196,181,253,.04) 0%,transparent 70%);transform:translate(-50%,-50%);pointer-events:none}
+.nav{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--serif);font-size:1.4rem;color:var(--accent)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--fg)}
+/* Main */
+.main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:100px 40px;text-align:center}
+.tag{font-size:.72rem;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:3px;margin-bottom:24px}
+.main h1{font-family:var(--serif);font-size:clamp(2.8rem,6vw,4.5rem);font-weight:400;line-height:1.1;margin-bottom:20px;letter-spacing:-.02em}
+.main h1 .italic{font-style:italic;color:var(--accent)}
+.main p{font-size:1rem;color:var(--fg-muted);line-height:1.8;margin-bottom:40px;max-width:420px;margin-left:auto;margin-right:auto}
+/* Waitlist form */
+.waitlist{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px}
+.waitlist-input{display:flex;gap:8px;width:100%;max-width:380px}
+.waitlist-input input{flex:1;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--fg);font-family:var(--sans);font-size:.88rem}
+.waitlist-input input:focus{outline:none;border-color:var(--accent)}
+.waitlist-input button{padding:14px 24px;background:var(--accent);color:#000;border:none;border-radius:10px;font-weight:700;font-family:var(--sans);cursor:pointer;white-space:nowrap;font-size:.88rem}
+.waitlist-count{font-size:.78rem;color:var(--fg-muted);display:flex;align-items:center;gap:8px}
+.waitlist-count .dot{width:6px;height:6px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* Progress */
+.progress-wrap{max-width:380px;margin:40px auto 0}
+.progress-label{display:flex;justify-content:space-between;font-size:.72rem;color:var(--fg-muted);margin-bottom:6px}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0;transition:width 2s ease}
+/* Features preview */
+.features{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:80px 40px}
+.features-header{text-align:center;margin-bottom:40px}
+.features-header h2{font-family:var(--serif);font-size:1.6rem;margin-bottom:8px}
+.features-header p{font-size:.88rem;color:var(--fg-muted)}
+.feat-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.feat-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .3s}
+.feat-item:hover{border-color:rgba(196,181,253,.3)}
+.feat-item .icon{font-size:1.2rem;margin-bottom:10px}
+.feat-item h3{font-size:.9rem;font-weight:600;margin-bottom:4px}
+.feat-item p{font-size:.78rem;color:var(--fg-muted);line-height:1.5}
+/* Bottom section */
+.bottom{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:60px 40px;text-align:center}
+.bottom h2{font-family:var(--serif);font-size:1.4rem;margin-bottom:12px}
+.bottom p{font-size:.85rem;color:var(--fg-muted);margin-bottom:20px}
+.social{display:flex;justify-content:center;gap:16px}
+.social a{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:border-color .2s;text-decoration:none}
+.social a:hover{border-color:var(--accent)}
+.social a svg{width:16px;height:16px}
+.footer{position:relative;z-index:1;text-align:center;padding:30px 40px;font-size:.72rem;color:#333}
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.feat-list{grid-template-columns:1fr}.waitlist-input{flex-direction:column}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<nav class="nav">
+<div class="nav-logo">Stealth</div>
+<div class="nav-links"><a href="#">About</a><a href="#">Updates</a><a href="#">Twitter</a></div>
+</nav>
+
+<section class="main">
+<div class="tag reveal">Coming Q2 2025</div>
+<h1 class="reveal">Something <span class="italic">extraordinary</span> is brewing</h1>
+<p class="reveal">We're building the next generation of creative tools. Be the first to know when we launch.</p>
+<div class="waitlist reveal">
+<div class="waitlist-input"><input type="email" placeholder="Enter your email"><button>Join Waitlist</button></div>
+<div class="waitlist-count"><div class="dot"></div>4,827 people already waiting</div>
+</div>
+<div class="progress-wrap reveal">
+<div class="progress-label"><span>Early access spots</span><span>4,827 / 5,000</span></div>
+<div class="progress-bar"><div class="progress-fill" id="progBar"></div></div>
+</div>
+</section>
+
+<section class="features">
+<div class="features-header reveal"><h2>What we're building</h2><p>A sneak peek at what's coming.</p></div>
+<div class="feat-list">
+<div class="feat-item reveal"><div class="icon">&#10024;</div><h3>AI-Powered Creation</h3><p>Generate, iterate, and refine your creative work with state-of-the-art AI.</p></div>
+<div class="feat-item reveal"><div class="icon">&#9889;</div><h3>Real-Time Collaboration</h3><p>Work together with your team in real-time. No more version conflicts.</p></div>
+<div class="feat-item reveal"><div class="icon">&#127912;</div><h3>Infinite Canvas</h3><p>An unlimited workspace for ideas. Zoom from pixel-level to bird's eye.</p></div>
+<div class="feat-item reveal"><div class="icon">&#128274;</div><h3>Privacy First</h3><p>Your work stays yours. End-to-end encryption. No data mining.</p></div>
+</div>
+</section>
+
+<section class="bottom reveal">
+<h2>Stay in the loop</h2>
+<p>Follow us for behind-the-scenes updates and early access announcements.</p>
+<div class="social">
+<a href="#"><svg viewBox="0 0 16 16" fill="none"><path d="M12.6 1H3.4A2.4 2.4 0 001 3.4v9.2A2.4 2.4 0 003.4 15h9.2a2.4 2.4 0 002.4-2.4V3.4A2.4 2.4 0 0012.6 1z" stroke="#C4B5FD" stroke-width="1"/></svg></a>
+<a href="#"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#C4B5FD" stroke-width="1"/></svg></a>
+<a href="#"><svg viewBox="0 0 16 16" fill="none"><path d="M2 14l12-12M14 2H7M14 2v7" stroke="#C4B5FD" stroke-width="1" stroke-linecap="round"/></svg></a>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Stealth Labs. Something big is coming.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Animate progress bar
+setTimeout(()=>{const bar=document.getElementById('progBar');if(bar)bar.style.width='96.5%'},300);
+// Reveals
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

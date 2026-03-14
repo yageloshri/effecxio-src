@@ -1,9 +1,11 @@
 'use client';
 import { memo, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function ScrollprogressPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const rafRef = useRef<number>(0);
   const progressRef = useRef(0);
   const dirRef = useRef(1);
@@ -11,6 +13,10 @@ function ScrollprogressPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const speed = 0.004; /* progress increment per frame (0 to 1) */
 
@@ -26,7 +32,7 @@ function ScrollprogressPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   const pct = Math.round(progress * 100);
 

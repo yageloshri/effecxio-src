@@ -1,9 +1,11 @@
 'use client';
 import { memo, useState, useEffect, useRef, useId } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function DistortimagePreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const [hovered, setHovered] = useState(false);
   const filterId = useId();
   const seedRef = useRef(1);
@@ -14,15 +16,23 @@ function DistortimagePreview() {
   /* Auto-toggle hover for preview animation */
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      clearInterval(autoTimerRef.current);
+      return;
+    }
     autoTimerRef.current = setInterval(() => {
       setHovered((p) => !p);
     }, 2000);
     return () => clearInterval(autoTimerRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   /* Animate seed when hovered */
   useEffect(() => {
     if (!hovered || prefersReduced) {
+      clearInterval(intervalRef.current);
+      return;
+    }
+    if (previewState !== 'active') {
       clearInterval(intervalRef.current);
       return;
     }
@@ -33,7 +43,7 @@ function DistortimagePreview() {
       }
     }, 100);
     return () => clearInterval(intervalRef.current);
-  }, [hovered, prefersReduced]);
+  }, [hovered, prefersReduced, previewState]);
 
   const cleanId = filterId.replace(/:/g, '_');
 

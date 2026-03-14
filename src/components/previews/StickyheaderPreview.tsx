@@ -1,9 +1,11 @@
 'use client';
 import { memo, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function StickyheaderPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
   const dirRef = useRef(1);
@@ -11,6 +13,10 @@ function StickyheaderPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const speed = 0.5;
     const maxOffset = 60; /* max simulated scroll distance */
     const threshold = 30; /* when header shrinks */
@@ -27,7 +33,7 @@ function StickyheaderPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

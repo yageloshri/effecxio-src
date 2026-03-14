@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reel | Motion & Video Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0F0F0F;--surface:#1A1A1A;--border:#2A2A2A;--fg:#F5F5F5;--fg-muted:#888;
+--red:#FF2D2D;--white:#FFF;
+--display:'Bebas Neue',sans-serif;--sans:'Work Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--red);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 50px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference}
+.nav-brand{font-family:var(--display);font-size:2rem;color:var(--white);text-decoration:none;letter-spacing:4px}
+.nav-links{display:flex;gap:30px}
+.nav-links a{color:var(--white);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s}
+.nav-links a:hover{opacity:.5}
+
+/* Hero */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1536240478700-b869070f9279?w=1600&h=900&fit=crop') center/cover;opacity:.25}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(rgba(15,15,15,.3),rgba(15,15,15,.8))}
+.hero-content{position:relative;text-align:center;z-index:1}
+.hero h1{font-family:var(--display);font-size:clamp(5rem,15vw,14rem);letter-spacing:8px;line-height:.85}
+.hero h1 .stroke{-webkit-text-stroke:2px var(--fg);color:transparent}
+.hero h1 .red{color:var(--red)}
+.hero-sub{font-size:.9rem;letter-spacing:6px;text-transform:uppercase;margin-top:30px;color:var(--fg-muted);font-weight:300}
+.play-btn{
+width:80px;height:80px;border-radius:50%;border:2px solid var(--white);
+display:flex;align-items:center;justify-content:center;margin:40px auto 0;
+cursor:pointer;transition:all .3s;background:transparent;
+}
+.play-btn:hover{background:var(--red);border-color:var(--red);transform:scale(1.1)}
+.play-btn svg{width:24px;height:24px;fill:var(--white);margin-right:-3px}
+
+/* Reel Strip */
+.reel-strip{overflow:hidden;padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.reel-track{display:flex;gap:20px;animation:scroll 25s linear infinite;width:max-content}
+.reel-item{width:300px;height:200px;overflow:hidden;flex-shrink:0;position:relative}
+.reel-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(50%);transition:filter .4s}
+.reel-item:hover img{filter:grayscale(0)}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* Work */
+.work{padding:120px 50px}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px}
+.section-header h2{font-family:var(--display);font-size:clamp(3rem,6vw,5.5rem);letter-spacing:4px}
+.section-header .count{font-size:.8rem;color:var(--fg-muted);letter-spacing:2px}
+
+.work-list{display:flex;flex-direction:column;gap:0}
+.work-row{
+display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;align-items:center;
+padding:40px 0;border-bottom:1px solid var(--border);transition:all .4s;
+}
+.work-row:hover{padding:40px 20px}
+.work-row .num{font-family:var(--display);font-size:3rem;color:var(--red);letter-spacing:2px}
+.work-row .title{font-family:var(--display);font-size:2.2rem;letter-spacing:3px;transition:color .3s}
+.work-row:hover .title{color:var(--red)}
+.work-row .meta{font-size:.75rem;color:var(--fg-muted);letter-spacing:2px;text-transform:uppercase;text-align:left}
+
+/* Services */
+.services{padding:120px 50px;background:var(--surface)}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;margin-top:60px}
+.service-card{padding:40px;border:1px solid var(--border);transition:all .4s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;inset:0;background:var(--red);transform:translateY(100%);transition:transform .5s cubic-bezier(.77,0,.175,1);z-index:0}
+.service-card:hover::before{transform:translateY(0)}
+.service-card:hover *{position:relative;z-index:1}
+.service-card .s-num{font-family:var(--display);font-size:4rem;opacity:.15;line-height:1;margin-bottom:16px;transition:opacity .4s}
+.service-card:hover .s-num{opacity:.4}
+.service-card h3{font-family:var(--display);font-size:1.8rem;letter-spacing:3px;margin-bottom:12px}
+.service-card p{font-size:.9rem;color:var(--fg-muted);line-height:1.7;font-weight:300;transition:color .4s}
+.service-card:hover p{color:rgba(255,255,255,.8)}
+
+/* Stats */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-item{padding:50px 30px;text-align:center;border-left:1px solid var(--border)}
+.stat-item:last-child{border-left:none}
+.stat-item .val{font-family:var(--display);font-size:3.5rem;letter-spacing:2px;color:var(--red)}
+.stat-item .label{font-size:.7rem;color:var(--fg-muted);letter-spacing:3px;text-transform:uppercase;margin-top:8px}
+
+/* Contact */
+.contact{padding:160px 50px;text-align:center}
+.contact h2{font-family:var(--display);font-size:clamp(3rem,10vw,9rem);letter-spacing:6px;line-height:.9}
+.contact h2 a{color:var(--fg);text-decoration:none;transition:color .3s;-webkit-text-stroke:2px var(--fg)}
+.contact h2 a:hover{color:var(--red);-webkit-text-stroke-color:var(--red)}
+.contact .sub{font-size:.8rem;color:var(--fg-muted);letter-spacing:4px;text-transform:uppercase;margin-top:30px}
+
+footer{padding:30px 50px;display:flex;justify-content:space-between;border-top:1px solid var(--border);font-size:.7rem;color:var(--fg-muted);letter-spacing:2px;text-transform:uppercase}
+footer a{color:var(--red);text-decoration:none}
+
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.work-row{grid-template-columns:auto 1fr auto}.services-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.work-row{grid-template-columns:1fr}.work-row .num,.work-row .meta{display:none}.stats-bar{grid-template-columns:1fr}.stat-item{border-left:none;border-top:1px solid var(--border)}.stat-item:first-child{border-top:none}footer{flex-direction:column;gap:10px;text-align:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">REEL</a>
+<div class="nav-links">
+<a href="#work">Work</a><a href="#services">Services</a><a href="#contact">Contact</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<h1><span class="stroke">WE</span> <span class="red">CREATE</span><br><span class="stroke">MOTION</span></h1>
+<div class="hero-sub">Film / Animation / Visual Effects</div>
+<div class="play-btn" title="Play Showreel">
+<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+</div>
+</div>
+</section>
+
+<div class="reel-strip">
+<div class="reel-track">
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1518676590747-1e3dcf5a04be?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1518676590747-1e3dcf5a04be?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+<div class="reel-item"><img src="https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400&h=260&fit=crop" alt="" loading="lazy"></div>
+</div>
+</div>
+
+<section class="work" id="work">
+<div class="section-header reveal">
+<h2>SELECTED WORK</h2>
+<span class="count">(06)</span>
+</div>
+<div class="work-list">
+<div class="work-row reveal"><span class="num">01</span><span class="title">NIKE AIR MAX</span><span class="meta">Brand Film / 2024</span></div>
+<div class="work-row reveal"><span class="num">02</span><span class="title">SPOTIFY WRAPPED</span><span class="meta">Motion Design / 2024</span></div>
+<div class="work-row reveal"><span class="num">03</span><span class="title">TESLA CYBER</span><span class="meta">VFX / 2023</span></div>
+<div class="work-row reveal"><span class="num">04</span><span class="title">APPLE VISION</span><span class="meta">3D Animation / 2023</span></div>
+<div class="work-row reveal"><span class="num">05</span><span class="title">ADIDAS ORIGINALS</span><span class="meta">Campaign Film / 2023</span></div>
+<div class="work-row reveal"><span class="num">06</span><span class="title">MERCEDES EQ</span><span class="meta">Product Launch / 2024</span></div>
+</div>
+</section>
+
+<section class="services" id="services">
+<div class="section-header reveal">
+<h2>SERVICES</h2>
+<span class="count">(04)</span>
+</div>
+<div class="services-grid">
+<div class="service-card reveal"><div class="s-num">01</div><h3>BRAND FILMS</h3><p>Cinematic storytelling that captures your brand's essence. From concept to final cut, we craft films that resonate and inspire action.</p></div>
+<div class="service-card reveal"><div class="s-num">02</div><h3>MOTION DESIGN</h3><p>Dynamic graphics and animations for digital platforms. Title sequences, UI animations, social content, and everything in between.</p></div>
+<div class="service-card reveal"><div class="s-num">03</div><h3>VISUAL EFFECTS</h3><p>Photorealistic VFX that blend seamlessly. Compositing, CGI, environment creation, and particle simulations.</p></div>
+<div class="service-card reveal"><div class="s-num">04</div><h3>3D & ANIMATION</h3><p>Full 3D production pipeline. Character animation, product visualization, architectural renders, and interactive experiences.</p></div>
+</div>
+</section>
+
+<div class="stats-bar">
+<div class="stat-item reveal"><div class="val" data-target="200">0</div><div class="label">Projects Completed</div></div>
+<div class="stat-item reveal"><div class="val" data-target="12">0</div><div class="label">Awards Won</div></div>
+<div class="stat-item reveal"><div class="val" data-target="40">0</div><div class="label">Team Members</div></div>
+<div class="stat-item reveal"><div class="val" data-target="8">0</div><div class="label">Years Running</div></div>
+</div>
+
+<section class="contact" id="contact">
+<h2 class="reveal"><a href="mailto:hello@reel.studio">LET'S<br>CREATE</a></h2>
+<div class="sub reveal">hello@reel.studio</div>
+</section>
+
+<footer>
+<span>&copy; 2025 REEL Studio</span>
+<span>TLV / LA / London</span>
+<span><a href="#">Vimeo</a> &mdash; <a href="#">Instagram</a> &mdash; <a href="#">LinkedIn</a></span>
+</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.12});
+reveals.forEach(r=>obs.observe(r));
+document.querySelectorAll('[data-target]').forEach(el=>{
+  const cObs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){const t=parseInt(el.dataset.target);let c=0;const s=Math.max(1,Math.floor(t/40));
+  const i=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(i)}el.textContent=c},40);cObs.unobserve(el)}})},{threshold:.5});cObs.observe(el);
+});
+</script>
+</body>
+</html>

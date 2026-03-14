@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 interface CounterConfig {
   target: number;
@@ -27,6 +28,7 @@ function formatNumber(n: number, format: boolean): string {
 
 const CountupPreview = memo(function CountupPreview() {
   const shouldReduceMotion = useReducedMotion();
+  const previewState = usePreviewState();
   const [values, setValues] = useState<number[]>(() =>
     shouldReduceMotion ? counters.map((c) => c.target) : counters.map(() => 0)
   );
@@ -37,6 +39,11 @@ const CountupPreview = memo(function CountupPreview() {
 
   useEffect(() => {
     if (shouldReduceMotion) return;
+
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -73,7 +80,7 @@ const CountupPreview = memo(function CountupPreview() {
     return () => {
       cancelAnimationFrame(rafRef.current);
     };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, previewState]);
 
   return (
     <div

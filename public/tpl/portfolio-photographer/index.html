@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens | Photography Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#111;--surface:#1A1A1A;--border:#2A2A2A;--fg:#F5F5F5;--fg-muted:#888;--sans:'Raleway',sans-serif;--serif:'Playfair Display',serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 40px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference}
+.nav-logo{font-family:var(--serif);font-size:1.3rem;font-weight:600;letter-spacing:2px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.78rem;color:#fff;text-decoration:none;font-weight:500;letter-spacing:1px;text-transform:uppercase;opacity:.6}.nav-links a:hover{opacity:1}
+/* Hero — fullscreen image */
+.hero{height:100vh;position:relative;overflow:hidden}
+.hero img{width:100%;height:100%;object-fit:cover;filter:brightness(.7)}
+.hero-text{position:absolute;bottom:80px;right:40px;max-width:500px}
+.hero-text h1{font-family:var(--serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:400;line-height:1.15;margin-bottom:12px}
+.hero-text h1 em{font-style:italic}
+.hero-text p{font-size:.88rem;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300}
+/* Gallery */
+.gallery{max-width:1200px;margin:0 auto;padding:80px 40px}
+.gal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+.gal-header h2{font-family:var(--serif);font-size:1.5rem;font-weight:500}
+.gal-tabs{display:flex;gap:16px}
+.gal-tabs button{background:none;border:none;color:var(--fg-muted);font-family:var(--sans);font-size:.82rem;cursor:pointer;font-weight:500;padding:4px 0;border-bottom:2px solid transparent;transition:all .2s}
+.gal-tabs button.active{color:var(--fg);border-color:var(--fg)}
+.masonry{columns:3;column-gap:14px}
+.masonry .photo{break-inside:avoid;margin-bottom:14px;border-radius:6px;overflow:hidden;cursor:pointer;position:relative}
+.masonry .photo img{width:100%;display:block;transition:transform .5s}
+.masonry .photo:hover img{transform:scale(1.03)}
+/* About */
+.about{max-width:1200px;margin:0 auto;padding:80px 40px;display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start}
+.about img{width:100%;border-radius:12px;object-fit:cover;aspect-ratio:3/4}
+.about-text h2{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:16px}
+.about-text p{font-size:.9rem;color:var(--fg-muted);line-height:1.8;margin-bottom:16px;font-weight:300}
+.about-text .exp{display:flex;gap:40px;margin-top:24px}
+.about-text .exp .item .num{font-family:var(--serif);font-size:2rem;font-weight:600}
+.about-text .exp .item .label{font-size:.72rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px}
+/* Contact */
+.contact{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.contact h2{font-family:var(--serif);font-size:1.8rem;margin-bottom:12px}
+.contact p{color:var(--fg-muted);margin-bottom:24px;font-weight:300}
+.contact-btn{display:inline-block;padding:14px 36px;border:1px solid var(--fg);color:var(--fg);text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:1px;transition:all .2s}
+.contact-btn:hover{background:var(--fg);color:var(--bg)}
+.footer{text-align:center;padding:30px 40px;font-size:.72rem;color:#444;border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.masonry{columns:2}.about{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">LENS</div><div class="nav-links"><a href="#">Portfolio</a><a href="#">About</a><a href="#">Contact</a></div></nav>
+
+<section class="hero">
+<img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&h=900&fit=crop" alt="" loading="lazy">
+<div class="hero-text">
+<h1>Capturing <em>moments</em> that matter</h1>
+<p>Documentary and fine art photographer based in Tel Aviv, specializing in landscape, travel, and editorial photography.</p>
+</div>
+</section>
+
+<section class="gallery">
+<div class="gal-header reveal">
+<h2>Portfolio</h2>
+<div class="gal-tabs"><button class="active">All</button><button>Landscape</button><button>Portrait</button><button>Travel</button></div>
+</div>
+<div class="masonry">
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=550&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&h=300&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&h=500&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=350&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1518098268026-4e89f1a2cd8e?w=400&h=600&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1533050487297-09b450131914?w=400&h=400&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1500534314263-a834e2e54cff?w=400&h=500&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=350&fit=crop" alt="" loading="lazy"></div>
+<div class="photo reveal"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=450&fit=crop" alt="" loading="lazy"></div>
+</div>
+</section>
+
+<section class="about">
+<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop&crop=face" alt="" loading="lazy" class="reveal">
+<div class="about-text reveal">
+<h2>About Me</h2>
+<p>I'm a self-taught photographer with over a decade of experience shooting across 40+ countries. My work has been featured in National Geographic, Condé Nast Traveler, and The Guardian.</p>
+<p>I believe photography is about patience and presence. My process is slow, intentional, and deeply connected to the places and people I photograph.</p>
+<div class="exp">
+<div class="item"><div class="num">12</div><div class="label">Years</div></div>
+<div class="item"><div class="num">40+</div><div class="label">Countries</div></div>
+<div class="item"><div class="num">8</div><div class="label">Awards</div></div>
+</div>
+</div>
+</section>
+
+<section class="contact reveal">
+<h2>Let's work together</h2>
+<p>Available for editorial, commercial, and fine art commissions.</p>
+<a class="contact-btn" href="#">Get In Touch</a>
+</section>
+
+<footer class="footer">&copy; 2025 Lens Photography. All images &copy; the photographer.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+// Tab switching (visual only)
+document.querySelectorAll('.gal-tabs button').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.gal-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active')})});
+</script>
+</body>
+</html>

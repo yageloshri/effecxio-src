@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 interface Particle {
   x: number;
@@ -16,6 +17,7 @@ const SPEED = 0.3;
 
 const ParticlesbgPreview = memo(function ParticlesbgPreview() {
   const shouldReduceMotion = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
@@ -59,6 +61,13 @@ const ParticlesbgPreview = memo(function ParticlesbgPreview() {
     const computedStyle = getComputedStyle(el);
     const accentColor = computedStyle.getPropertyValue('--accent').trim() || '#c8f53b';
     const accent3Color = computedStyle.getPropertyValue('--accent3').trim() || '#44aaff';
+
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return () => {
+        canvas.remove();
+      };
+    }
 
     const animate = () => {
       const width = w();
@@ -119,7 +128,7 @@ const ParticlesbgPreview = memo(function ParticlesbgPreview() {
       observer.disconnect();
       canvas.remove();
     };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, previewState]);
 
   if (shouldReduceMotion) {
     return (

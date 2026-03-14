@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consensus | DAO Governance</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#08080C;--surface:#0F0F16;--surface2:#16162A;--border:#1F1F3A;
+--fg:#E8E8F0;--fg-muted:#6868A0;
+--indigo:#6366F1;--indigo-dim:rgba(99,102,241,.08);--cyan:#22D3EE;
+--sans:'Space Grotesk',sans-serif;--mono:'Fira Code',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--indigo);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,12,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.1rem;font-weight:700;color:var(--indigo);text-decoration:none;letter-spacing:-.3px}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500}
+.nav-links a:hover{color:var(--indigo)}
+.nav-cta{background:var(--indigo);color:#fff;padding:9px 20px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:900px;margin:0 auto;padding:160px 40px 60px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,5.5vw,3.8rem);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.02em}
+.hero h1 .accent{color:var(--indigo)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:480px;margin:0 auto 32px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-i{background:var(--indigo);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+.btn-g{border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+/* Live proposals */
+.proposals{max-width:800px;margin:40px auto;padding:0 40px}
+.prop-frame{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.prop-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.prop-header h3{font-size:.85rem;font-weight:600}
+.prop-header .live{font-size:.7rem;color:var(--cyan);font-weight:600;display:flex;align-items:center;gap:6px}
+.prop-header .live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse-dot 1.5s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+.prop-list{padding:0}
+.prop-item{padding:16px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;transition:background .2s}
+.prop-item:last-child{border:none}
+.prop-item:hover{background:var(--surface2)}
+.prop-item .pi-info .pi-id{font-family:var(--mono);font-size:.7rem;color:var(--fg-muted);margin-bottom:4px}
+.prop-item .pi-info .pi-title{font-size:.9rem;font-weight:600}
+.prop-item .pi-info .pi-meta{font-size:.72rem;color:var(--fg-muted);margin-top:4px}
+.prop-item .pi-vote{text-align:left}
+.prop-item .pi-vote .vote-bar{width:120px;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.prop-item .pi-vote .vote-bar-fill{height:100%;border-radius:3px}
+.prop-item .pi-vote .vote-pct{font-size:.7rem;font-family:var(--mono)}
+
+/* Stats */
+.stats{max-width:800px;margin:40px auto;padding:0 40px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.stat-card .stat-num{font-size:1.6rem;font-weight:700;color:var(--indigo);margin-bottom:2px}
+.stat-card .stat-label{font-size:.72rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px}
+
+/* Features */
+.features{max-width:900px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-size:.75rem;color:var(--indigo);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .3s}
+.feat-card:hover{border-color:var(--indigo);transform:translateY(-3px)}
+.feat-card h3{font-size:.9rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.8rem;color:var(--fg-muted);line-height:1.6}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--indigo),#4F46E5);border-radius:16px;padding:50px;color:#fff}
+.cta-box h2{font-size:2rem;font-weight:700;margin-bottom:10px}
+.cta-box p{opacity:.85;margin-bottom:24px}
+.cta-box a{display:inline-block;background:#fff;color:var(--indigo);padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:30px 40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.feat-grid{grid-template-columns:1fr 1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid,.stats-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Consensus</a>
+<div class="nav-links"><a href="#governance">Governance</a><a href="#features">Features</a><a href="#" class="nav-cta">Launch App</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Decentralized<br><span class="accent">Governance</span></h1>
+<p class="reveal">A DAO framework for transparent decision-making. Propose, vote, and execute — all on-chain.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-i">Launch App &rarr;</a><a href="#features" class="btn-g">Read Docs</a></div>
+</section>
+
+<div class="proposals reveal" id="governance">
+<div class="prop-frame">
+<div class="prop-header"><h3>Active Proposals</h3><div class="live">Live Voting</div></div>
+<div class="prop-list">
+<div class="prop-item"><div class="pi-info"><div class="pi-id">CGP-042</div><div class="pi-title">Increase Treasury Allocation for Grants</div><div class="pi-meta">Proposed by 0x7a3...f2d &bull; 2 days left</div></div><div class="pi-vote"><div class="vote-bar"><div class="vote-bar-fill" style="width:78%;background:var(--cyan)"></div></div><div class="vote-pct" style="color:var(--cyan)">78% For</div></div></div>
+<div class="prop-item"><div class="pi-info"><div class="pi-id">CGP-041</div><div class="pi-title">Add Polygon zkEVM Support</div><div class="pi-meta">Proposed by 0x3b1...a8c &bull; 5 days left</div></div><div class="pi-vote"><div class="vote-bar"><div class="vote-bar-fill" style="width:62%;background:var(--indigo)"></div></div><div class="vote-pct" style="color:var(--indigo)">62% For</div></div></div>
+<div class="prop-item"><div class="pi-info"><div class="pi-id">CGP-040</div><div class="pi-title">Reduce Quorum Threshold to 10%</div><div class="pi-meta">Proposed by 0xf92...c17 &bull; 1 day left</div></div><div class="pi-vote"><div class="vote-bar"><div class="vote-bar-fill" style="width:45%;background:var(--fg-muted)"></div></div><div class="vote-pct">45% For</div></div></div>
+</div>
+</div>
+</div>
+
+<div class="stats reveal">
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-num" data-target="12400">0</div><div class="stat-label">Token Holders</div></div>
+<div class="stat-card"><div class="stat-num" data-target="42">0</div><div class="stat-label">Proposals</div></div>
+<div class="stat-card"><div class="stat-num" data-target="89">0</div><div class="stat-label">% Participation</div></div>
+<div class="stat-card"><div class="stat-num">$4.2M</div><div class="stat-label">Treasury</div></div>
+</div>
+</div>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Governance Infrastructure</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><h3>On-Chain Voting</h3><p>Every vote is recorded on-chain. Fully transparent, tamper-proof, and verifiable.</p></div>
+<div class="feat-card reveal"><h3>Delegation</h3><p>Delegate your voting power to trusted community members without giving up your tokens.</p></div>
+<div class="feat-card reveal"><h3>Timelock Execution</h3><p>Passed proposals execute after a 48h timelock, giving the community time to review.</p></div>
+<div class="feat-card reveal"><h3>Multi-Sig Treasury</h3><p>Treasury controlled by 5/9 multi-sig with on-chain spending transparency.</p></div>
+<div class="feat-card reveal"><h3>Snapshot Integration</h3><p>Gasless off-chain polling for temperature checks before on-chain votes.</p></div>
+<div class="feat-card reveal"><h3>Custom Quorum</h3><p>Set flexible quorum requirements per proposal type. Emergency vs standard governance.</p></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Join the DAO</h2>
+<p>Hold CONS tokens to propose and vote. Shape the future of the protocol.</p>
+<a href="#">Launch App &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Consensus DAO. Governed by the community.</footer>
+
+<script>
+const isPreview=(self!==top);
+const counters=document.querySelectorAll('[data-target]');
+const cObs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){const t=+r.target.dataset.target;let c=0;const inc=t/50;const timer=setInterval(()=>{c+=inc;if(c>=t){r.target.textContent=t.toLocaleString();clearInterval(timer)}else{r.target.textContent=Math.ceil(c).toLocaleString()}},25);cObs.unobserve(r.target)}})},{threshold:.5});
+counters.forEach(c=>cObs.observe(c));
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

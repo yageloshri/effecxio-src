@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MasterClass Pro | Online Courses</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A0F;--surface:#121218;--border:#1E1E2A;--fg:#F0F0F5;--fg-muted:#6E6E82;--violet:#A78BFA;--violet-dim:rgba(167,139,250,.08);--sans:'Space Grotesk',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:700;font-size:1.1rem}.nav-logo span{color:var(--violet)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--violet);color:#fff;padding:9px 18px;border-radius:8px;font-size:.82rem;font-weight:600;text-decoration:none}
+.hero{max-width:1100px;margin:0 auto;padding:80px 40px 40px;text-align:center}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}
+.hero h1 span{color:var(--violet)}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:500px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-v{padding:14px 28px;background:var(--violet);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer}
+.btn-g{padding:14px 28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.92rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+.courses{max-width:1100px;margin:0 auto;padding:60px 40px}
+.crs-header{text-align:center;margin-bottom:40px}
+.crs-header h2{font-size:1.4rem;font-weight:700}
+.crs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.crs-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s}
+.crs-card:hover{border-color:var(--violet)}
+.crs-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.crs-card .info{padding:16px}
+.crs-card .info .cat{font-size:.65rem;color:var(--violet);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.crs-card .info h3{font-size:.92rem;font-weight:700;margin-bottom:4px}
+.crs-card .info .meta{font-size:.72rem;color:var(--fg-muted);margin-bottom:10px}
+.crs-card .info .bottom{display:flex;justify-content:space-between;align-items:center}
+.crs-card .info .price{font-weight:700;font-size:.95rem}
+.crs-card .info .rating{font-size:.72rem;color:var(--violet)}
+.stats{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat{text-align:center;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.stat .num{font-size:1.8rem;font-weight:700;color:var(--violet)}
+.stat .label{font-size:.72rem;color:var(--fg-muted);margin-top:4px}
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:44px}
+.cta-box h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.crs-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">Master<span>Class</span></div><div class="nav-links"><a href="#">Courses</a><a href="#">Instructors</a><a href="#">Pricing</a><a href="#">For Teams</a></div><a class="nav-btn" href="#">Start Learning</a></nav>
+<section class="hero reveal"><h1>Learn from the <span>best minds</span> in tech</h1><p>Expert-led courses in development, design, data science, and AI. Hands-on projects. Real-world skills.</p><div class="hero-btns"><button class="btn-v">Browse Courses</button><button class="btn-g">View Plans</button></div></section>
+<section class="courses"><div class="crs-header reveal"><h2>Popular courses</h2></div><div class="crs-grid">
+<div class="crs-card reveal"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=225&fit=crop" alt="" loading="lazy"><div class="info"><div class="cat">Development</div><h3>Full-Stack Next.js Masterclass</h3><div class="meta">Sarah Chen &bull; 42 lessons &bull; 8h</div><div class="bottom"><span class="price">$89</span><span class="rating">&#9733; 4.9 (1.2k)</span></div></div></div>
+<div class="crs-card reveal"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop" alt="" loading="lazy"><div class="info"><div class="cat">Data Science</div><h3>Python for Data Analysis</h3><div class="meta">Dr. Alex Kim &bull; 56 lessons &bull; 12h</div><div class="bottom"><span class="price">$79</span><span class="rating">&#9733; 4.8 (890)</span></div></div></div>
+<div class="crs-card reveal"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=400&h=225&fit=crop" alt="" loading="lazy"><div class="info"><div class="cat">Design</div><h3>Advanced UI Design with Figma</h3><div class="meta">Maya Patel &bull; 38 lessons &bull; 6h</div><div class="bottom"><span class="price">$69</span><span class="rating">&#9733; 4.9 (650)</span></div></div></div>
+</div></section>
+<div class="stats reveal"><div class="stat"><div class="num">500K+</div><div class="label">Students</div></div><div class="stat"><div class="num">200+</div><div class="label">Courses</div></div><div class="stat"><div class="num">50+</div><div class="label">Instructors</div></div><div class="stat"><div class="num">4.8</div><div class="label">Avg. Rating</div></div></div>
+<section class="cta"><div class="cta-box reveal"><h2>Start learning today</h2><p>Get unlimited access to all courses for $19/month.</p><button class="btn-v">Get Unlimited Access &rarr;</button></div></section>
+<footer class="footer">&copy; 2025 MasterClass Pro.</footer>
+<script>const isPreview=(self!==top);const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));</script>
+</body>
+</html>

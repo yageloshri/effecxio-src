@@ -26,7 +26,7 @@ export default function Footer() {
               color: 'var(--accent)',
             }}
           >
-            effects.lab
+            Effecxio
           </span>
         </div>
 

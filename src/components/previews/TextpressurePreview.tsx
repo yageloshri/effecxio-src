@@ -2,12 +2,14 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const TEXT = 'PRESSURE';
 const MAX_DIST = 120;
 
 function TextpressurePreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const spanRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const rafRef = useRef<number | null>(null);
@@ -17,7 +19,7 @@ function TextpressurePreview() {
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (prefersReduced) return;
+      if (prefersReduced || previewState !== 'active') return;
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         const newWeights = spanRefs.current.map((span) => {
@@ -32,10 +34,15 @@ function TextpressurePreview() {
         setWeights(newWeights);
       });
     },
-    [prefersReduced]
+    [prefersReduced, previewState]
   );
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
     const el = containerRef.current;
     if (!el) return;
     el.addEventListener('mousemove', handleMouseMove);
@@ -43,7 +50,7 @@ function TextpressurePreview() {
       el.removeEventListener('mousemove', handleMouseMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, previewState]);
 
   return (
     <div

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Meridian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0B1120;--surface:#131B2E;--border:#1E2A42;--accent:#7B61FF;--cyan:#00D4AA;--text:#E8ECF4;--muted:#5A6B8A;--glass:rgba(19,27,46,0.7)}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);direction:rtl;line-height:1.6;overflow-x:hidden;cursor:default}
+a{color:var(--accent);text-decoration:none}
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+
+/* CANVAS */
+#neural-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.4}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--glass);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all .3s}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--text)}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--cyan));border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:18px;height:18px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--muted);font-size:14px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.btn-primary{background:var(--accent);color:#fff;padding:10px 24px;border-radius:10px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(123,97,255,0.35)}
+.btn-secondary{background:var(--surface);color:var(--text);padding:10px 24px;border-radius:10px;font-weight:600;font-size:14px;border:1px solid var(--border);cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn-secondary:hover{border-color:var(--accent)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0;transition:all .3s}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;top:64px;right:0;left:0;background:var(--surface);border-bottom:1px solid var(--border);padding:20px 24px;z-index:99;flex-direction:column;gap:16px}
+.mobile-menu.active{display:flex}
+.mobile-menu a{color:var(--text);font-size:16px;padding:8px 0}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:120px 0 80px;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-badge{display:inline-block;background:rgba(123,97,255,0.1);color:var(--accent);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;border:1px solid rgba(123,97,255,0.2);margin-bottom:20px}
+.hero h1{font-size:clamp(36px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:20px;letter-spacing:-1px}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:18px;color:var(--muted);margin-bottom:32px;max-width:480px;line-height:1.7}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+
+/* DASHBOARD MOCKUP */
+.dashboard-mock{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden}
+.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.dash-dots{display:flex;gap:6px}
+.dash-dots span{width:10px;height:10px;border-radius:50%}
+.dash-dots span:nth-child(1){background:#FF5F57}
+.dash-dots span:nth-child(2){background:#FEBC2E}
+.dash-dots span:nth-child(3){background:#28C840}
+.dash-title{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.dash-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+.dash-stat{background:rgba(123,97,255,0.06);border:1px solid rgba(123,97,255,0.12);border-radius:10px;padding:14px}
+.dash-stat-label{font-size:11px;color:var(--muted);margin-bottom:4px}
+.dash-stat-value{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.dash-stat-value.green{color:var(--cyan)}
+.dash-stat-value.purple{color:var(--accent)}
+.dash-chart{display:flex;align-items:flex-end;gap:6px;height:80px;padding-top:8px}
+.dash-bar{flex:1;border-radius:4px 4px 0 0;transition:height 1s cubic-bezier(.4,0,.2,1);height:0}
+
+/* METRICS */
+.metrics{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 0;position:relative;z-index:1}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.metric-value{font-size:clamp(32px,4vw,48px);font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--text);margin-bottom:4px}
+.metric-value .suffix{font-size:0.6em;color:var(--accent)}
+.metric-label{font-size:14px;color:var(--muted)}
+
+/* BENTO GRID */
+.bento{padding:100px 0;position:relative;z-index:1}
+.section-header{text-align:center;margin-bottom:56px}
+.section-header h2{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:12px}
+.section-header p{color:var(--muted);font-size:17px}
+.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:16px}
+.bento-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.bento-card:hover{border-color:rgba(123,97,255,0.4);box-shadow:0 8px 40px rgba(123,97,255,0.1)}
+.bento-card.large{grid-column:span 2}
+.bento-icon{width:44px;height:44px;background:rgba(123,97,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.bento-icon svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bento-card h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.bento-card p{color:var(--muted);font-size:14px;line-height:1.7}
+.bento-card .bento-img{width:100%;height:160px;border-radius:10px;object-fit:cover;margin-top:16px;opacity:0.8}
+
+/* TERMINAL */
+.terminal-section{padding:100px 0;position:relative;z-index:1}
+.terminal-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start}
+.terminal-info h2{font-size:clamp(28px,4vw,38px);font-weight:700;margin-bottom:16px}
+.terminal-info p{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:24px}
+.terminal-feat{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:14px;color:var(--text)}
+.terminal-feat-icon{width:24px;height:24px;background:rgba(0,212,170,0.1);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.terminal-feat-icon svg{width:14px;height:14px;stroke:var(--cyan);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.terminal-window{background:#0D0D0D;border:1px solid #2A2A2A;border-radius:12px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:13px}
+.terminal-header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#1A1A1A;border-bottom:1px solid #2A2A2A}
+.terminal-header span:nth-child(1){width:12px;height:12px;border-radius:50%;background:#FF5F57}
+.terminal-header span:nth-child(2){width:12px;height:12px;border-radius:50%;background:#FEBC2E}
+.terminal-header span:nth-child(3){width:12px;height:12px;border-radius:50%;background:#28C840}
+.terminal-header-title{margin-right:auto;color:#666;font-size:12px}
+.terminal-body{padding:16px;min-height:220px}
+.terminal-line{opacity:0;transform:translateY(8px);transition:all .4s ease}
+.terminal-line.visible{opacity:1;transform:translateY(0)}
+.terminal-line+.terminal-line{margin-top:6px}
+.prompt{color:var(--cyan)}
+.cmd{color:#ccc}
+.comment{color:#555}
+.accent-txt{color:var(--accent)}
+.success{color:var(--cyan)}
+.terminal-cursor{display:inline-block;width:8px;height:16px;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:text-bottom}
+@keyframes blink{50%{opacity:0}}
+
+/* MARQUEE */
+.marquee-section{padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative;z-index:1}
+.marquee-label{text-align:center;font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.marquee-track{display:flex;gap:48px;animation:marquee 40s linear infinite;width:max-content}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-logo{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;font-weight:500;white-space:nowrap}
+.marquee-logo svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* PRICING */
+.pricing{padding:100px 0;position:relative;z-index:1}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;position:relative;transition:all .3s}
+.price-card:hover{transform:translateY(-4px)}
+.price-card.popular{border-color:var(--accent);background:linear-gradient(180deg,rgba(123,97,255,0.08),var(--surface))}
+.popular-badge{position:absolute;top:-12px;right:50%;transform:translateX(50%);background:var(--accent);color:#fff;padding:4px 16px;border-radius:100px;font-size:12px;font-weight:600}
+.price-name{font-size:20px;font-weight:700;margin-bottom:4px;margin-top:8px}
+.price-desc{font-size:13px;color:var(--muted);margin-bottom:20px}
+.price-amount{font-size:48px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+.currency{font-size:24px;color:var(--muted)}
+.price-period{font-size:13px;color:var(--muted);margin-bottom:24px}
+.price-features{list-style:none;text-align:right;margin-bottom:28px}
+.price-features li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);padding:8px 0;border-bottom:1px solid rgba(30,42,66,0.5)}
+.price-features svg{width:16px;height:16px;stroke:var(--cyan);fill:none;stroke-width:2.5;stroke-linecap:round;flex-shrink:0}
+.price-btn{width:100%;padding:12px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;border:none;transition:all .25s}
+.price-btn-fill{background:var(--accent);color:#fff}
+.price-btn-fill:hover{box-shadow:0 6px 24px rgba(123,97,255,0.4)}
+.price-btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-btn-outline:hover{border-color:var(--accent)}
+
+/* CTA */
+.cta-section{padding:100px 0;position:relative;z-index:1;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(123,97,255,0.08),rgba(0,212,170,0.05));border-radius:24px}
+.cta-orbs{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15}
+.cta-orb-1{width:400px;height:400px;background:var(--accent);top:-100px;right:-100px}
+.cta-orb-2{width:300px;height:300px;background:var(--cyan);bottom:-80px;left:-80px}
+.cta-content{position:relative;text-align:center;max-width:640px;margin:0 auto}
+.cta-content h2{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:16px}
+.cta-content p{color:var(--muted);font-size:17px;margin-bottom:32px;line-height:1.7}
+
+/* FOOTER */
+.footer{padding:64px 0 32px;border-top:1px solid var(--border);position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand p{color:var(--muted);font-size:14px;line-height:1.7;margin-top:12px;max-width:280px}
+.footer-social{display:flex;gap:12px;margin-top:16px}
+.footer-social a{width:36px;height:36px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.footer-social a:hover{border-color:var(--accent);background:rgba(123,97,255,0.08)}
+.footer-social svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.5}
+.footer-col h4{font-size:14px;font-weight:600;margin-bottom:16px;color:var(--text)}
+.footer-col a{display:block;color:var(--muted);font-size:13px;padding:4px 0;transition:color .2s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .dashboard-mock{max-width:500px}
+  .bento-grid{grid-template-columns:1fr 1fr}
+  .bento-card.large{grid-column:span 2}
+  .terminal-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .hero-grid{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+  .bento-grid{grid-template-columns:1fr}
+  .bento-card.large{grid-column:span 1}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<canvas id="neural-canvas"></canvas>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      Meridian
+    </div>
+    <div class="nav-links">
+      <a href="#features">יכולות</a>
+      <a href="#terminal">הדגמה</a>
+      <a href="#pricing">תמחור</a>
+      <button class="btn-primary" style="padding:8px 20px;font-size:13px">התחל בחינם</button>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('active')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features">יכולות</a>
+  <a href="#terminal">הדגמה</a>
+  <a href="#pricing">תמחור</a>
+  <a href="#contact">צור קשר</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">גרסה 3.0 זמינה עכשיו</div>
+        <h1>ניהול חכם.<br><span class="gradient">תוצאות מדידות.</span></h1>
+        <p class="hero-sub">הפלטפורמה שמרכזת את כל הנתונים שלכם למקום אחד, עם אנליטיקס מבוסס AI ותובנות בזמן אמת.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary">
+            התחל תקופת ניסיון
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn-secondary">צפה בהדגמה</button>
+        </div>
+      </div>
+      <div class="dashboard-mock">
+        <div class="dash-header">
+          <div class="dash-dots"><span></span><span></span><span></span></div>
+          <div class="dash-title">dashboard.meridian.io</div>
+        </div>
+        <div class="dash-stats">
+          <div class="dash-stat"><div class="dash-stat-label">משתמשים פעילים</div><div class="dash-stat-value purple">12,847</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">זמן פעילות</div><div class="dash-stat-value green">99.9%</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">בקשות / שנ׳</div><div class="dash-stat-value purple">2.4K</div></div>
+          <div class="dash-stat"><div class="dash-stat-label">חיסכון חודשי</div><div class="dash-stat-value green">34%</div></div>
+        </div>
+        <div class="dash-chart" id="dashChart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics" id="metrics">
+  <div class="container">
+    <div class="metrics-grid">
+      <div><div class="metric-value"><span class="counter" data-count="50000">0</span><span class="suffix">+</span></div><div class="metric-label">משתמשים פעילים</div></div>
+      <div><div class="metric-value"><span class="counter counter-decimal" data-count="99.9">0</span><span class="suffix">%</span></div><div class="metric-label">זמן פעילות</div></div>
+      <div><div class="metric-value"><span class="counter" data-count="2">0</span><span class="suffix">TB+</span></div><div class="metric-label">נתונים מעובדים</div></div>
+      <div><div class="metric-value"><span class="counter" data-count="150">0</span><span class="suffix">+</span></div><div class="metric-label">אינטגרציות</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO FEATURES -->
+<section class="bento" id="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>כל מה שצריך. במקום אחד.</h2>
+      <p>כלים חכמים שעובדים יחד כדי לתת לכם תמונה מלאה</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card large">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M21 12V7H3v10h9"/><path d="M3 7l9 6 9-6"/><circle cx="18" cy="18" r="3"/><path d="M18 15v3h3"/></svg></div>
+        <h3>אנליטיקס בזמן אמת</h3>
+        <p>עקבו אחרי כל המטריקות שלכם בזמן אמת עם דשבורדים מותאמים אישית ואלרטים חכמים מבוססי AI.</p>
+        <img class="bento-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" alt="Analytics dashboard" loading="lazy">
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>אבטחה מתקדמת</h3>
+        <p>הצפנה מקצה לקצה, SSO, ו-audit logs מפורטים. עומד בתקני SOC2 ו-GDPR.</p>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>ביצועים מהירים</h3>
+        <p>תגובה ממוצעת של 42ms. תשתית edge עם 12 נקודות נוכחות ברחבי העולם.</p>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+        <h3>התאמה מלאה</h3>
+        <p>הגדירו workflows, התראות ודשבורדים בדיוק כמו שאתם צריכים.</p>
+      </div>
+      <div class="bento-card large">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg></div>
+        <h3>ענן חכם</h3>
+        <p>סנכרון אוטומטי לענן עם גיבוי בזמן אמת. ניהול גרסאות מתקדם ושחזור בלחיצה.</p>
+        <img class="bento-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Data visualization" loading="lazy">
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <h3>API פתוח</h3>
+        <p>RESTful API מתועד עם SDK רשמי ל-Python, Node.js ו-Go. Webhooks בזמן אמת.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL DEMO -->
+<section class="terminal-section" id="terminal">
+  <div class="container">
+    <div class="terminal-grid">
+      <div class="terminal-info">
+        <h2>פריסה בשורת פקודה אחת</h2>
+        <p>ה-CLI של Meridian מאפשר לכם לנהל את כל התשתית ישירות מהטרמינל. פשוט, מהיר, ומאובטח.</p>
+        <div class="terminal-feat">
+          <div class="terminal-feat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>פריסה אוטומטית עם zero-downtime</span>
+        </div>
+        <div class="terminal-feat">
+          <div class="terminal-feat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>מוניטורינג בזמן אמת עם התראות חכמות</span>
+        </div>
+        <div class="terminal-feat">
+          <div class="terminal-feat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>סקריפטים מותאמים אישית ואוטומציה</span>
+        </div>
+      </div>
+      <div class="terminal-window" id="terminalWindow">
+        <div class="terminal-header">
+          <span></span><span></span><span></span>
+          <span class="terminal-header-title">meridian-cli</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-line" data-delay="0"><span class="prompt">$ </span><span class="cmd">meridian deploy --env production</span></div>
+          <div class="terminal-line" data-delay="400"><span class="comment"># Building project...</span></div>
+          <div class="terminal-line" data-delay="800"><span class="accent-txt">[info]</span> <span class="cmd">Compiled 847 modules in 2.1s</span></div>
+          <div class="terminal-line" data-delay="1200"><span class="accent-txt">[info]</span> <span class="cmd">Running 156 tests...</span></div>
+          <div class="terminal-line" data-delay="1800"><span class="success">[pass]</span> <span class="cmd">All tests passed (156/156)</span></div>
+          <div class="terminal-line" data-delay="2200"><span class="accent-txt">[info]</span> <span class="cmd">Deploying to 12 edge nodes...</span></div>
+          <div class="terminal-line" data-delay="2800"><span class="success">[done]</span> <span class="cmd">Production deploy complete</span></div>
+          <div class="terminal-line" data-delay="3200"><span class="success">[live]</span> <span class="cmd">https://app.meridian.io</span> <span class="comment">// 42ms avg response</span></div>
+          <div class="terminal-line" data-delay="3600"><span class="prompt">$ </span><span class="terminal-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<section class="marquee-section">
+  <div class="marquee-label">אינטגרציות נתמכות</div>
+  <div class="marquee-track">
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><polygon points="16,2 28,9 28,23 16,30 4,23 4,9" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span>HexaFlow</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><rect x="6" y="18" width="20" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="8" y="12" width="16" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="10" y="6" width="12" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span>StackDB</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><circle cx="8" cy="16" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="24" cy="8" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="11" y1="15" x2="21" y2="9" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="17" x2="21" y2="23" stroke="currentColor" stroke-width="1.5"/></svg><span>NodeSync</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><path d="M4 16c4-8 8 8 12 0s8 8 12 0" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span>WaveOps</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><rect x="10" y="10" width="12" height="12" rx="1" transform="rotate(45 16 16)" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="1"/><line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="1"/></svg><span>GridLab</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><path d="M16 4a12 12 0 0 1 10.4 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M26.4 10a12 12 0 0 1-10.4 18" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M16 28A12 12 0 0 1 5.6 22" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M5.6 22a12 12 0 0 1 10.4-18" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span>SyncHub</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><path d="M16 4L6 9v7c0 7.7 4.3 14 10 16 5.7-2 10-8.3 10-16V9L16 4z" stroke="currentColor" stroke-width="1.5" fill="none"/><polyline points="12 16 15 19 21 13" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span>VaultKey</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><polyline points="2,16 8,16 11,8 16,24 20,12 23,16 30,16" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PulseIO</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><polygon points="16,2 28,9 28,23 16,30 4,23 4,9" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span>HexaFlow</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><rect x="6" y="18" width="20" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="8" y="12" width="16" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="10" y="6" width="12" height="4" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span>StackDB</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><circle cx="8" cy="16" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="24" cy="8" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="11" y1="15" x2="21" y2="9" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="17" x2="21" y2="23" stroke="currentColor" stroke-width="1.5"/></svg><span>NodeSync</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><path d="M4 16c4-8 8 8 12 0s8 8 12 0" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span>WaveOps</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><rect x="10" y="10" width="12" height="12" rx="1" transform="rotate(45 16 16)" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="1"/><line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="1"/></svg><span>GridLab</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><path d="M16 4a12 12 0 0 1 10.4 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M26.4 10a12 12 0 0 1-10.4 18" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M16 28A12 12 0 0 1 5.6 22" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M5.6 22a12 12 0 0 1 10.4-18" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span>SyncHub</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><path d="M16 4L6 9v7c0 7.7 4.3 14 10 16 5.7-2 10-8.3 10-16V9L16 4z" stroke="currentColor" stroke-width="1.5" fill="none"/><polyline points="12 16 15 19 21 13" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><span>VaultKey</span></div>
+    <div class="marquee-logo"><svg viewBox="0 0 32 32"><polyline points="2,16 8,16 11,8 16,24 20,12 23,16 30,16" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PulseIO</span></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <h2>תמחור פשוט ושקוף</h2>
+      <p>בחרו את התוכנית שמתאימה לכם. ללא עלויות נסתרות.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-desc">למפתחים עצמאיים ופרויקטים קטנים</div>
+        <div class="price-amount"><span class="currency">$</span>29</div>
+        <div class="price-period">לחודש, לכל משתמש</div>
+        <ul class="price-features">
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>עד 5 פרויקטים</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>10GB אחסון</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>אנליטיקס בסיסי</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>תמיכה בדוא"ל</li>
+        </ul>
+        <button class="price-btn price-btn-outline">התחל עכשיו</button>
+      </div>
+      <div class="price-card popular">
+        <div class="popular-badge">הכי פופולרי</div>
+        <div class="price-name">Professional</div>
+        <div class="price-desc">לצוותים שרוצים לצמוח</div>
+        <div class="price-amount"><span class="currency">$</span>79</div>
+        <div class="price-period">לחודש, לכל משתמש</div>
+        <ul class="price-features">
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>פרויקטים ללא הגבלה</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>100GB אחסון</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>אנליטיקס מתקדם + AI</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>API מלא + Webhooks</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>תמיכה 24/7 בצ'אט</li>
+        </ul>
+        <button class="price-btn price-btn-fill">התחל תקופת ניסיון</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Enterprise</div>
+        <div class="price-desc">לארגונים עם דרישות מיוחדות</div>
+        <div class="price-amount" style="font-size:36px">מותאם אישית</div>
+        <div class="price-period">צור קשר לקבלת הצעה</div>
+        <ul class="price-features">
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>הכל ב-Professional</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SSO + SAML</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SLA מותאם</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>מנהל חשבון ייעודי</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>פריסה on-premise</li>
+        </ul>
+        <button class="price-btn price-btn-outline">דבר איתנו</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div class="cta-orbs cta-orb-1"></div>
+  <div class="cta-orbs cta-orb-2"></div>
+  <div class="container">
+    <div class="cta-content">
+      <h2>מוכנים להתחיל?</h2>
+      <p>הצטרפו לאלפי חברות שכבר משתמשות ב-Meridian כדי לנהל את הנתונים שלהן בצורה חכמה יותר. 14 ימי ניסיון חינם, ללא כרטיס אשראי.</p>
+      <button class="btn-primary" style="font-size:18px;padding:16px 40px">
+        התחל תקופת ניסיון חינם
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:4px">
+          <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          Meridian
+        </div>
+        <p>ניהול חכם. תוצאות מדידות. הפלטפורמה שמביאה את כל הנתונים שלך למקום אחד.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" stroke-width="0" fill="currentColor"><path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-7-8.5L19.5 4H18l-5 6.2L9 4H4z"/></svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>מוצר</h4><a href="#">יכולות</a><a href="#">תמחור</a><a href="#">אינטגרציות</a><a href="#">API</a><a href="#">מה חדש</a></div>
+      <div class="footer-col"><h4>חברה</h4><a href="#">אודות</a><a href="#">בלוג</a><a href="#">קריירה</a><a href="#">שותפויות</a></div>
+      <div class="footer-col"><h4>תמיכה</h4><a href="#">מרכז עזרה</a><a href="#">תיעוד</a><a href="#">סטטוס מערכת</a><a href="#">צור קשר</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>2024 Meridian. כל הזכויות שמורות.</span>
+      <span><a href="#" style="color:var(--muted);margin-left:20px">תנאי שימוש</a><a href="#" style="color:var(--muted);margin-left:20px">מדיניות פרטיות</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var isPreview = (self !== top);
+
+  /* MOBILE MENU */
+  /* NAVBAR SCROLL */
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){
+    if(window.pageYOffset > 80){
+      navbar.style.background = 'rgba(19,27,46,0.92)';
+      navbar.style.borderColor = 'rgba(123,97,255,0.2)';
+    } else {
+      navbar.style.background = 'var(--glass)';
+      navbar.style.borderColor = 'var(--border)';
+    }
+  }, {passive:true});
+
+  /* SMOOTH SCROLL */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(this.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+
+  /* DASHBOARD CHART BARS */
+  var chart = document.getElementById('dashChart');
+  if(chart){
+    var heights = [40,65,50,80,60,75,90,55,70,85,45,95];
+    heights.forEach(function(h){
+      var bar = document.createElement('div');
+      bar.className = 'dash-bar';
+      var isAccent = Math.random() > 0.5;
+      bar.style.background = isAccent ? 'linear-gradient(to top,rgba(123,97,255,0.3),rgba(123,97,255,0.7))' : 'linear-gradient(to top,rgba(0,212,170,0.2),rgba(0,212,170,0.5))';
+      chart.appendChild(bar);
+      setTimeout(function(){bar.style.height = h + '%';}, 300);
+    });
+  }
+
+  /* COUNTER ANIMATION */
+  function animateCounters(){
+    document.querySelectorAll('.counter').forEach(function(el){
+      if(el.dataset.animated) return;
+      var target = parseFloat(el.dataset.count);
+      var isDecimal = el.classList.contains('counter-decimal');
+      var duration = 2000, start = 0, startTime = null;
+      el.dataset.animated = '1';
+      function step(ts){
+        if(!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var val = start + (target - start) * eased;
+        el.textContent = isDecimal ? val.toFixed(1) : Math.floor(val).toLocaleString();
+        if(progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  var metricsObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){animateCounters();metricsObs.unobserve(entry.target);}
+    });
+  }, {threshold:0.3});
+  var ms = document.getElementById('metrics');
+  if(ms) metricsObs.observe(ms);
+
+  /* TERMINAL TYPING */
+  var termObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.querySelectorAll('.terminal-line').forEach(function(line){
+          var delay = parseInt(line.dataset.delay) || 0;
+          setTimeout(function(){line.classList.add('visible');}, delay);
+        });
+        termObs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.3});
+  var tw = document.getElementById('terminalWindow');
+  if(tw) termObs.observe(tw);
+
+  /* BENTO CARD 3D TILT */
+  document.querySelectorAll('.bento-card').forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left, y = e.clientY - rect.top;
+      var rx = ((y - rect.height/2) / (rect.height/2)) * -4;
+      var ry = ((x - rect.width/2) / (rect.width/2)) * 4;
+      card.style.transform = 'perspective(800px) rotateX('+rx+'deg) rotateY('+ry+'deg) scale(1.02)';
+    });
+    card.addEventListener('mouseleave', function(){
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+    });
+  });
+
+  /* THREE.JS NEURAL MESH */
+  if(!isPreview){
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.onload = initMesh;
+    document.head.appendChild(s);
+  }
+
+  function initMesh(){
+    var canvas = document.getElementById('neural-canvas');
+    if(!canvas || typeof THREE === 'undefined') return;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
+    camera.position.z = 50;
+    var renderer = new THREE.WebGLRenderer({canvas:canvas, alpha:true, antialias:true});
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    var N = 80, D = 15, pos = new Float32Array(N*3), cols = new Float32Array(N*3), vel = [];
+    var c1 = new THREE.Color(0x7B61FF), c2 = new THREE.Color(0x00D4AA);
+    for(var i=0;i<N;i++){
+      pos[i*3]=(Math.random()-0.5)*80;pos[i*3+1]=(Math.random()-0.5)*60;pos[i*3+2]=(Math.random()-0.5)*30;
+      var t=Math.random(),c=c1.clone().lerp(c2,t);
+      cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b;
+      vel.push({x:(Math.random()-0.5)*0.02,y:(Math.random()-0.5)*0.02,z:(Math.random()-0.5)*0.01});
+    }
+    var pg = new THREE.BufferGeometry();
+    pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    pg.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+    var pm = new THREE.PointsMaterial({size:2.5,vertexColors:true,transparent:true,opacity:0.7,sizeAttenuation:true});
+    scene.add(new THREE.Points(pg, pm));
+    var lm = new THREE.LineBasicMaterial({color:0x7B61FF,transparent:true,opacity:0.08});
+    var lg = new THREE.BufferGeometry();
+    var lines = new THREE.LineSegments(lg, lm);
+    scene.add(lines);
+    function updateLines(){
+      var lp=[];
+      for(var i=0;i<N;i++)for(var j=i+1;j<N;j++){
+        var dx=pos[i*3]-pos[j*3],dy=pos[i*3+1]-pos[j*3+1],dz=pos[i*3+2]-pos[j*3+2];
+        if(Math.sqrt(dx*dx+dy*dy+dz*dz)<D) lp.push(pos[i*3],pos[i*3+1],pos[i*3+2],pos[j*3],pos[j*3+1],pos[j*3+2]);
+      }
+      lg.setAttribute('position', new THREE.Float32BufferAttribute(lp, 3));
+    }
+    function animate(){
+      requestAnimationFrame(animate);
+      for(var i=0;i<N;i++){
+        pos[i*3]+=vel[i].x;pos[i*3+1]+=vel[i].y;pos[i*3+2]+=vel[i].z;
+        if(Math.abs(pos[i*3])>40) vel[i].x*=-1;
+        if(Math.abs(pos[i*3+1])>30) vel[i].y*=-1;
+        if(Math.abs(pos[i*3+2])>15) vel[i].z*=-1;
+      }
+      pg.attributes.position.needsUpdate=true;
+      updateLines();
+      scene.rotation.y+=0.0003;scene.rotation.x+=0.0001;
+      renderer.render(scene, camera);
+    }
+    animate();
+    addEventListener('resize', function(){
+      camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);
+    });
+  }
+})();
+</script>
+</body>
+</html>

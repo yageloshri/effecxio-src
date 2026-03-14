@@ -14,7 +14,7 @@ function HoverrevealPreview() {
     <div
       style={{
         width: '100%',
-        height: 220,
+        height: '220px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -27,8 +27,8 @@ function HoverrevealPreview() {
         onMouseLeave={() => setIsHovered(false)}
         style={{
           position: 'relative',
-          width: 200,
-          height: 140,
+          width: '200px',
+          height: '140px',
           borderRadius: 14,
           overflow: 'hidden',
           cursor: 'pointer',

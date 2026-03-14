@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amore | Wedding Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FBF8F4;--surface:#FFF;--fg:#3A3028;--fg-muted:#8A7E6F;
+--rose:#C4918A;--rose-light:#F5E6E2;--sage:#9CAF88;--gold:#C5A572;
+--border:#E8DDD2;
+--serif:'Cormorant Garamond',serif;--sans:'Josefin Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;font-weight:300}
+::selection{background:var(--rose);color:#fff}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:40px}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=900&fit=crop') center/cover;opacity:.12}
+.hero-content{position:relative;z-index:1}
+.hero-date{font-family:var(--sans);font-size:.8rem;letter-spacing:6px;text-transform:uppercase;color:var(--rose);margin-bottom:20px}
+.hero-names{font-family:var(--serif);font-size:clamp(3rem,8vw,7rem);font-weight:300;line-height:1.1;font-style:italic;color:var(--fg)}
+.hero-names .amp{font-size:.6em;color:var(--rose);display:block;margin:10px 0;font-style:italic}
+.hero-tagline{font-family:var(--serif);font-size:1.3rem;font-weight:300;font-style:italic;color:var(--fg-muted);margin-top:20px}
+.hero-ornament{margin:30px auto;opacity:.3}
+.hero-ornament svg{width:150px}
+.hero-venue{font-size:.85rem;letter-spacing:4px;text-transform:uppercase;color:var(--fg-muted)}
+
+/* Countdown */
+.countdown{display:flex;gap:30px;justify-content:center;padding:60px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cd-item{text-align:center}
+.cd-num{font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--rose);display:block}
+.cd-label{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--fg-muted)}
+
+/* Story */
+.story{max-width:800px;margin:0 auto;padding:100px 40px;text-align:center}
+.s-tag{font-size:.75rem;letter-spacing:5px;text-transform:uppercase;color:var(--rose);margin-bottom:16px}
+.story h2{font-family:var(--serif);font-size:2.5rem;font-weight:300;font-style:italic;margin-bottom:24px}
+.story p{color:var(--fg-muted);line-height:2;font-size:1rem}
+.story-photos{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:40px}
+.story-photos img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;filter:sepia(10%)}
+
+/* Details */
+.details{padding:80px 40px;background:var(--rose-light)}
+.details-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;text-align:center}
+.detail-card{padding:40px}
+.detail-card .icon{font-family:var(--serif);font-size:2.5rem;color:var(--rose);margin-bottom:16px}
+.detail-card h3{font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:12px}
+.detail-card p{font-size:.9rem;color:var(--fg-muted);line-height:1.8}
+
+/* Timeline */
+.timeline{max-width:600px;margin:0 auto;padding:80px 40px}
+.timeline .s-tag,.timeline h2{text-align:center}
+.timeline h2{font-family:var(--serif);font-size:2rem;font-weight:300;font-style:italic;margin-bottom:40px}
+.tl-item{display:flex;gap:24px;padding:20px 0;position:relative}
+.tl-item::before{content:'';position:absolute;right:51px;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-time{font-family:var(--serif);font-size:1.1rem;color:var(--rose);min-width:80px;text-align:left;position:relative}
+.tl-time::after{content:'';position:absolute;left:-19px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--rose)}
+.tl-content h4{font-family:var(--serif);font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.tl-content p{font-size:.85rem;color:var(--fg-muted)}
+
+/* Gallery */
+.gallery{padding:80px 40px}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1100px;margin:0 auto}
+.gallery-item{aspect-ratio:1;overflow:hidden;border-radius:8px}
+.gallery-item img{width:100%;height:100%;object-fit:cover;filter:sepia(10%);transition:transform .5s,filter .5s}
+.gallery-item:hover img{transform:scale(1.06);filter:sepia(0)}
+
+/* RSVP */
+.rsvp{max-width:600px;margin:0 auto;padding:80px 40px;text-align:center}
+.rsvp h2{font-family:var(--serif);font-size:2.5rem;font-weight:300;font-style:italic;margin-bottom:12px}
+.rsvp p{color:var(--fg-muted);margin-bottom:30px}
+.rsvp-form{display:flex;flex-direction:column;gap:16px;max-width:400px;margin:0 auto}
+.rsvp-form input,.rsvp-form select{
+padding:14px 18px;border:1px solid var(--border);border-radius:8px;background:var(--surface);
+font-family:var(--sans);font-size:.9rem;color:var(--fg);
+}
+.rsvp-form button{
+padding:14px;background:var(--rose);color:#fff;border:none;border-radius:8px;
+font-family:var(--sans);font-size:.9rem;font-weight:600;cursor:pointer;
+letter-spacing:2px;text-transform:uppercase;transition:background .3s;
+}
+.rsvp-form button:hover{background:#B07D76}
+
+footer{padding:40px;text-align:center;font-family:var(--serif);font-size:1.2rem;font-style:italic;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){.details-inner{grid-template-columns:1fr}.story-photos,.gallery-grid{grid-template-columns:1fr 1fr}.countdown{flex-wrap:wrap;gap:16px}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+<div class="hero-content">
+<div class="hero-date reveal">October 18, 2025</div>
+<div class="hero-names reveal">
+Noa
+<span class="amp">&</span>
+Daniel
+</div>
+<div class="hero-tagline reveal">We're getting married</div>
+<div class="hero-ornament">
+<svg viewBox="0 0 150 20"><line x1="0" y1="10" x2="60" y2="10" stroke="#C4918A" stroke-width=".5"/><circle cx="75" cy="10" r="4" fill="none" stroke="#C4918A" stroke-width=".5"/><line x1="90" y1="10" x2="150" y2="10" stroke="#C4918A" stroke-width=".5"/></svg>
+</div>
+<div class="hero-venue reveal">Beit HaOrangerie, Caesarea</div>
+</div>
+</section>
+
+<div class="countdown reveal">
+<div class="cd-item"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Days</span></div>
+<div class="cd-item"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Hours</span></div>
+<div class="cd-item"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">Minutes</span></div>
+<div class="cd-item"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">Seconds</span></div>
+</div>
+
+<section class="story">
+<div class="s-tag reveal">Our Story</div>
+<h2 class="reveal">How It All Began</h2>
+<p class="reveal">We met at a tiny coffee shop in Tel Aviv on a rainy December morning. Noa ordered a flat white, Daniel asked for a pour-over, and somehow we ended up sharing a table for three hours. Six years, two apartments, and one very patient golden retriever later, here we are.</p>
+<div class="story-photos reveal">
+<img src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=300&h=400&fit=crop" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300&h=400&fit=crop" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&h=400&fit=crop" alt="" loading="lazy">
+</div>
+</section>
+
+<section class="details">
+<div class="details-inner">
+<div class="detail-card reveal">
+<div class="icon">&#9829;</div>
+<h3>The Ceremony</h3>
+<p>Sunset ceremony at 17:00<br>Beit HaOrangerie Gardens<br>Caesarea, Israel</p>
+</div>
+<div class="detail-card reveal">
+<div class="icon">&#9733;</div>
+<h3>The Celebration</h3>
+<p>Dinner & dancing from 19:00<br>Indoor Grand Hall<br>Live band & DJ</p>
+</div>
+</div>
+</section>
+
+<section class="timeline">
+<div class="s-tag reveal">Schedule</div>
+<h2 class="reveal">The Big Day</h2>
+<div class="tl-item reveal"><div class="tl-time">16:00</div><div class="tl-content"><h4>Guest Arrival</h4><p>Welcome drinks in the garden</p></div></div>
+<div class="tl-item reveal"><div class="tl-time">17:00</div><div class="tl-content"><h4>Ceremony</h4><p>Outdoor ceremony at sunset</p></div></div>
+<div class="tl-item reveal"><div class="tl-time">18:00</div><div class="tl-content"><h4>Cocktail Hour</h4><p>Signature cocktails & appetizers</p></div></div>
+<div class="tl-item reveal"><div class="tl-time">19:00</div><div class="tl-content"><h4>Dinner</h4><p>Seated dinner in the Grand Hall</p></div></div>
+<div class="tl-item reveal"><div class="tl-time">21:00</div><div class="tl-content"><h4>First Dance & Party</h4><p>Live band followed by DJ until late</p></div></div>
+</section>
+
+<div class="gallery">
+<div class="gallery-grid">
+<div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=300&h=300&fit=crop" alt="" loading="lazy"></div>
+<div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&h=300&fit=crop" alt="" loading="lazy"></div>
+<div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=300&h=300&fit=crop" alt="" loading="lazy"></div>
+<div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=300&h=300&fit=crop" alt="" loading="lazy"></div>
+</div>
+</div>
+
+<section class="rsvp" id="rsvp">
+<h2 class="reveal">RSVP</h2>
+<p class="reveal">Please let us know by September 1, 2025</p>
+<form class="rsvp-form reveal" onsubmit="return false">
+<input type="text" placeholder="Full Name">
+<input type="email" placeholder="Email">
+<select><option>Will you attend?</option><option>Happily attending</option><option>Regretfully declining</option></select>
+<input type="number" placeholder="Number of guests" min="1" max="4">
+<button type="submit">Send RSVP</button>
+</form>
+</section>
+
+<footer>With love, Noa & Daniel</footer>
+
+<script>
+const isPreview=(self!==top);
+function updateCD(){
+  const t=new Date('2025-10-18T17:00:00').getTime(),n=Date.now(),d=Math.max(0,t-n);
+  document.getElementById('cd-days').textContent=String(Math.floor(d/864e5)).padStart(2,'0');
+  document.getElementById('cd-hours').textContent=String(Math.floor(d%864e5/36e5)).padStart(2,'0');
+  document.getElementById('cd-mins').textContent=String(Math.floor(d%36e5/6e4)).padStart(2,'0');
+  document.getElementById('cd-secs').textContent=String(Math.floor(d%6e4/1e3)).padStart(2,'0');
+}
+updateCD();if(!isPreview)setInterval(updateCD,1000);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

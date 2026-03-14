@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const STEPS = [
   { label: 'Step 1', color: 'var(--accent)' },
@@ -10,6 +11,7 @@ const STEPS = [
 
 function PinnedsectionPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const rightRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
@@ -17,6 +19,10 @@ function PinnedsectionPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const el = rightRef.current;
     if (!el) return;
 
@@ -36,7 +42,7 @@ function PinnedsectionPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

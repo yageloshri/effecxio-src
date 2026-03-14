@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const COUNTDOWN_KEYFRAMES = `
 @keyframes countdown-flipout {
@@ -16,6 +17,7 @@ const COUNTDOWN_KEYFRAMES = `
 
 function CountdowntimerPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const styleRef = useRef<HTMLStyleElement | null>(null);
   const [count, setCount] = useState(9);
   const [flipping, setFlipping] = useState(false);
@@ -45,6 +47,12 @@ function CountdowntimerPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+
+    if (previewState !== 'active') {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+
     let flipTimeout: ReturnType<typeof setTimeout>;
     intervalRef.current = setInterval(() => {
       flipTimeout = tick();
@@ -53,7 +61,7 @@ function CountdowntimerPreview() {
       if (intervalRef.current) clearInterval(intervalRef.current);
       clearTimeout(flipTimeout);
     };
-  }, [prefersReduced, tick]);
+  }, [prefersReduced, tick, previewState]);
 
   const digitStyle: React.CSSProperties = {
     width: 64,

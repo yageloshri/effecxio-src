@@ -33,4 +33,5 @@ export interface Effect {
   codeTabs: CodeTab[];
   explanationHe: string;
   proTipHe?: string;
+  promptHe?: string;
 }

@@ -1,9 +1,11 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 function ParallaximagePreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const imgRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
@@ -11,6 +13,10 @@ function ParallaximagePreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const img = imgRef.current;
     if (!img) return;
 
@@ -29,7 +35,7 @@ function ParallaximagePreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const PANELS = [
   { label: 'A', color: 'var(--accent)' },
@@ -11,6 +12,7 @@ const PANELS = [
 
 function HorizontalscrollPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const trackRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
@@ -18,6 +20,10 @@ function HorizontalscrollPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
     const track = trackRef.current;
     if (!track) return;
 
@@ -40,7 +46,7 @@ function HorizontalscrollPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

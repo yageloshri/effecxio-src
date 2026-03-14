@@ -2,22 +2,30 @@
 
 import { memo, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const WORDS = ['אתרים', 'מוצרים', 'חלומות', 'חוויות', 'עתידות'];
 
 function FlipwordPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const [index, setIndex] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
+    if (previewState !== 'active') {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      return;
+    }
+
     intervalRef.current = setInterval(() => {
       setIndex((prev) => (prev + 1) % WORDS.length);
     }, 2500);
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, []);
+  }, [previewState]);
 
   return (
     <div

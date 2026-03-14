@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prism | Analytics Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0C0F1A;--surface:#141829;--surface2:#1C2038;--border:#2A2E45;
+--fg:#E4E7F1;--fg-muted:#8B90A8;--primary:#6366F1;--primary-glow:rgba(99,102,241,.15);
+--cyan:#22D3EE;--emerald:#34D399;--amber:#FBBF24;--rose:#FB7185;
+--sans:'Outfit',sans-serif;--mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--primary);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(12,15,26,.8);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.3rem;font-weight:700;color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:10px}
+.nav-brand .prism{width:24px;height:24px;background:linear-gradient(135deg,var(--primary),var(--cyan));border-radius:6px;transform:rotate(45deg)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--primary);color:#fff;padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:box-shadow .2s}
+.nav-cta:hover{box-shadow:0 0 20px var(--primary-glow)}
+
+.hero{max-width:1100px;margin:0 auto;padding:140px 40px 80px;text-align:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);padding:6px 14px;border-radius:20px;font-size:.8rem;color:var(--cyan);margin-bottom:24px;font-weight:500}
+.hero h1{font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-.03em}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--primary),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--fg-muted);max-width:550px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-p{background:var(--primary);color:#fff;padding:13px 28px;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s;font-size:.9rem}
+.btn-p:hover{box-shadow:0 0 30px var(--primary-glow);transform:translateY(-1px)}
+.btn-s{background:var(--surface);border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:10px;font-weight:600;text-decoration:none;font-size:.9rem;transition:border-color .2s}
+.btn-s:hover{border-color:var(--primary)}
+
+/* Dashboard Mockup */
+.dash-mock{max-width:1060px;margin:60px auto 0;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.dash-bar{background:var(--surface2);padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.dash-bar span{width:10px;height:10px;border-radius:50%}
+.dash-bar .r{background:#FF5F57}.dash-bar .y{background:#FEBC2E}.dash-bar .g{background:#28C840}
+.dash-body{padding:24px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px}
+.metric-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px}
+.metric-label{font-size:.75rem;color:var(--fg-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.metric-value{font-size:1.8rem;font-weight:700}
+.metric-change{font-size:.75rem;margin-top:4px;display:flex;align-items:center;gap:4px}
+.metric-change.up{color:var(--emerald)}
+.metric-change.down{color:var(--rose)}
+.dash-chart-area{grid-column:1/-1;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px;height:220px;position:relative}
+.dash-chart-area canvas{width:100%;height:100%}
+.dash-bottom{grid-column:1/-1;display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.dash-table{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px}
+.dash-table h4{font-size:.85rem;margin-bottom:12px;font-weight:600}
+.table-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.8rem}
+.table-row:last-child{border:none}
+.table-row .source{color:var(--fg-muted)}
+.dash-donut{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dash-donut h4{font-size:.85rem;margin-bottom:12px;font-weight:600}
+
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:100px 40px}
+.section-tag{font-size:.8rem;color:var(--cyan);text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:12px}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.section-desc{color:var(--fg-muted);font-size:1rem;max-width:500px;margin-bottom:50px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .3s,transform .3s}
+.feat-card:hover{border-color:var(--primary);transform:translateY(-4px)}
+.feat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-icon svg{width:22px;height:22px}
+.feat-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Integrations */
+.integrations{padding:80px 40px;text-align:center}
+.integrations h2{font-size:2rem;font-weight:800;margin-bottom:40px}
+.int-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:800px;margin:0 auto}
+.int-chip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:.85rem;font-weight:500;display:flex;align-items:center;gap:8px;transition:border-color .2s}
+.int-chip:hover{border-color:var(--primary)}
+.int-chip .dot{width:8px;height:8px;border-radius:50%}
+
+/* Pricing */
+.pricing{max-width:1000px;margin:0 auto;padding:100px 40px;text-align:center}
+.pricing .section-tag,.pricing .section-title,.pricing .section-desc{text-align:center}
+.pricing .section-desc{margin:0 auto 50px}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;text-align:right;transition:border-color .3s}
+.price-card:hover{border-color:var(--primary)}
+.price-card.pop{border-color:var(--primary);position:relative}
+.price-card.pop::after{content:'Most Popular';position:absolute;top:-12px;right:20px;background:var(--primary);color:#fff;font-size:.7rem;padding:4px 12px;border-radius:6px;font-weight:600}
+.pc-name{font-size:1rem;font-weight:600;margin-bottom:8px}
+.pc-price{font-size:2.2rem;font-weight:800;margin-bottom:4px}
+.pc-price span{font-size:.85rem;font-weight:400;color:var(--fg-muted)}
+.pc-desc{font-size:.8rem;color:var(--fg-muted);margin-bottom:20px}
+.pc-list{list-style:none;margin-bottom:24px;text-align:right}
+.pc-list li{font-size:.8rem;padding:6px 0;color:var(--fg-muted);display:flex;align-items:center;gap:6px}
+.pc-list li::before{content:'';width:5px;height:5px;background:var(--emerald);border-radius:50%}
+.pc-btn{display:block;padding:11px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;text-align:center;transition:all .2s}
+.pc-btn.fill{background:var(--primary);color:#fff}
+.pc-btn.fill:hover{box-shadow:0 0 20px var(--primary-glow)}
+.pc-btn.out{border:1px solid var(--border);color:var(--fg)}
+.pc-btn.out:hover{border-color:var(--primary)}
+
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--primary),var(--cyan));border-radius:20px;padding:60px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;width:300px;height:300px;background:rgba(255,255,255,.06);border-radius:50%;top:-100px;left:-100px}
+.cta-box h2{font-size:2rem;font-weight:800;margin-bottom:12px;position:relative}
+.cta-box p{opacity:.85;margin-bottom:28px;position:relative}
+.cta-box a{display:inline-block;background:#fff;color:var(--primary);padding:13px 28px;border-radius:10px;font-weight:700;text-decoration:none;transition:transform .2s;position:relative}
+.cta-box a:hover{transform:translateY(-2px)}
+
+footer{padding:40px;border-top:1px solid var(--border);text-align:center;font-size:.8rem;color:var(--fg-muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.feat-grid,.price-grid{grid-template-columns:1fr 1fr}.dash-body{grid-template-columns:1fr 1fr}.dash-bottom{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid,.price-grid,.dash-body{grid-template-columns:1fr}.hero h1{font-size:2.2rem}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand"><div class="prism"></div>Prism</a>
+<div class="nav-links">
+<a href="#features">Features</a>
+<a href="#pricing">Pricing</a>
+<a href="#">Docs</a>
+<a href="#" class="nav-cta">Try Free</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M6 20V4M18 20v-6"/></svg> Analytics Reimagined</div>
+<h1>See Your Data<br>in <span class="gradient">Full Spectrum</span></h1>
+<p>Prism transforms raw data into crystal-clear insights. The analytics dashboard that makes complex data simple and actionable.</p>
+<div class="hero-btns">
+<a href="#" class="btn-p">Start Free &rarr;</a>
+<a href="#" class="btn-s">Live Demo</a>
+</div>
+
+<div class="dash-mock reveal">
+<div class="dash-bar"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+<div class="dash-body">
+<div class="metric-card">
+<div class="metric-label">Revenue</div>
+<div class="metric-value" style="color:var(--emerald)">$48.2K</div>
+<div class="metric-change up">+12.5% from last month</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">Users</div>
+<div class="metric-value" style="color:var(--cyan)">12,847</div>
+<div class="metric-change up">+8.3% from last month</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">Conv. Rate</div>
+<div class="metric-value" style="color:var(--amber)">3.24%</div>
+<div class="metric-change up">+0.4% from last month</div>
+</div>
+<div class="metric-card">
+<div class="metric-label">Churn</div>
+<div class="metric-value" style="color:var(--rose)">1.8%</div>
+<div class="metric-change down">-0.2% from last month</div>
+</div>
+<div class="dash-chart-area"><canvas id="mainChart"></canvas></div>
+<div class="dash-bottom">
+<div class="dash-table">
+<h4>Top Sources</h4>
+<div class="table-row"><span>Google Organic</span><span class="source">4,521 visits</span></div>
+<div class="table-row"><span>Direct</span><span class="source">2,890 visits</span></div>
+<div class="table-row"><span>Twitter/X</span><span class="source">1,245 visits</span></div>
+<div class="table-row"><span>Product Hunt</span><span class="source">987 visits</span></div>
+<div class="table-row"><span>LinkedIn</span><span class="source">654 visits</span></div>
+</div>
+<div class="dash-donut">
+<h4>Device Split</h4>
+<canvas id="donutChart" width="120" height="120"></canvas>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="features" id="features">
+<div class="section-tag reveal">Features</div>
+<div class="section-title reveal">Built for Data-Driven Teams</div>
+<div class="section-desc reveal">Everything you need to understand your users and grow your product.</div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="feat-icon" style="background:rgba(99,102,241,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><path d="M12 20V10M6 20V4M18 20v-6"/></svg></div><h3>Real-time Dashboards</h3><p>Watch your metrics update live. Custom widgets, drag-and-drop layout builder.</p></div>
+<div class="feat-card reveal"><div class="feat-icon" style="background:rgba(34,211,238,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><h3>Global Analytics</h3><p>Track users across 195 countries. Geo-heatmaps, timezone insights, locale data.</p></div>
+<div class="feat-card reveal"><div class="feat-icon" style="background:rgba(52,211,153,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h3>Funnel Analysis</h3><p>Build conversion funnels in seconds. Identify drop-off points and optimize flows.</p></div>
+<div class="feat-card reveal"><div class="feat-icon" style="background:rgba(251,191,36,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/><circle cx="12" cy="12" r="4"/></svg></div><h3>AI Predictions</h3><p>Machine learning models predict churn, LTV, and growth trends automatically.</p></div>
+<div class="feat-card reveal"><div class="feat-icon" style="background:rgba(251,113,133,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#FB7185" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg></div><h3>SQL Editor</h3><p>Write custom queries against your data. Autocomplete, saved queries, scheduled reports.</p></div>
+<div class="feat-card reveal"><div class="feat-icon" style="background:rgba(99,102,241,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3>Enterprise Security</h3><p>SOC 2 Type II certified. SSO, RBAC, audit logs, data encryption at rest.</p></div>
+</div>
+</section>
+
+<div class="integrations">
+<h2 class="reveal">40+ Integrations</h2>
+<div class="int-grid reveal">
+<div class="int-chip"><span class="dot" style="background:#4285F4"></span>Google Ads</div>
+<div class="int-chip"><span class="dot" style="background:#1877F2"></span>Meta Ads</div>
+<div class="int-chip"><span class="dot" style="background:#6772E5"></span>Stripe</div>
+<div class="int-chip"><span class="dot" style="background:#FF6550"></span>HubSpot</div>
+<div class="int-chip"><span class="dot" style="background:#7B68EE"></span>Slack</div>
+<div class="int-chip"><span class="dot" style="background:#E01E5A"></span>Segment</div>
+<div class="int-chip"><span class="dot" style="background:#00D4AA"></span>Shopify</div>
+<div class="int-chip"><span class="dot" style="background:#FF9900"></span>AWS</div>
+<div class="int-chip"><span class="dot" style="background:#0078D4"></span>Salesforce</div>
+<div class="int-chip"><span class="dot" style="background:#F04438"></span>Mixpanel</div>
+</div>
+</div>
+
+<section class="pricing" id="pricing">
+<div class="section-tag reveal">Pricing</div>
+<div class="section-title reveal">Scale as You Grow</div>
+<div class="section-desc reveal">No hidden fees. Cancel anytime.</div>
+<div class="price-grid">
+<div class="price-card reveal"><div class="pc-name">Starter</div><div class="pc-price">$0<span>/mo</span></div><div class="pc-desc">For side projects</div><ul class="pc-list"><li>10K events/mo</li><li>1 dashboard</li><li>7-day retention</li><li>Community support</li></ul><a href="#" class="pc-btn out">Get Started</a></div>
+<div class="price-card pop reveal"><div class="pc-name">Pro</div><div class="pc-price">$79<span>/mo</span></div><div class="pc-desc">For growing teams</div><ul class="pc-list"><li>1M events/mo</li><li>Unlimited dashboards</li><li>1-year retention</li><li>SQL editor</li><li>Priority support</li></ul><a href="#" class="pc-btn fill">Start Trial</a></div>
+<div class="price-card reveal"><div class="pc-name">Enterprise</div><div class="pc-price">Custom</div><div class="pc-desc">For large orgs</div><ul class="pc-list"><li>Unlimited events</li><li>SSO & RBAC</li><li>Custom retention</li><li>Dedicated CSM</li><li>SLA guarantee</li></ul><a href="#" class="pc-btn out">Contact Sales</a></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start Seeing Clearly</h2>
+<p>14-day free trial. No credit card required.</p>
+<a href="#">Get Started Free &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Prism Analytics. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+
+// Main chart
+const mc=document.getElementById('mainChart');
+if(mc){
+  const ctx=mc.getContext('2d');const W=mc.width=mc.parentElement.offsetWidth-40;const H=mc.height=180;
+  const d=[30,45,35,60,55,70,65,80,75,95,85,100,90,110,105,120,115,130,125,140,135,150,145,155];
+  const mx=Math.max(...d);
+  // Area
+  ctx.beginPath();ctx.moveTo(0,H);
+  d.forEach((v,i)=>{ctx.lineTo((i/(d.length-1))*W,H-(v/mx)*H*.85)});
+  ctx.lineTo(W,H);ctx.closePath();
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(99,102,241,.2)');g.addColorStop(1,'rgba(99,102,241,0)');
+  ctx.fillStyle=g;ctx.fill();
+  // Line
+  ctx.beginPath();d.forEach((v,i)=>{const x=(i/(d.length-1))*W;const y=H-(v/mx)*H*.85;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.strokeStyle='#6366F1';ctx.lineWidth=2;ctx.stroke();
+  // Second line
+  const d2=d.map(v=>v*0.6+Math.random()*15);
+  ctx.beginPath();d2.forEach((v,i)=>{const x=(i/(d2.length-1))*W;const y=H-(v/mx)*H*.85;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.strokeStyle='#22D3EE';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+}
+// Donut
+const dc=document.getElementById('donutChart');
+if(dc){
+  const ctx=dc.getContext('2d');const cx=60,cy=60,r=45,lw=16;
+  const segs=[{v:.55,c:'#6366F1'},{v:.30,c:'#22D3EE'},{v:.15,c:'#FBBF24'}];
+  let start=-Math.PI/2;
+  segs.forEach(s=>{const end=start+s.v*Math.PI*2;ctx.beginPath();ctx.arc(cx,cy,r,start,end);ctx.strokeStyle=s.c;ctx.lineWidth=lw;ctx.lineCap='round';ctx.stroke();start=end+.05});
+  ctx.fillStyle='var(--fg)';ctx.font='700 14px Outfit';ctx.textAlign='center';ctx.fillText('55%',cx,cy+5);
+}
+</script>
+</body>
+</html>

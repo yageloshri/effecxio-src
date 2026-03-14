@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaDEX | Crypto Exchange</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0A0A0F;--surface:#111118;--surface2:#18182A;--border:#222240;
+--fg:#EEEEF4;--fg-muted:#7070A0;
+--blue:#3B82F6;--blue-dim:rgba(59,130,246,.08);--red:#EF4444;--green:#22C55E;
+--sans:'Inter',sans-serif;--mono:'Roboto Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--blue);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.1rem;font-weight:800;color:var(--blue);text-decoration:none}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.83rem;font-weight:500}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff;padding:8px 18px;border-radius:6px;font-size:.83rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:900px;margin:0 auto;padding:150px 40px 40px;text-align:center}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;line-height:1.08;margin-bottom:16px;letter-spacing:-.02em}
+.hero h1 .accent{color:var(--blue)}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:460px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-b{background:var(--blue);color:#fff;padding:12px 26px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+.btn-o{border:1px solid var(--border);color:var(--fg);padding:12px 26px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+/* Trading interface mock */
+.trading{max-width:900px;margin:30px auto;padding:0 40px}
+.trade-frame{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.trade-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border)}
+.trade-header .pair-info{display:flex;align-items:center;gap:12px}
+.trade-header .pair-info .pair-name{font-weight:700;font-size:1rem}
+.trade-header .pair-info .pair-price{font-family:var(--mono);font-size:1rem;color:var(--green)}
+.trade-header .pair-info .pair-change{font-size:.8rem;color:var(--green);font-weight:600}
+.trade-header .pair-stats{display:flex;gap:20px}
+.trade-header .pair-stats .ps{text-align:left}
+.trade-header .pair-stats .ps-label{font-size:.65rem;color:var(--fg-muted);text-transform:uppercase}
+.trade-header .pair-stats .ps-val{font-family:var(--mono);font-size:.8rem;font-weight:500}
+.trade-body{display:grid;grid-template-columns:1fr 280px;gap:0}
+.chart-area{height:280px;padding:20px;display:flex;align-items:flex-end;gap:1px;background:var(--bg)}
+.chart-area .candle{display:flex;flex-direction:column;align-items:center;flex:1}
+.chart-area .candle .wick{width:1px;background:var(--fg-muted);opacity:.3}
+.chart-area .candle .body{width:6px;border-radius:1px;min-height:4px}
+.order-panel{border-right:1px solid var(--border);padding:20px}
+.order-panel .op-tabs{display:flex;gap:0;margin-bottom:16px}
+.order-panel .op-tab{flex:1;text-align:center;padding:8px;font-size:.8rem;font-weight:700;cursor:default;border-radius:6px}
+.order-panel .op-tab.buy{background:rgba(34,197,94,.1);color:var(--green)}
+.order-panel .op-tab.sell{color:var(--fg-muted)}
+.order-panel .op-field{margin-bottom:10px}
+.order-panel .op-field label{display:block;font-size:.7rem;color:var(--fg-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.order-panel .op-field .input-mock{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px;font-family:var(--mono);font-size:.85rem;color:var(--fg)}
+.order-panel .op-btn{width:100%;background:var(--green);color:var(--bg);padding:12px;border-radius:8px;font-weight:700;font-size:.85rem;text-align:center;margin-top:14px;cursor:default}
+
+/* Market tickers */
+.tickers{max-width:900px;margin:30px auto;padding:0 40px}
+.ticker-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ticker-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;transition:border-color .2s}
+.ticker-card:hover{border-color:var(--blue)}
+.ticker-card .tc-pair{font-weight:700;font-size:.85rem;margin-bottom:2px}
+.ticker-card .tc-price{font-family:var(--mono);font-size:1rem;font-weight:600}
+.ticker-card .tc-change{font-size:.75rem;font-weight:600;margin-top:2px}
+.ticker-card .tc-change.up{color:var(--green)}
+.ticker-card .tc-change.down{color:var(--red)}
+
+/* Features */
+.features{max-width:900px;margin:0 auto;padding:60px 40px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-size:.75rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;transition:all .3s}
+.feat-card:hover{border-color:var(--blue)}
+.feat-card h3{font-size:.85rem;font-weight:700;margin-bottom:4px}
+.feat-card p{font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--blue);border-radius:14px;padding:44px;color:#fff}
+.cta-box h2{font-size:1.8rem;font-weight:800;margin-bottom:8px}
+.cta-box p{opacity:.85;margin-bottom:20px}
+.cta-box a{display:inline-block;background:#fff;color:var(--blue);padding:12px 26px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:24px 40px;text-align:center;font-size:.78rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.ticker-grid,.feat-grid{grid-template-columns:1fr 1fr}.trade-body{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.ticker-grid,.feat-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}.order-panel{display:none}.trade-header .pair-stats{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">NovaDEX</a>
+<div class="nav-links"><a href="#markets">Markets</a><a href="#features">Features</a><a href="#" class="nav-cta">Trade Now</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Trade Crypto<br><span class="accent">Without Limits</span></h1>
+<p class="reveal">Non-custodial exchange with deep liquidity, low fees, and institutional-grade security. Trade 200+ pairs.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-b">Start Trading &rarr;</a><a href="#" class="btn-o">View Markets</a></div>
+</section>
+
+<div class="trading reveal">
+<div class="trade-frame">
+<div class="trade-header">
+<div class="pair-info"><span class="pair-name">BTC/USDT</span><span class="pair-price">$67,432.50</span><span class="pair-change">+2.34%</span></div>
+<div class="pair-stats"><div class="ps"><div class="ps-label">24h High</div><div class="ps-val">$68,100</div></div><div class="ps"><div class="ps-label">24h Low</div><div class="ps-val">$65,800</div></div><div class="ps"><div class="ps-label">24h Vol</div><div class="ps-val">$1.2B</div></div></div>
+</div>
+<div class="trade-body">
+<div class="chart-area" id="chart"></div>
+<div class="order-panel">
+<div class="op-tabs"><div class="op-tab buy">Buy</div><div class="op-tab sell">Sell</div></div>
+<div class="op-field"><label>Price (USDT)</label><div class="input-mock">67,432.50</div></div>
+<div class="op-field"><label>Amount (BTC)</label><div class="input-mock">0.1500</div></div>
+<div class="op-field"><label>Total</label><div class="input-mock">$10,114.88</div></div>
+<div class="op-btn">Buy BTC</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tickers reveal" id="markets">
+<div class="ticker-grid">
+<div class="ticker-card"><div class="tc-pair">BTC/USDT</div><div class="tc-price">$67,432</div><div class="tc-change up">+2.34%</div></div>
+<div class="ticker-card"><div class="tc-pair">ETH/USDT</div><div class="tc-price">$3,842</div><div class="tc-change up">+1.87%</div></div>
+<div class="ticker-card"><div class="tc-pair">SOL/USDT</div><div class="tc-price">$148.20</div><div class="tc-change down">-0.92%</div></div>
+<div class="ticker-card"><div class="tc-pair">ARB/USDT</div><div class="tc-price">$1.24</div><div class="tc-change up">+5.12%</div></div>
+</div>
+</div>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Professional Trading</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><h3>Non-Custodial</h3><p>Your keys, your coins. Trade directly from your wallet — we never hold your funds.</p></div>
+<div class="feat-card reveal"><h3>Deep Liquidity</h3><p>Aggregated liquidity from 20+ sources. Minimal slippage even on large orders.</p></div>
+<div class="feat-card reveal"><h3>0.05% Fees</h3><p>Industry-lowest trading fees. Additional discounts for NOVA token holders.</p></div>
+<div class="feat-card reveal"><h3>Limit Orders</h3><p>Set price targets and walk away. Your orders execute automatically on-chain.</p></div>
+<div class="feat-card reveal"><h3>Cross-Chain</h3><p>Trade assets across Ethereum, Solana, Arbitrum, and Base in one interface.</p></div>
+<div class="feat-card reveal"><h3>API Access</h3><p>Full REST and WebSocket APIs for algorithmic trading and market making.</p></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start Trading Today</h2>
+<p>Connect your wallet. No KYC required for basic trading.</p>
+<a href="#">Launch Exchange &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 NovaDEX. Trade freely.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Generate candlestick chart
+const chart=document.getElementById('chart');
+if(chart){
+let price=67000;
+for(let i=0;i<60;i++){
+const change=(Math.random()-.48)*800;
+const open=price;price+=change;const close=price;
+const high=Math.max(open,close)+Math.random()*400;
+const low=Math.min(open,close)-Math.random()*400;
+const candle=document.createElement('div');candle.className='candle';
+const isGreen=close>open;
+const bodyH=Math.max(Math.abs(close-open)/40,4);
+const wickH=(high-low)/40;
+candle.innerHTML=`<div class="wick" style="height:${wickH}px"></div><div class="body" style="height:${bodyH}px;background:${isGreen?'var(--green)':'var(--red)'}"></div>`;
+chart.appendChild(candle);
+}
+}
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

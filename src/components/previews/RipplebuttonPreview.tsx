@@ -25,15 +25,15 @@ function RipplebuttonPreview() {
     styleRef.current = style;
   }
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleHover = useCallback(
+    () => {
       if (prefersReduced) return;
       const btn = btnRef.current;
       if (!btn) return;
 
       const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const x = rect.width / 2;
+      const y = rect.height / 2;
       const size = Math.max(rect.width, rect.height);
 
       const ripple = document.createElement('span');
@@ -69,7 +69,7 @@ function RipplebuttonPreview() {
     >
       <button
         ref={btnRef}
-        onClick={handleClick}
+        onMouseEnter={handleHover}
         style={{
           position: 'relative',
           padding: '14px 40px',

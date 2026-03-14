@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curate | Monthly Surprise Boxes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Gambetta:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFFAF5;--surface:#FFF;--border:#F0E6D8;--fg:#1C1108;--fg-muted:#8B7355;--coral:#E8624A;--coral-light:#FEF0EC;--gold:#C5981B;--sans:'Bricolage Grotesque',sans-serif;--body:'Gambetta',serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.topbar{background:var(--coral);color:#fff;text-align:center;padding:10px;font-size:.75rem;font-weight:600;letter-spacing:.5px}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-size:1.4rem;font-weight:800;letter-spacing:-.5px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--coral);color:#fff;padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;text-decoration:none}
+.hero{max-width:1100px;margin:0 auto;padding:50px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text .tag{display:inline-block;padding:6px 12px;background:var(--coral-light);color:var(--coral);font-size:.72rem;font-weight:700;border-radius:50px;margin-bottom:14px}
+.hero-text h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.12;letter-spacing:-.03em;margin-bottom:14px}
+.hero-text h1 em{font-family:var(--body);font-style:italic;color:var(--coral)}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px;font-family:var(--body)}
+.hero-btns{display:flex;gap:10px}
+.btn-coral{padding:14px 28px;background:var(--coral);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer}
+.btn-out{padding:14px 28px;border:2px solid var(--border);border-radius:50px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-stats{display:flex;gap:24px;margin-top:20px}
+.hero-stats .stat{text-align:center}
+.hero-stats .stat .num{font-size:1.3rem;font-weight:800}
+.hero-stats .stat .label{font-size:.68rem;color:var(--fg-muted)}
+.hero-visual{position:relative}
+.hero-visual img{width:100%;border-radius:20px;aspect-ratio:4/5;object-fit:cover}
+.hero-visual .float-badge{position:absolute;bottom:20px;right:20px;background:var(--surface);border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.1);font-size:.75rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.hero-visual .float-badge .stars{color:var(--gold)}
+.how{max-width:1100px;margin:0 auto;padding:60px 40px}
+.how-header{text-align:center;margin-bottom:40px}
+.how-header h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.how-header p{font-size:.88rem;color:var(--fg-muted);font-family:var(--body)}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.how-step{text-align:center;padding:28px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px}
+.how-step .num{width:48px;height:48px;border-radius:50%;background:var(--coral-light);color:var(--coral);font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.how-step h3{font-size:.92rem;font-weight:700;margin-bottom:6px}
+.how-step p{font-size:.78rem;color:var(--fg-muted);line-height:1.5;font-family:var(--body)}
+.boxes{max-width:1100px;margin:0 auto;padding:40px}
+.box-header{text-align:center;margin-bottom:40px}
+.box-header h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.box-header p{font-size:.88rem;color:var(--fg-muted);font-family:var(--body)}
+.box-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.box-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .3s}
+.box-card:hover{transform:translateY(-4px)}
+.box-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.box-card .info{padding:18px}
+.box-card .info .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.box-card .info h3{font-size:1rem;font-weight:700}
+.box-card .info .price{font-weight:800;color:var(--coral);font-size:.95rem}
+.box-card .info p{font-size:.78rem;color:var(--fg-muted);margin-bottom:10px;font-family:var(--body)}
+.box-card .info .tags{display:flex;gap:6px;flex-wrap:wrap}
+.box-card .info .tag{font-size:.62rem;padding:3px 8px;background:var(--coral-light);color:var(--coral);border-radius:4px;font-weight:600}
+.reviews{max-width:1100px;margin:0 auto;padding:40px}
+.rev-header{text-align:center;margin-bottom:30px}
+.rev-header h2{font-size:1.3rem;font-weight:800}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rev-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.rev-card .stars{color:var(--gold);font-size:.82rem;margin-bottom:8px}
+.rev-card p{font-size:.82rem;line-height:1.6;margin-bottom:10px;font-family:var(--body)}
+.rev-card .author{font-size:.75rem;font-weight:700}
+.rev-card .sub{font-size:.65rem;color:var(--fg-muted)}
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--coral);border-radius:20px;padding:44px;color:#fff}
+.cta-box h2{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.cta-box p{opacity:.85;margin-bottom:20px;font-size:.88rem;font-family:var(--body)}
+.cta-box button{background:#fff;color:var(--coral);padding:14px 28px;border:none;border-radius:50px;font-weight:700;font-family:var(--sans);cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.hero,.how-grid,.box-grid,.rev-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-stats{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="topbar">First box 50% OFF — use code CURATE50</div>
+<nav class="nav"><div class="nav-logo">Curate</div><div class="nav-links"><a href="#">How It Works</a><a href="#">Boxes</a><a href="#">Reviews</a><a href="#">Gift</a></div><a class="nav-btn" href="#">Subscribe</a></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<div class="tag">Subscription Boxes</div>
+<h1>Monthly surprises, <em>curated</em> just for you</h1>
+<p>Every month we handpick premium products tailored to your taste. Skincare, snacks, books, or lifestyle — you choose the theme, we handle the magic.</p>
+<div class="hero-btns"><button class="btn-coral">Choose Your Box</button><button class="btn-out">Gift a Box</button></div>
+<div class="hero-stats">
+<div class="stat"><div class="num">500K+</div><div class="label">Boxes Delivered</div></div>
+<div class="stat"><div class="num">4.9/5</div><div class="label">Average Rating</div></div>
+<div class="stat"><div class="num">98%</div><div class="label">Stay Rate</div></div>
+</div>
+</div>
+<div class="hero-visual reveal">
+<img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=500&h=625&fit=crop" alt="" loading="lazy">
+<div class="float-badge"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.9 from 12K reviews</div>
+</div>
+</section>
+
+<section class="how">
+<div class="how-header reveal"><h2>How it works</h2><p>Three simple steps to your first box.</p></div>
+<div class="how-grid">
+<div class="how-step reveal"><div class="num">1</div><h3>Pick Your Theme</h3><p>Choose from skincare, gourmet snacks, books, wellness, or lifestyle.</p></div>
+<div class="how-step reveal"><div class="num">2</div><h3>We Curate</h3><p>Our team handpicks 5-8 premium products worth 3x the subscription price.</p></div>
+<div class="how-step reveal"><div class="num">3</div><h3>Unbox Joy</h3><p>Delivered to your door monthly. Skip or cancel anytime.</p></div>
+</div>
+</section>
+
+<section class="boxes">
+<div class="box-header reveal"><h2>Choose your box</h2><p>Flexible plans starting from just $29/month.</p></div>
+<div class="box-grid">
+<div class="box-card reveal"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>Beauty Box</h3><span class="price">$39/mo</span></div><p>5-7 skincare and beauty products from indie brands.</p><div class="tags"><span class="tag">Skincare</span><span class="tag">Vegan</span><span class="tag">Full-size</span></div></div></div>
+<div class="box-card reveal"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>Gourmet Box</h3><span class="price">$45/mo</span></div><p>Artisan snacks, sauces, and treats from around the world.</p><div class="tags"><span class="tag">Food</span><span class="tag">Artisan</span><span class="tag">International</span></div></div></div>
+<div class="box-card reveal"><img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>Book Box</h3><span class="price">$29/mo</span></div><p>A curated read + bookmark, tea, and reading accessories.</p><div class="tags"><span class="tag">Fiction</span><span class="tag">Non-Fiction</span><span class="tag">Extras</span></div></div></div>
+</div>
+</section>
+
+<section class="reviews">
+<div class="rev-header reveal"><h2>What subscribers say</h2></div>
+<div class="rev-grid">
+<div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Every month feels like my birthday. The curation is spot-on and I always discover new brands I love."</p><div class="author">Maya K.</div><div class="sub">Beauty Box &bull; 8 months</div></div>
+<div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The value is insane. Last month's box had $120+ worth of products for just $39. Totally worth it."</p><div class="author">Tomer S.</div><div class="sub">Gourmet Box &bull; 12 months</div></div>
+<div class="rev-card reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Gifted this to my mom and now she won't stop talking about it. Perfect gift idea."</p><div class="author">Noa R.</div><div class="sub">Book Box &bull; 3 months</div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Your first box is 50% off</h2>
+<p>Join 50,000+ subscribers discovering new favorites every month.</p>
+<button>Subscribe Now &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Curate Co. Delivering joy since 2021.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

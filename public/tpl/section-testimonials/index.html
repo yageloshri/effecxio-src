@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonials Slider</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0F0F12;--surface:#18181E;--border:#2A2A34;--fg:#F0F0F4;--fg-muted:#7A7A8E;--violet:#A78BFA;--sans:'Outfit',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.section{max-width:800px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;color:var(--violet);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(2rem,4vw,2.8rem);font-weight:700}
+/* Slider */
+.slider{position:relative;overflow:hidden}
+.slider-track{display:flex;transition:transform .5s ease}
+.slide{min-width:100%;padding:0 20px}
+.slide-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;text-align:center}
+.slide-card .stars{color:var(--violet);font-size:1rem;margin-bottom:16px;letter-spacing:2px}
+.slide-card blockquote{font-size:1.1rem;line-height:1.7;margin-bottom:24px;font-weight:500}
+.slide-card .author{display:flex;align-items:center;justify-content:center;gap:12px}
+.slide-card .author img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.slide-card .author .name{font-weight:700;font-size:.85rem}
+.slide-card .author .role{font-size:.75rem;color:var(--fg-muted)}
+/* Controls */
+.slider-controls{display:flex;justify-content:center;gap:8px;margin-top:24px}
+.slider-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s}
+.slider-dot.active{background:var(--violet);width:24px;border-radius:4px}
+.slider-arrows{display:flex;justify-content:center;gap:10px;margin-top:16px}
+.slider-arrows button{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--fg);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.slider-arrows button:hover{border-color:var(--violet);color:var(--violet)}
+.slider-arrows button svg{width:16px;height:16px}
+/* Logos */
+.logos{max-width:600px;margin:60px auto 0;text-align:center}
+.logos-title{font-size:.75rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+.logos-row{display:flex;gap:40px;justify-content:center;align-items:center;flex-wrap:wrap;opacity:.4}
+.logos-row .logo{font-size:1rem;font-weight:700;letter-spacing:1px}
+</style>
+</head>
+<body>
+<section class="section">
+<div class="s-center"><div class="s-tag">Testimonials</div><div class="s-title">Loved by Teams</div></div>
+<div class="slider">
+<div class="slider-track" id="track">
+<div class="slide"><div class="slide-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"This tool completely transformed how our team collaborates. We ship 2x faster now and actually enjoy the process."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=88&h=88&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Sarah Chen</div><div class="role">CTO at ScaleUp</div></div></div></div></div>
+<div class="slide"><div class="slide-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"I've tried every tool in this category. This is the first one that actually stuck. The attention to detail is remarkable."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=88&h=88&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Marcus Rivera</div><div class="role">Head of Product, Finova</div></div></div></div></div>
+<div class="slide"><div class="slide-card"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"Setup took 5 minutes and the ROI was visible within the first week. This is how software should feel."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=88&h=88&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Noa Shapira</div><div class="role">CEO, DataFlow</div></div></div></div></div>
+</div>
+</div>
+<div class="slider-controls" id="dots"></div>
+<div class="slider-arrows"><button onclick="prev()"><svg viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><button onclick="next()"><svg viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+<div class="logos"><div class="logos-title">Trusted by companies like</div><div class="logos-row"><div class="logo">Stripe</div><div class="logo">Vercel</div><div class="logo">Linear</div><div class="logo">Notion</div><div class="logo">Figma</div></div></div>
+</section>
+<script>
+const isPreview=(self!==top);
+let current=0;const total=3;const track=document.getElementById('track');const dotsEl=document.getElementById('dots');
+function goTo(i){current=i;track.style.transform=`translateX(${current*100}%)`;updateDots()}
+function next(){goTo((current+1)%total)}
+function prev(){goTo((current-1+total)%total)}
+function updateDots(){dotsEl.innerHTML='';for(let i=0;i<total;i++){const d=document.createElement('div');d.className='slider-dot'+(i===current?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d)}}
+updateDots();
+setInterval(next,5000);
+</script>
+</body>
+</html>

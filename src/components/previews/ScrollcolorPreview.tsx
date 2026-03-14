@@ -1,6 +1,7 @@
 'use client';
 import { memo, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 const COLORS = [
   [10, 10, 26],   /* deep blue */
@@ -27,6 +28,7 @@ function getColor(t: number): string {
 
 function ScrollcolorPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const rafRef = useRef<number>(0);
   const tRef = useRef(0);
   const dirRef = useRef(1);
@@ -34,6 +36,10 @@ function ScrollcolorPreview() {
 
   useEffect(() => {
     if (prefersReduced) return;
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return;
+    }
 
     const speed = 0.002;
 
@@ -49,7 +55,7 @@ function ScrollcolorPreview() {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   return (
     <div

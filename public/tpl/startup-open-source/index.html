@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSSHub | Open Source Collaboration</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0D1117;--surface:#161B22;--border:#30363D;--fg:#E6EDF3;--fg-muted:#8B949E;--teal:#39D353;--teal-dim:rgba(57,211,83,.1);--blue:#58A6FF;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.nav-logo svg{width:24px;height:24px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.84rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.nav-stars{display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--border);border-radius:8px;font-size:.78rem;color:var(--fg-muted);font-family:var(--mono)}
+.nav-stars svg{width:14px;height:14px}
+.nav-btn{background:var(--teal);color:#000;padding:8px 16px;border-radius:8px;font-size:.84rem;font-weight:700;text-decoration:none}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:80px 40px 60px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--teal-dim);border:1px solid rgba(57,211,83,.2);border-radius:50px;font-size:.75rem;font-weight:600;color:var(--teal);margin-bottom:24px;font-family:var(--mono)}
+.hero h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;line-height:1.1;letter-spacing:-.04em;margin-bottom:16px}
+.hero h1 .teal{color:var(--teal)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:540px;margin:0 auto 32px;line-height:1.7}
+.hero-actions{display:flex;gap:12px;justify-content:center;margin-bottom:40px}
+.btn-teal{padding:12px 24px;background:var(--teal);color:#000;border:none;border-radius:8px;font-weight:700;font-size:.9rem;font-family:var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn-dim{padding:12px 24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-weight:600;font-size:.9rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+/* Contribution graph */
+.graph-wrap{max-width:700px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+.graph-label{font-size:.72rem;color:var(--fg-muted);margin-bottom:10px;font-family:var(--mono)}
+.graph{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}
+.graph .cell{width:10px;height:10px;border-radius:2px;background:var(--border)}
+.graph .cell.l1{background:rgba(57,211,83,.2)}.graph .cell.l2{background:rgba(57,211,83,.4)}.graph .cell.l3{background:rgba(57,211,83,.6)}.graph .cell.l4{background:var(--teal)}
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:80px 40px}
+.feat-header{text-align:center;margin-bottom:50px}
+.feat-header .tag{font-size:.75rem;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-family:var(--mono)}
+.feat-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .3s}
+.feat-card:hover{border-color:var(--teal)}
+.feat-card .icon{width:40px;height:40px;border-radius:8px;background:var(--teal-dim);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.feat-card .icon svg{width:18px;height:18px}
+.feat-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.82rem;color:var(--fg-muted);line-height:1.6}
+/* Repos */
+.repos{max-width:1100px;margin:0 auto;padding:40px}
+.repos-header{text-align:center;margin-bottom:30px}
+.repos-header h2{font-size:1.3rem;font-weight:700}
+.repos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.repo-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s}
+.repo-card:hover{border-color:var(--blue)}
+.repo-card .repo-name{font-size:.9rem;font-weight:700;color:var(--blue);margin-bottom:4px;font-family:var(--mono)}
+.repo-card .repo-desc{font-size:.78rem;color:var(--fg-muted);line-height:1.5;margin-bottom:12px}
+.repo-card .repo-meta{display:flex;gap:16px;font-size:.72rem;color:var(--fg-muted);font-family:var(--mono)}
+.repo-card .repo-meta .lang{display:flex;align-items:center;gap:4px}
+.repo-card .repo-meta .lang .dot{width:8px;height:8px;border-radius:50%}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px}
+.cta-box h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);font-size:.92rem;margin-bottom:24px}
+.cta-install{display:inline-flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 20px;font-family:var(--mono);font-size:.82rem;color:var(--teal);margin-bottom:20px;cursor:pointer}
+.cta-install .copy{color:var(--fg-muted);font-size:.72rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border);font-family:var(--mono)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.feat-grid,.repos-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-actions{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo"><svg viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="#E6EDF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>OSSHub</div>
+<div class="nav-links"><a href="#">Explore</a><a href="#">Docs</a><a href="#">Community</a><a href="#">Sponsors</a></div>
+<div class="nav-right"><div class="nav-stars"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10.2 3.4 12l.7-4L1.2 5.2l4-.6L7 1z" stroke="#39D353" stroke-width="1" fill="#39D353"/></svg>12.4k</div><a class="nav-btn" href="#">Get Started</a></div>
+</nav>
+
+<section class="hero reveal">
+<div class="hero-badge">v3.0 released — see what's new</div>
+<h1>Open source tools for <span class="teal">modern teams</span></h1>
+<p>OSSHub provides free, production-grade developer tools. Built by the community, for the community. MIT licensed.</p>
+<div class="hero-actions"><button class="btn-teal"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>Star on GitHub</button><button class="btn-dim">Read Docs</button></div>
+<div class="graph-wrap">
+<div class="graph-label">4,892 contributions in the last year</div>
+<div class="graph" id="contribGraph"></div>
+</div>
+</section>
+
+<section class="features">
+<div class="feat-header reveal"><div class="tag">Features</div><h2>Developer experience first</h2></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M6 12l-4-3 4-3M12 6l4 3-4 3" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Type Safe APIs</h3><p>Full TypeScript support with auto-generated types from your schema.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3v12" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Plugin System</h3><p>Extend anything with our composable plugin architecture.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M2 13l5-5 3 3 5-7" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Blazing Fast</h3><p>Zero runtime overhead. Tree-shakeable. Under 5kb gzipped.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="3" stroke="#39D353" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>100% Test Coverage</h3><p>Every release is backed by comprehensive testing and CI/CD.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#39D353" stroke-width="1.5"/><path d="M9 6v3l2 1" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Active Maintenance</h3><p>Weekly releases. Issues answered within 24 hours. 50+ contributors.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4l2-4z" stroke="#39D353" stroke-width="1.5" stroke-linejoin="round"/></svg></div><h3>MIT Licensed</h3><p>Use in personal, commercial, or enterprise projects. No strings attached.</p></div>
+</div>
+</section>
+
+<section class="repos">
+<div class="repos-header reveal"><h2>Popular Repositories</h2></div>
+<div class="repos-grid">
+<div class="repo-card reveal"><div class="repo-name">osshub/core</div><div class="repo-desc">The core library. Zero-dependency runtime with plugin support.</div><div class="repo-meta"><div class="lang"><div class="dot" style="background:#3178C6"></div>TypeScript</div><span>&#9733; 8.2k</span><span>&#9741; 1.4k</span></div></div>
+<div class="repo-card reveal"><div class="repo-name">osshub/cli</div><div class="repo-desc">Command-line interface for scaffolding, building, and deploying.</div><div class="repo-meta"><div class="lang"><div class="dot" style="background:#3178C6"></div>TypeScript</div><span>&#9733; 3.1k</span><span>&#9741; 420</span></div></div>
+<div class="repo-card reveal"><div class="repo-name">osshub/ui</div><div class="repo-desc">Headless UI components. Accessible, customizable, beautiful.</div><div class="repo-meta"><div class="lang"><div class="dot" style="background:#3178C6"></div>TypeScript</div><span>&#9733; 5.6k</span><span>&#9741; 890</span></div></div>
+<div class="repo-card reveal"><div class="repo-name">osshub/docs</div><div class="repo-desc">Documentation site built with MDX and interactive examples.</div><div class="repo-meta"><div class="lang"><div class="dot" style="background:#F1E05A"></div>MDX</div><span>&#9733; 1.2k</span><span>&#9741; 340</span></div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Get started in seconds</h2>
+<p>Install OSSHub and start building.</p>
+<div class="cta-install" onclick="navigator.clipboard.writeText('npx create-osshub@latest')">npx create-osshub@latest <span class="copy">click to copy</span></div><br>
+<button class="btn-teal">Read Documentation &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 OSSHub Contributors. MIT License.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Generate contribution graph
+const g=document.getElementById('contribGraph');if(g){for(let i=0;i<364;i++){const d=document.createElement('div');d.className='cell';const r=Math.random();if(r>.7)d.classList.add('l'+(Math.ceil(Math.random()*4)));g.appendChild(d)}}
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

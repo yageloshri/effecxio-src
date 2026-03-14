@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 // Preview simulates mouse — real version reacts to actual cursor
 const DOT_KEYFRAMES = `
@@ -21,6 +22,7 @@ const INFLUENCE = 60;   /* cursor influence radius in px */
 
 function DotmatrixPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const styleRef = useRef<HTMLStyleElement | null>(null);
@@ -67,6 +69,13 @@ function DotmatrixPreview() {
     const computedStyle = getComputedStyle(el);
     const accentColor = computedStyle.getPropertyValue('--accent').trim() || '#c8f53b';
 
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return () => {
+        canvas.remove();
+      };
+    }
+
     const animate = () => {
       const width = w();
       const height = h();
@@ -108,7 +117,7 @@ function DotmatrixPreview() {
       observer.disconnect();
       canvas.remove();
     };
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   if (prefersReduced) {
     return (

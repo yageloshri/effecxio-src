@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShipIt | From Idea to MVP in Days</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0D0D12;--surface:#16161E;--border:#2A2A3A;--fg:#EEEEF0;--fg-muted:#6B6B80;--lime:#84CC16;--lime-dim:rgba(132,204,22,.1);--sans:'Space Grotesk',sans-serif;--mono:'Fira Code',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1000px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:700;font-size:1.1rem;font-family:var(--mono);color:var(--lime)}
+.nav-logo span{color:var(--fg-muted)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.84rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--lime);color:#000;padding:9px 18px;border-radius:8px;font-size:.84rem;font-weight:700;text-decoration:none;font-family:var(--sans)}
+/* Hero */
+.hero{max-width:1000px;margin:0 auto;padding:80px 40px 60px;text-align:center}
+.hero-terminal{display:inline-block;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-family:var(--mono);font-size:.78rem;color:var(--lime);margin-bottom:28px}
+.hero-terminal .cursor{animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:700;letter-spacing:-.04em;line-height:1.1;margin-bottom:18px}
+.hero h1 .lime{color:var(--lime)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:500px;margin:0 auto 32px;line-height:1.7}
+.hero-actions{display:flex;gap:12px;justify-content:center}
+.btn-lime{padding:14px 28px;background:var(--lime);color:#000;border:none;border-radius:10px;font-weight:700;font-size:.95rem;font-family:var(--sans);cursor:pointer}
+.btn-border{padding:14px 28px;background:transparent;border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.95rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+/* Code block */
+.code-section{max-width:700px;margin:0 auto;padding:0 40px 60px}
+.code-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.code-top{display:flex;align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border)}
+.code-top .dot{width:8px;height:8px;border-radius:50%}.dot.r{background:#EF4444}.dot.y{background:#EAB308}.dot.g{background:#22C55E}
+.code-top .filename{margin-right:auto;font-size:.72rem;color:var(--fg-muted);font-family:var(--mono)}
+.code-body{padding:16px;font-family:var(--mono);font-size:.78rem;line-height:1.9;overflow-x:auto}
+.code-body .kw{color:#C084FC}.code-body .fn{color:#60A5FA}.code-body .str{color:var(--lime)}.code-body .cm{color:#4B5563}.code-body .num{color:#F59E0B}
+/* Timeline */
+.timeline{max-width:1000px;margin:0 auto;padding:60px 40px}
+.tl-header{text-align:center;margin-bottom:50px}
+.tl-header .tag{font-size:.75rem;color:var(--lime);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.tl-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em}
+.tl-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tl-step{text-align:center;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:14px;position:relative;transition:border-color .3s}
+.tl-step:hover{border-color:var(--lime)}
+.tl-step .day{font-size:.7rem;font-family:var(--mono);color:var(--lime);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.tl-step h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.tl-step p{font-size:.78rem;color:var(--fg-muted);line-height:1.5}
+/* Stack */
+.stack{max-width:1000px;margin:0 auto;padding:60px 40px}
+.stack-header{text-align:center;margin-bottom:40px}
+.stack-header h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700}
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stack-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:12px}
+.stack-item .s-icon{width:40px;height:40px;border-radius:10px;background:var(--lime-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;font-weight:800;color:var(--lime);font-family:var(--mono)}
+.stack-item .s-name{font-size:.88rem;font-weight:600}
+.stack-item .s-desc{font-size:.72rem;color:var(--fg-muted)}
+/* Pricing */
+.pricing{max-width:1000px;margin:0 auto;padding:60px 40px}
+.pr-header{text-align:center;margin-bottom:40px}
+.pr-header h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700}
+.pr-header p{color:var(--fg-muted);font-size:.9rem;margin-top:6px}
+.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pr-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .3s}
+.pr-card.pop{border-color:var(--lime);position:relative}
+.pr-card.pop::before{content:'Popular';position:absolute;top:-10px;right:16px;background:var(--lime);color:#000;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:50px}
+.pr-card .name{font-size:.82rem;color:var(--fg-muted);font-weight:600;margin-bottom:4px}
+.pr-card .price{font-size:2rem;font-weight:700;margin-bottom:4px}.pr-card .price span{font-size:.82rem;color:var(--fg-muted)}
+.pr-card .desc{font-size:.78rem;color:var(--fg-muted);margin-bottom:16px}
+.pr-card ul{list-style:none;margin-bottom:20px}
+.pr-card ul li{font-size:.8rem;color:var(--fg-muted);padding:4px 0;display:flex;align-items:center;gap:6px}
+.pr-card ul li::before{content:'✓';color:var(--lime);font-weight:700;font-size:.7rem}
+.pr-card .btn{display:block;text-align:center;padding:10px;border-radius:8px;font-weight:600;font-size:.85rem;text-decoration:none;border:1px solid var(--border);color:var(--fg);transition:all .2s}
+.pr-card.pop .btn{background:var(--lime);color:#000;border-color:var(--lime)}
+.footer{max-width:1000px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.78rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.tl-steps,.pr-grid,.stack-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-actions{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo">ShipIt<span>.dev</span></div>
+<div class="nav-links"><a href="#">How It Works</a><a href="#">Stack</a><a href="#">Pricing</a><a href="#">Docs</a></div>
+<a class="nav-btn" href="#">Start Shipping</a>
+</nav>
+
+<section class="hero reveal">
+<div class="hero-terminal">$ shipit init my-startup <span class="cursor">|</span></div>
+<h1>From zero to <span class="lime">MVP</span> in days, not months</h1>
+<p>ShipIt gives you production-ready boilerplates, auth, payments, and deployment. Stop wasting time on infrastructure.</p>
+<div class="hero-actions"><button class="btn-lime">Start Building &rarr;</button><button class="btn-border">View Demo</button></div>
+</section>
+
+<div class="code-section reveal">
+<div class="code-block">
+<div class="code-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="filename">app/api/route.ts</div></div>
+<div class="code-body">
+<span class="cm">// That's it. Auth + DB + API in 3 lines.</span><br>
+<span class="kw">import</span> { <span class="fn">auth</span>, <span class="fn">db</span> } <span class="kw">from</span> <span class="str">'@shipit/core'</span><br><br>
+<span class="kw">export async function</span> <span class="fn">GET</span>() {<br>
+&nbsp;&nbsp;<span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">auth</span>()<br>
+&nbsp;&nbsp;<span class="kw">const</span> data = <span class="kw">await</span> <span class="fn">db</span>.query(<span class="str">'projects'</span>)<br>
+&nbsp;&nbsp;<span class="kw">return</span> Response.<span class="fn">json</span>(data)<br>
+}
+</div>
+</div>
+</div>
+
+<section class="timeline">
+<div class="tl-header reveal"><div class="tag">Timeline</div><h2>Ship your MVP in 7 days</h2></div>
+<div class="tl-steps">
+<div class="tl-step reveal"><div class="day">Day 1-2</div><h3>Setup</h3><p>Pick your stack, configure auth and database. Ready to code.</p></div>
+<div class="tl-step reveal"><div class="day">Day 3-4</div><h3>Build</h3><p>Focus on your core features. We handle the boring stuff.</p></div>
+<div class="tl-step reveal"><div class="day">Day 5-6</div><h3>Polish</h3><p>Add payments, emails, analytics. One-line integrations.</p></div>
+<div class="tl-step reveal"><div class="day">Day 7</div><h3>Launch</h3><p>Deploy to production with one command. You're live.</p></div>
+</div>
+</section>
+
+<section class="stack">
+<div class="stack-header reveal"><h2>Built on the best stack</h2></div>
+<div class="stack-grid">
+<div class="stack-item reveal"><div class="s-icon">N</div><div><div class="s-name">Next.js 15</div><div class="s-desc">App Router + Server Actions</div></div></div>
+<div class="stack-item reveal"><div class="s-icon">T</div><div><div class="s-name">TypeScript</div><div class="s-desc">End-to-end type safety</div></div></div>
+<div class="stack-item reveal"><div class="s-icon">P</div><div><div class="s-name">Prisma</div><div class="s-desc">Type-safe ORM</div></div></div>
+<div class="stack-item reveal"><div class="s-icon">S</div><div><div class="s-name">Stripe</div><div class="s-desc">Payments & subscriptions</div></div></div>
+<div class="stack-item reveal"><div class="s-icon">R</div><div><div class="s-name">Resend</div><div class="s-desc">Transactional emails</div></div></div>
+<div class="stack-item reveal"><div class="s-icon">V</div><div><div class="s-name">Vercel</div><div class="s-desc">Edge deployment</div></div></div>
+</div>
+</section>
+
+<section class="pricing">
+<div class="pr-header reveal"><h2>Simple pricing</h2><p>One-time purchase. Lifetime access. Free updates forever.</p></div>
+<div class="pr-grid">
+<div class="pr-card reveal"><div class="name">Starter</div><div class="price">$49 <span>one-time</span></div><div class="desc">For side projects</div><ul><li>1 project</li><li>Auth + Database</li><li>Basic components</li><li>Community support</li></ul><a class="btn" href="#">Get Starter</a></div>
+<div class="pr-card pop reveal"><div class="name">Pro</div><div class="price">$149 <span>one-time</span></div><div class="desc">For serious builders</div><ul><li>Unlimited projects</li><li>Payments + Emails</li><li>Admin dashboard</li><li>Priority support</li></ul><a class="btn" href="#">Get Pro</a></div>
+<div class="pr-card reveal"><div class="name">Team</div><div class="price">$349 <span>one-time</span></div><div class="desc">For startup teams</div><ul><li>Everything in Pro</li><li>Team collaboration</li><li>Custom integrations</li><li>1:1 onboarding call</li></ul><a class="btn" href="#">Get Team</a></div>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 ShipIt Dev Tools.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

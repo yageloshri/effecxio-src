@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { usePreviewState } from '@/context/PreviewStateContext';
 
 interface Star {
   x: number;
@@ -16,6 +17,7 @@ const LINE_DIST = 55; /* max distance for constellation lines */
 
 function ConstellationsPreview() {
   const prefersReduced = useReducedMotion();
+  const previewState = usePreviewState();
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
@@ -52,6 +54,13 @@ function ConstellationsPreview() {
     }));
 
     let frame = 0;
+
+    if (previewState !== 'active') {
+      cancelAnimationFrame(rafRef.current);
+      return () => {
+        canvas.remove();
+      };
+    }
 
     const animate = () => {
       ctx.clearRect(0, 0, W, H);
@@ -97,7 +106,7 @@ function ConstellationsPreview() {
       observer.disconnect();
       canvas.remove();
     };
-  }, [prefersReduced]);
+  }, [prefersReduced, previewState]);
 
   if (prefersReduced) {
     return (
