@@ -53,6 +53,20 @@ export default function Header() {
           >
             תבניות
           </Link>
+          <Link
+            href="/specials"
+            style={{
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 500,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            ספיישלים
+          </Link>
         </nav>
 
         <motion.a
@@ -115,20 +129,6 @@ export default function Header() {
             onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
           >
             ספריות
-          </Link>
-          <Link
-            href="/specials"
-            style={{
-              color: '#fff',
-              textDecoration: 'none',
-              fontSize: 14,
-              fontWeight: 500,
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-          >
-            ספיישלים
           </Link>
         </nav>
       </div>
