@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
-  trailingSlash: true,
+  assetPrefix: './',
   reactCompiler: true,
   compress: true,
   experimental: {

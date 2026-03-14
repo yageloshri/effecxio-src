@@ -14,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl">
       <head>
         <base href="/" />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var b=document.querySelector('base');if(b)b.href='/';})()` }} />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
