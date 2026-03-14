@@ -580,6 +580,8 @@ export default function HomePage() {
             .cta-card-tpl:hover { box-shadow: 0 0 30px rgba(168,85,247,0.3) !important; }
             .cta-card-ico:hover { box-shadow: 0 0 30px rgba(56,189,248,0.3) !important; }
             .cta-card-fnt:hover { box-shadow: 0 0 30px rgba(255,107,107,0.3) !important; }
+            .cta-card-spc:hover { box-shadow: 0 0 30px rgba(245,158,11,0.3) !important; }
+            .cta-card-lib:hover { box-shadow: 0 0 30px rgba(16,185,129,0.3) !important; }
           `}</style>
 
           <motion.div
@@ -590,7 +592,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
+              gridTemplateColumns: 'repeat(3, 1fr)',
               gap: 16,
               maxWidth: 900,
               margin: '0 auto',
@@ -709,6 +711,64 @@ export default function HomePage() {
                 color: '#fff',
               }}>
                 פונטים
+              </span>
+            </Link>
+
+            {/* ── ספיישלים — solid amber/orange ── */}
+            <Link
+              href="/specials"
+              className="cta-card cta-card-spc"
+              style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 72,
+                borderRadius: 16,
+                border: 'none',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                textDecoration: 'none',
+                overflow: 'hidden',
+                gap: 8,
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span style={{
+                fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: 16,
+                color: '#fff',
+              }}>
+                ספיישלים
+              </span>
+            </Link>
+
+            {/* ── ספריות — solid emerald/green ── */}
+            <Link
+              href="/libraries"
+              className="cta-card cta-card-lib"
+              style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 72,
+                borderRadius: 16,
+                border: 'none',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                textDecoration: 'none',
+                overflow: 'hidden',
+                gap: 8,
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+              </svg>
+              <span style={{
+                fontFamily: "'Heebo', sans-serif", fontWeight: 700, fontSize: 16,
+                color: '#fff',
+              }}>
+                ספריות
               </span>
             </Link>
           </motion.div>

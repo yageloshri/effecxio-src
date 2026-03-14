@@ -39,9 +39,7 @@ export default function Footer() {
             margin: '0 0 16px 0',
           }}
         >
-          נבנה עם{' '}
-          <span style={{ color: 'var(--accent)' }}>♥</span>
-          {' '}לקהילת המפתחים הישראלית
+          נבנה באהבה רבה לקהילת ה-vibe coders בישראל 🇮🇱
         </p>
 
         {/* Links row */}

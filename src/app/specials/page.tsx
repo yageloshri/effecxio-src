@@ -287,12 +287,12 @@ export default function SpecialsPage() {
       {/* Header */}
       <div style={{ textAlign: 'center', padding: '120px 24px 60px', direction: 'rtl' }}>
         <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          background: 'rgba(200,245,59,0.08)', border: '1px solid rgba(200,245,59,0.2)',
-          borderRadius: 100, padding: '4px 14px', fontSize: 11,
-          color: '#c8f53b', fontFamily: 'monospace', marginBottom: 20, letterSpacing: '0.05em',
+          fontSize: 13, color: '#555', marginBottom: 20,
+          fontFamily: "'Heebo', sans-serif", fontWeight: 400,
+          letterSpacing: '0.02em',
         }}>
-          ✦ {specials.length} אפקטים מיוחדים
+          <span style={{ color: 'var(--accent)', fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 14 }}>{specials.length}</span>
+          {' '}אפקטים מיוחדים
         </div>
         <h1 style={{
           fontSize: 'clamp(2.5rem,5vw,4rem)',
@@ -302,7 +302,7 @@ export default function SpecialsPage() {
         }}>
           אפקטים מיוחדים, מוכנים להעתקה.
         </h1>
-        <p style={{ fontSize: 17, color: '#666', maxWidth: 500, margin: '0 auto 40px' }}>
+        <p style={{ fontSize: 17, color: '#fff', maxWidth: 500, margin: '0 auto 40px' }}>
           {specials.length} אפקטים עצמאיים ב-HTML/CSS/JS. בחרו, צפו בתצוגה מקדימה, העתיקו את הקוד.
         </p>
         <input

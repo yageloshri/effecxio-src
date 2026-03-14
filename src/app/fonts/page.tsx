@@ -377,13 +377,13 @@ export default function FontsPage() {
       {/* Hero */}
       <div style={{ padding: '120px 60px 40px', maxWidth: 1400, margin: '0 auto', textAlign: 'center' }}>
         <div style={{ fontSize: 11, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .4, marginBottom: 16 }}>
-          Effexio
+          Effecxio
         </div>
         <h1 style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(2.5rem,5vw,4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 16 }}>
           פונטים עבריים<br />
           <span style={{ color: 'var(--accent)' }}>חינמיים</span>
         </h1>
-        <p style={{ opacity: .45, fontSize: 16, maxWidth: 500, lineHeight: 1.7, margin: '0 auto' }}>
+        <p style={{ color: '#fff', fontSize: 16, maxWidth: 500, lineHeight: 1.7, margin: '0 auto' }}>
           {hebrewFonts.length} פונטים עבריים חינמיים לשימוש מסחרי.
           לחץ על preview לעריכה חיה — ואז הורד מהמקור המקורי.
         </p>

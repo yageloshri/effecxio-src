@@ -247,7 +247,7 @@ export const libraries: Library[] = [
   {
     id: 'three',
     name: 'Three.js',
-    descriptionHe: '3D בbrowser. WebGL בלי להגעיל. Scenes, materials, lights — הכל.',
+    descriptionHe: '3D בבראוזר. WebGL פשוט ואלגנטי. Scenes, materials, lights — הכל.',
     npm: 'three',
     stars: '102k',
     category: '3d',

@@ -4,9 +4,9 @@ import Header from '@/components/Header';
 import MobileBottomNav from '@/components/mobile/MobileBottomNav';
 
 export const metadata: Metadata = {
-  title: 'Effects Lab — ספריית אפקטים לאתרים',
+  title: 'Effecxio — ספריית אפקטים לאתרים',
   description: 'כל האפקטים שיהפכו את האתר שלך לבלתי נשכח',
-  openGraph: { title: 'Effects Lab', type: 'website' },
+  openGraph: { title: 'Effecxio', type: 'website' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -114,12 +114,12 @@ export default function TemplatesPage() {
       {/* Header */}
       <div style={{ textAlign: 'center', padding: '120px 24px 60px', direction: 'rtl' }}>
         <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          background: 'rgba(200,245,59,0.08)', border: '1px solid rgba(200,245,59,0.2)',
-          borderRadius: 100, padding: '4px 14px', fontSize: 11,
-          color: '#c8f53b', fontFamily: 'monospace', marginBottom: 20, letterSpacing: '0.05em',
+          fontSize: 13, color: '#555', marginBottom: 20,
+          fontFamily: "'Heebo', sans-serif", fontWeight: 400,
+          letterSpacing: '0.02em',
         }}>
-          {'\u2726'} 100 {'\u05d8\u05de\u05e4\u05dc\u05d9\u05d9\u05d8\u05d9\u05dd \u05de\u05d5\u05db\u05e0\u05d9\u05dd'}
+          <span style={{ color: 'var(--accent)', fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 14 }}>100</span>
+          {' \u05d8\u05de\u05e4\u05dc\u05d9\u05d9\u05d8\u05d9\u05dd \u05de\u05d5\u05db\u05e0\u05d9\u05dd'}
         </div>
         <h1 style={{
           fontSize: 'clamp(2.5rem,5vw,4rem)',
@@ -129,8 +129,8 @@ export default function TemplatesPage() {
         }}>
           {'\u05d1\u05d7\u05e8\u05d5 \u05d8\u05de\u05e4\u05dc\u05d9\u05d9\u05d8, \u05ea\u05e2\u05ea\u05d9\u05e7\u05d5 \u05d5\u05e1\u05d9\u05d9\u05de\u05ea\u05dd.'}
         </h1>
-        <p style={{ fontSize: 17, color: '#666', maxWidth: 500, margin: '0 auto 40px' }}>
-          {'100 \u05d8\u05de\u05e4\u05dc\u05d9\u05d9\u05d8\u05d9\u05dd \u05de\u05e7\u05e6\u05d5\u05e2\u05d9\u05d9\u05dd \u05dc\u05db\u05dc \u05e2\u05e1\u05e7. \u05d1\u05d7\u05e8, \u05d4\u05e2\u05ea\u05e7 \u05e4\u05e8\u05d5\u05de\u05e4\u05d8 \u05dc-Lovable, Base44 \u05d0\u05d5 Claude Code \u2014 \u05e7\u05d1\u05dc \u05d0\u05ea\u05e8 \u05de\u05e2\u05d5\u05e6\u05d1 \u05ea\u05d5\u05da \u05d3\u05e7\u05d5\u05ea.'}
+        <p style={{ fontSize: 17, color: '#fff', maxWidth: 500, margin: '0 auto 40px' }}>
+          100 טמפלייטים מקצועיים לכל עסק. בחרו, העתיקו פרומפט — קבלו אתר מעוצב תוך דקות.
         </p>
         <input
           type="text"

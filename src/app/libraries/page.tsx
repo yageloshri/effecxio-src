@@ -149,7 +149,7 @@ function LibraryCard({ lib }: { lib: Library }) {
                 <rect x="5" y="5" width="9" height="9" rx="1"/>
                 <path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2"/>
               </svg>
-              העתק פרומט ל-Lovable
+              העתק פרומפט
             </>
           )}
         </button>
@@ -239,9 +239,9 @@ export default function LibrariesPage() {
     <div style={{ background: 'var(--bg, #080808)', minHeight: '100vh', color: 'var(--text, #f0f0f0)' }}>
 
       {/* Hero */}
-      <div style={{ padding: '120px 60px 40px', maxWidth: 1400, margin: '0 auto' }}>
+      <div style={{ padding: '120px 24px 40px', maxWidth: 1400, margin: '0 auto', textAlign: 'center', direction: 'rtl' }}>
         <div style={{ fontSize: 11, letterSpacing: '.2em', textTransform: 'uppercase', opacity: .4, marginBottom: 16 }}>
-          Effects Lab
+          Effecxio
         </div>
         <h1 style={{
           fontFamily: 'Space Mono, monospace',
@@ -253,9 +253,9 @@ export default function LibrariesPage() {
           ספריות npm<br />
           <span style={{ color: 'var(--accent, #c8f53b)' }}>ל-vibe coders</span>
         </h1>
-        <p style={{ opacity: .45, fontSize: 16, maxWidth: 500, lineHeight: 1.7, direction: 'rtl' }}>
+        <p style={{ color: '#fff', fontSize: 16, maxWidth: 500, lineHeight: 1.7, direction: 'rtl', margin: '0 auto' }}>
           {libraries.length} ספריות עם preview חי. לחץ על כל אחת, ראה מה היא עושה,
-          והעתק פרומט מוכן להדביק ב-Lovable.
+          והעתק פרומט מוכן להדביק.
         </p>
       </div>
 

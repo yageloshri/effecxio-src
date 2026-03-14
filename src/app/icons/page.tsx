@@ -624,7 +624,7 @@ export default function IconsPage() {
         >
           בנק האייקונים
         </h1>
-        <p style={{ opacity: 0.5, marginTop: 8, fontSize: 15, textAlign: 'center' }}>
+        <p style={{ color: '#fff', marginTop: 8, fontSize: 15, textAlign: 'center' }}>
           {allSets.length} סטים &times; 60 אייקונים &mdash; {allSets.length * 60} SVG מקוריים
         </p>
       </div>
