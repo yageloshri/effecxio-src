@@ -60,19 +60,17 @@ export default function Card3DSection() {
   return (
     <section ref={containerRef}>
       <style>{`
-@import url('https://fonts.cdnfonts.com/css/satoshi');
-
 .card3d-section-wrap {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    padding: 80px 32px;
-    font-family: 'Satoshi', sans-serif;
-    --scale: clamp(180px, 18vw, 260px);
-    gap: 24px;
-    max-width: 900px;
+    padding: 80px 24px;
+    font-family: 'Heebo', sans-serif;
+    --scale: clamp(120px, 13vw, 170px);
+    gap: 0;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -89,6 +87,7 @@ export default function Card3DSection() {
     cursor: pointer;
     text-decoration: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 12px;
 }
 .card-3d-anim:hover {
     transform: translateY(-6px) scale(1.02);
@@ -109,19 +108,25 @@ export default function Card3DSection() {
     position: absolute;
     width: 100%;
     height: 100%;
-    bottom: -5%;
+    bottom: -10%;
     display: flex;
     justify-content: center;
     align-items: center;
+    perspective: 800px;
 }
 .card-3d-anim .card3d-model img {
-    max-width: 70%;
-    max-height: 75%;
+    max-width: 75%;
+    max-height: 80%;
     object-fit: contain;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+    /* Default: image sticks OUT of the card — tilted forward, pushed up */
+    transform: perspective(800px) rotateX(30deg) translateY(-30px) scale(1.05);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
+    filter: brightness(0.85) drop-shadow(0 8px 20px rgba(0,0,0,0.3));
 }
 .card-3d-anim:hover .card3d-model img {
-    transform: scale(1.1) translateY(-8px);
+    /* Hover: image sinks INTO the card pocket — flattens, moves down */
+    transform: perspective(800px) rotateX(0deg) translateY(5px) scale(0.92);
+    filter: brightness(1.05) drop-shadow(0 4px 12px rgba(0,0,0,0.2));
 }
 
 .card-3d-anim .card3d-glass {
@@ -141,9 +146,9 @@ export default function Card3DSection() {
     bottom: 0;
     top: unset;
     height: fit-content;
-    padding: 12px 20px 16px;
+    padding: 12px 16px 16px;
     direction: rtl;
-    text-align: right;
+    text-align: center;
     width: 100%;
 }
 .card-3d-anim .card3d-content h2 {
@@ -152,7 +157,7 @@ export default function Card3DSection() {
     line-height: 124%;
     font-weight: 700;
     font-family: 'Heebo', sans-serif;
-    font-size: 17px;
+    font-size: 22px;
 }
 .card-3d-anim .card3d-content p {
     margin: 0;
@@ -216,26 +221,40 @@ export default function Card3DSection() {
     mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p8), rgba(0,0,0,1) var(--p9));
 }
 
+@media (max-width: 1024px) {
+    .card3d-section-wrap {
+        flex-wrap: wrap;
+        --scale: clamp(140px, 28vw, 180px);
+        gap: 8px;
+        padding: 60px 16px;
+    }
+    .card-3d-anim {
+        margin: 6px;
+        height: 300px;
+    }
+}
 @media (max-width: 768px) {
     .card3d-section-wrap {
         --scale: clamp(140px, 42vw, 180px);
-        gap: 12px;
+        gap: 8px;
         padding: 60px 16px;
     }
     .card-3d-anim {
         height: 280px;
+        margin: 4px;
     }
-    .card-3d-anim .card3d-content h2 { font-size: 15px; }
+    .card-3d-anim .card3d-content h2 { font-size: 18px; }
     .card-3d-anim .card3d-content p { font-size: 11px; }
 }
 @media (max-width: 480px) {
     .card3d-section-wrap {
         --scale: clamp(130px, 44vw, 160px);
-        gap: 10px;
+        gap: 6px;
         padding: 48px 12px;
     }
     .card-3d-anim {
         height: 240px;
+        margin: 3px;
     }
 }
       `}</style>
