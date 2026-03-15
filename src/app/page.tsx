@@ -531,64 +531,35 @@ export default function HomePage() {
               gap: 16,
               maxWidth: 900,
               margin: '0 auto',
+              paddingBottom: 50,
               direction: 'rtl',
             }}
           >
-            {/* ── אפקטים — split button effect ── */}
-            <div style={{ position: 'relative' }}>
-              <Link
-                href="/effects"
-                className="cta-card cta-card-fx"
-                style={{
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 72,
-                  borderRadius: 16,
-                  border: '1px solid var(--border)',
-                  background: 'var(--surface)',
-                  textDecoration: 'none',
-                  overflow: 'hidden',
-                }}
-              >
-                <div className="split-half fx-split-top"><span>אפקטים</span></div>
-                <div className="split-half fx-split-bottom"><span>אפקטים</span></div>
-                <div className="split-reveal">✦ זו רק ההתחלה ✦</div>
-              </Link>
-              {/* Thought bubble */}
-              <div style={{
-                position: 'absolute',
-                top: -16,
-                right: -20,
-                transform: 'translateX(100%)',
-                zIndex: 10,
-                background: '#ffffff',
-                borderRadius: 20,
-                padding: '12px 20px',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.28), 0 1px 6px rgba(0,0,0,0.18)',
+            {/* ── פונטים — solid red/coral (moved to row 1) ── */}
+            <Link
+              href="/fonts"
+              className="cta-card cta-card-fnt"
+              style={{
+                position: 'relative',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
-                direction: 'rtl',
+                justifyContent: 'center',
+                height: 72,
+                borderRadius: 16,
+                border: 'none',
+                background: 'linear-gradient(135deg, #ff6b6b, #ef4444)',
+                textDecoration: 'none',
+                overflow: 'hidden',
+              }}
+            >
+              <span style={{
+                fontFamily: "'GveretLevin', 'Heebo', sans-serif",
+                fontWeight: 400, fontSize: 24,
+                color: '#fff',
               }}>
-                <div style={{
-                  position: 'absolute', left: -10, top: '50%', marginTop: -3,
-                  width: 6, height: 6, borderRadius: '50%',
-                  background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
-                }} />
-                <div style={{
-                  position: 'absolute', left: -20, top: '50%', marginTop: -5,
-                  width: 4, height: 4, borderRadius: '50%',
-                  background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
-                }} />
-                <span style={{ fontSize: 16, lineHeight: 1 }}>😏</span>
-                <span style={{
-                  fontSize: 14, fontWeight: 700, color: '#111111',
-                  fontFamily: "'Heebo', sans-serif", lineHeight: 1.3, whiteSpace: 'nowrap',
-                }}>כן כן, גם האפקט הזה אצלנו</span>
-              </div>
-            </div>
+                פונטים
+              </span>
+            </Link>
 
             {/* ── תבניות — solid purple ── */}
             <Link
@@ -657,32 +628,6 @@ export default function HomePage() {
               </span>
             </Link>
 
-            {/* ── פונטים — solid red/coral ── */}
-            <Link
-              href="/fonts"
-              className="cta-card cta-card-fnt"
-              style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 72,
-                borderRadius: 16,
-                border: 'none',
-                background: 'linear-gradient(135deg, #ff6b6b, #ef4444)',
-                textDecoration: 'none',
-                overflow: 'hidden',
-              }}
-            >
-              <span style={{
-                fontFamily: "'GveretLevin', 'Heebo', sans-serif",
-                fontWeight: 400, fontSize: 24,
-                color: '#fff',
-              }}>
-                פונטים
-              </span>
-            </Link>
-
             {/* ── ספיישלים — solid amber/orange ── */}
             <Link
               href="/specials"
@@ -711,6 +656,68 @@ export default function HomePage() {
                 ספיישלים
               </span>
             </Link>
+
+            {/* ── אפקטים — split-reveal green (row 2 middle) ── */}
+            <div style={{ position: 'relative' }}>
+              <Link
+                href="/effects"
+                className="cta-card cta-card-fx"
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 72,
+                  borderRadius: 16,
+                  border: '1px solid rgba(200,245,59,0.15)',
+                  background: 'var(--surface)',
+                  textDecoration: 'none',
+                  overflow: 'hidden',
+                }}
+              >
+                <div className="split-half fx-split-top"><span>אפקטים</span></div>
+                <div className="split-half fx-split-bottom"><span>אפקטים</span></div>
+                <div className="split-reveal">גלה עכשיו →</div>
+              </Link>
+
+              {/* Bubble tag — below the card */}
+              <div
+                className="cta-fx-bubble"
+                style={{
+                  position: 'absolute',
+                  bottom: -44,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  whiteSpace: 'nowrap',
+                  background: '#fff',
+                  color: '#1a1a1a',
+                  fontFamily: "'Heebo', sans-serif",
+                  fontWeight: 600,
+                  fontSize: 12,
+                  padding: '6px 14px',
+                  borderRadius: 20,
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+                  zIndex: 10,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <span>כן כן, גם האפקט הזה אצלנו</span>
+                <span style={{ fontSize: 14 }}>😏</span>
+                {/* Dots pointing up */}
+                <div style={{
+                  position: 'absolute', top: -6, left: '50%', transform: 'translateX(-50%)',
+                  width: 10, height: 10, background: '#fff', borderRadius: '50%',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                }} />
+                <div style={{
+                  position: 'absolute', top: -12, left: '50%', transform: 'translateX(-30%)',
+                  width: 6, height: 6, background: '#fff', borderRadius: '50%',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                }} />
+              </div>
+            </div>
 
             {/* ── ספריות — solid emerald/green ── */}
             <Link

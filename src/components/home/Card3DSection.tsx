@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const CARDS = [
@@ -56,30 +56,57 @@ const CARDS = [
 
 export default function Card3DSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileVisible, setMobileVisible] = useState<Set<number>>(new Set());
+  const mobileCardsRef = useRef<(HTMLElement | null)[]>([]);
 
-  // Scroll-triggered animation for mobile
+  // Desktop: stagger slide-up
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    if (!isMobile) return;
+    const el = containerRef.current;
+    if (!el || isMobile) return;
 
-    const cards = containerRef.current?.querySelectorAll('.card-3d-anim');
-    if (!cards) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  // Mobile: detect + per-card scroll animation
+  useEffect(() => {
+    const mobile = window.innerWidth <= 768;
+    setIsMobile(mobile);
+    if (!mobile) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('card3d-in-view');
-          } else {
-            entry.target.classList.remove('card3d-in-view');
+            const idx = Number((entry.target as HTMLElement).dataset.idx);
+            setMobileVisible((prev) => new Set(prev).add(idx));
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.3 }
     );
 
-    cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
+    // Observe after a tick so initial paint is hidden
+    const timer = setTimeout(() => {
+      mobileCardsRef.current.forEach((el) => {
+        if (el) observer.observe(el);
+      });
+    }, 50);
+
+    return () => { clearTimeout(timer); observer.disconnect(); };
   }, []);
 
   return (
@@ -111,11 +138,7 @@ export default function Card3DSection() {
     align-items: center;
     cursor: pointer;
     text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin: 0;
-}
-.card-3d-anim:hover {
-    transform: translateY(-6px) scale(1.02);
 }
 
 .card-3d-anim .card3d-overflow {
@@ -249,6 +272,10 @@ export default function Card3DSection() {
     mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p8), rgba(0,0,0,1) var(--p9));
 }
 
+.card-3d-anim:hover {
+    transform: translateY(-6px) scale(1.02) !important;
+}
+
 /* Thought bubble tag */
 /* Thought bubble — sits inside the flex row, to the right of the cards */
 .card3d-bubble {
@@ -299,55 +326,63 @@ export default function Card3DSection() {
     box-shadow: 0 1px 6px rgba(0,0,0,0.2);
 }
 
-@media (max-width: 1024px) {
-    .card3d-section-wrap {
-        flex-wrap: wrap;
-        --scale: clamp(140px, 28vw, 180px);
-        gap: 16px;
-        padding: 60px 16px 20px;
-    }
-    .card-3d-anim {
-        margin: 0;
-        height: 300px;
-    }
-    /* Hide desktop bubble, show mobile bubble */
+/* Mobile: hide desktop cards, show mobile list */
+@media (max-width: 768px) {
+    .card3d-section-wrap { display: none !important; }
+    .card3d-mobile-list { display: flex !important; }
     .card3d-bubble-desktop { display: none !important; }
     .card3d-bubble-mobile { display: flex !important; }
 }
-@media (max-width: 768px) {
-    .card3d-section-wrap {
-        display: grid !important;
-        grid-template-columns: repeat(3, 1fr);
-        --scale: auto;
-        gap: 12px;
-        padding: 60px 16px 20px;
-    }
-    .card-3d-anim {
-        width: 100% !important;
-        min-width: unset !important;
-        height: 260px;
-        margin: 0;
-    }
-    /* Scroll-triggered animation instead of hover */
-    .card-3d-anim .card3d-model img {
-        transform: rotateY(22deg) rotateX(18deg) translateY(-30px) scale(1.02);
-    }
-    .card-3d-anim.card3d-in-view .card3d-model img {
-        transform: rotateY(0deg) rotateX(-5deg) translateY(4px) scale(0.93);
-    }
-    .card-3d-anim .card3d-content h2 { font-size: 16px; }
-    .card-3d-anim .card3d-content p { font-size: 10px; }
+
+/* Mobile card list */
+.card3d-mobile-list {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 20px;
+    max-width: 400px;
+    margin: 0 auto;
 }
-@media (max-width: 480px) {
-    .card3d-section-wrap {
-        gap: 10px;
-        padding: 48px 12px 16px;
-    }
-    .card-3d-anim {
-        height: 220px;
-    }
-    .card-3d-anim .card3d-content h2 { font-size: 14px; }
-    .card-3d-anim .card3d-content p { font-size: 9px; }
+.card3d-mobile-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: var(--surface, #0a0a0a);
+    border: 1px solid rgba(255,255,255,0.06);
+    text-decoration: none;
+    direction: rtl;
+    will-change: transform, opacity;
+}
+.card3d-mobile-item .card3d-m-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.card3d-mobile-item .card3d-m-text {
+    flex: 1;
+}
+.card3d-mobile-item .card3d-m-text h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Heebo', sans-serif;
+    line-height: 1.2;
+}
+.card3d-mobile-item .card3d-m-text p {
+    margin: 0;
+    font-size: 12px;
+    font-family: 'Heebo', sans-serif;
+    line-height: 1.5;
+    opacity: 0.5;
+    color: #fff;
+}
+.card3d-mobile-item .card3d-m-arrow {
+    font-size: 18px;
+    opacity: 0.3;
+    flex-shrink: 0;
 }
       `}</style>
 
@@ -359,7 +394,7 @@ export default function Card3DSection() {
           <span className="card3d-bubble-emoji">✨</span>
           <span className="card3d-bubble-text">גם האפקט הזה נלקח מהאתר</span>
         </div>
-        {CARDS.map((card) => (
+        {CARDS.map((card, i) => (
           <Link
             key={card.href}
             href={card.href}
@@ -367,6 +402,9 @@ export default function Card3DSection() {
             style={{
               background: card.clr,
               boxShadow: `1px 1px 3px ${card.fclr}22, 12px 42px 24px -8px ${card.fclr}11, 10px 24px 42px 0 ${card.fclr}11, 1px 4px 12px 0 ${card.fclr}18`,
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(40px)',
+              transition: `opacity 0.5s ease ${i * 100}ms, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${i * 100}ms`,
             }}
           >
             <div className="card3d-overflow">
@@ -388,6 +426,39 @@ export default function Card3DSection() {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Mobile list — alternating slide-in */}
+      <div className="card3d-mobile-list">
+        {CARDS.map((card, i) => {
+          const isVisible = mobileVisible.has(i);
+          const fromRight = i % 2 === 0;
+          return (
+            <Link
+              key={card.href}
+              href={card.href}
+              className="card3d-mobile-item"
+              ref={(el) => { mobileCardsRef.current[i] = el; }}
+              data-idx={i}
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible
+                  ? 'translateX(0)'
+                  : fromRight ? 'translateX(60px)' : 'translateX(-60px)',
+                transition: 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                borderColor: isVisible ? `${card.fclr}30` : 'rgba(255,255,255,0.06)',
+                boxShadow: isVisible ? `0 0 20px ${card.fclr}10` : 'none',
+              }}
+            >
+              <div className="card3d-m-dot" style={{ background: card.fclr }} />
+              <div className="card3d-m-text">
+                <h3 style={{ color: card.fclr }}>{card.title}</h3>
+                <p>{card.description}</p>
+              </div>
+              <span className="card3d-m-arrow">←</span>
+            </Link>
+          );
+        })}
       </div>
 
       {/* Mobile bubble — below cards */}

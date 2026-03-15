@@ -469,8 +469,8 @@ export default function HowItWorks() {
           height: '70vh',
         }}>
           <div style={{ position: 'relative', height: '100%' }}>
-            {/* Thought bubble */}
-            <div style={{
+            {/* Thought bubble — desktop only */}
+            <div className="hiw-bubble-desktop" style={{
               position: 'absolute',
               bottom: -20,
               left: -30,
@@ -485,7 +485,6 @@ export default function HowItWorks() {
               gap: 8,
               direction: 'rtl',
             }}>
-              {/* Dots pointing right toward the code panel */}
               <div style={{
                 position: 'absolute', right: -10, top: '50%', marginTop: -3,
                 width: 6, height: 6, borderRadius: '50%',
@@ -526,6 +525,41 @@ export default function HowItWorks() {
         </div>
       </div>
 
+      {/* Thought bubble — mobile only, below the section */}
+      <div className="hiw-bubble-mobile" style={{
+        display: 'none',
+        justifyContent: 'center',
+        padding: '20px 0 0',
+      }}>
+        <div style={{
+          position: 'relative',
+          background: '#ffffff',
+          borderRadius: 20,
+          padding: '12px 20px',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.28), 0 1px 6px rgba(0,0,0,0.18)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          direction: 'rtl',
+        }}>
+          <div style={{
+            position: 'absolute', top: -8, right: '50%',
+            width: 6, height: 6, borderRadius: '50%',
+            background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
+          }} />
+          <div style={{
+            position: 'absolute', top: -18, right: 'calc(50% + 6px)',
+            width: 4, height: 4, borderRadius: '50%',
+            background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
+          }} />
+          <span style={{ fontSize: 16, lineHeight: 1 }}>✨</span>
+          <span style={{
+            fontSize: 14, fontWeight: 700, color: '#111111',
+            fontFamily: "'Heebo', sans-serif", lineHeight: 1.3, whiteSpace: 'nowrap',
+          }}>גם האפקט הזה נמצא אצלנו</span>
+        </div>
+      </div>
+
       {/* CSS */}
       <style>{`
         @keyframes hiw-blink {
@@ -545,6 +579,8 @@ export default function HowItWorks() {
             top: auto !important;
             height: 400px !important;
           }
+          .hiw-bubble-desktop { display: none !important; }
+          .hiw-bubble-mobile { display: flex !important; }
         }
       `}</style>
     </section>

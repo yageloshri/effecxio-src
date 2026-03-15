@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated icon libraries (use download-icons.sh to regenerate)
+/public/icon-libraries/

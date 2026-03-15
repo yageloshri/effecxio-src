@@ -299,7 +299,7 @@ export default function Hero() {
               marginBottom: 24,
             }}
           >
-            Effecxio
+            <span style={{ color: '#ffffff' }}>Effec</span><span style={{ color: 'var(--accent)' }}>x</span><span style={{ color: '#ffffff' }}>io</span>
           </motion.div>
         )}
 
