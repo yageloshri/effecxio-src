@@ -469,6 +469,40 @@ export default function HowItWorks() {
           height: '70vh',
         }}>
           <div style={{ position: 'relative', height: '100%' }}>
+            {/* Thought bubble */}
+            <div style={{
+              position: 'absolute',
+              bottom: -20,
+              left: -30,
+              transform: 'translateX(-100%)',
+              zIndex: 10,
+              background: '#ffffff',
+              borderRadius: 20,
+              padding: '14px 22px',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.28), 0 1px 6px rgba(0,0,0,0.18)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              direction: 'rtl',
+            }}>
+              {/* Dots pointing right toward the code panel */}
+              <div style={{
+                position: 'absolute', right: -10, top: '50%', marginTop: -3,
+                width: 6, height: 6, borderRadius: '50%',
+                background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
+              }} />
+              <div style={{
+                position: 'absolute', right: -20, top: '50%', marginTop: -5,
+                width: 4, height: 4, borderRadius: '50%',
+                background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
+              }} />
+              <span style={{ fontSize: 18, lineHeight: 1 }}>✨</span>
+              <span style={{
+                fontSize: 15, fontWeight: 700, color: '#111111',
+                fontFamily: "'Heebo', sans-serif", lineHeight: 1.3, whiteSpace: 'nowrap',
+              }}>גם האפקט הזה נמצא אצלנו</span>
+            </div>
+
             {STEPS.map((step, i) => (
               <div
                 key={i}

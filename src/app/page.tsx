@@ -535,26 +535,60 @@ export default function HomePage() {
             }}
           >
             {/* ── אפקטים — split button effect ── */}
-            <Link
-              href="/effects"
-              className="cta-card cta-card-fx"
-              style={{
-                position: 'relative',
+            <div style={{ position: 'relative' }}>
+              <Link
+                href="/effects"
+                className="cta-card cta-card-fx"
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 72,
+                  borderRadius: 16,
+                  border: '1px solid var(--border)',
+                  background: 'var(--surface)',
+                  textDecoration: 'none',
+                  overflow: 'hidden',
+                }}
+              >
+                <div className="split-half fx-split-top"><span>אפקטים</span></div>
+                <div className="split-half fx-split-bottom"><span>אפקטים</span></div>
+                <div className="split-reveal">✦ זו רק ההתחלה ✦</div>
+              </Link>
+              {/* Thought bubble */}
+              <div style={{
+                position: 'absolute',
+                top: -16,
+                right: -20,
+                transform: 'translateX(100%)',
+                zIndex: 10,
+                background: '#ffffff',
+                borderRadius: 20,
+                padding: '12px 20px',
+                boxShadow: '0 4px 24px rgba(0,0,0,0.28), 0 1px 6px rgba(0,0,0,0.18)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                height: 72,
-                borderRadius: 16,
-                border: '1px solid var(--border)',
-                background: 'var(--surface)',
-                textDecoration: 'none',
-                overflow: 'hidden',
-              }}
-            >
-              <div className="split-half fx-split-top"><span>אפקטים</span></div>
-              <div className="split-half fx-split-bottom"><span>אפקטים</span></div>
-              <div className="split-reveal">✦ זו רק ההתחלה ✦</div>
-            </Link>
+                gap: 8,
+                direction: 'rtl',
+              }}>
+                <div style={{
+                  position: 'absolute', left: -10, top: '50%', marginTop: -3,
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
+                }} />
+                <div style={{
+                  position: 'absolute', left: -20, top: '50%', marginTop: -5,
+                  width: 4, height: 4, borderRadius: '50%',
+                  background: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.2)',
+                }} />
+                <span style={{ fontSize: 16, lineHeight: 1 }}>😏</span>
+                <span style={{
+                  fontSize: 14, fontWeight: 700, color: '#111111',
+                  fontFamily: "'Heebo', sans-serif", lineHeight: 1.3, whiteSpace: 'nowrap',
+                }}>כן כן, גם האפקט הזה אצלנו</span>
+              </div>
+            </div>
 
             {/* ── תבניות — solid purple ── */}
             <Link

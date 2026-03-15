@@ -23,10 +23,10 @@ export default function Footer() {
               fontFamily: "'Space Mono', monospace",
               fontWeight: 700,
               fontSize: 18,
-              color: 'var(--accent)',
+              color: '#ffffff',
             }}
           >
-            Effecxio
+            Effec<span style={{ color: 'var(--accent)' }}>x</span>io
           </span>
         </div>
 
@@ -42,28 +42,6 @@ export default function Footer() {
           נבנה באהבה רבה לקהילת ה-vibe coders בישראל 🇮🇱
         </p>
 
-        {/* Links row */}
-        <div
-          style={{
-            fontSize: 12,
-            color: 'var(--muted)',
-            fontFamily: "'Heebo', sans-serif",
-          }}
-        >
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: 'var(--muted)',
-              textDecoration: 'none',
-            }}
-          >
-            GitHub
-          </a>
-          <span style={{ margin: '0 8px' }}>&middot;</span>
-          <span>גרסה 2.0</span>
-        </div>
       </div>
     </footer>
   );
