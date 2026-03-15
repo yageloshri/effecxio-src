@@ -7,7 +7,7 @@ import { PreviewStateContext } from '@/context/PreviewStateContext';
 import FilmGrain from '@/components/home/FilmGrain';
 import Hero from '@/components/Hero';
 import DevTestimonials from '@/components/DevTestimonials';
-import Card3D from '@/components/home/Card3D';
+import Card3DSection from '@/components/home/Card3DSection';
 import HowItWorks from '@/components/home/HowItWorks';
 import CountUp from '@/components/home/CountUp';
 import Footer from '@/components/Footer';
@@ -64,92 +64,8 @@ export default function HomePage() {
       <Hero />
       <DevTestimonials />
 
-      {/* ═══════════════ SECTION 2 — Tool Cards ═══════════════ */}
-      <section style={{ background: 'var(--bg)', padding: '100px 32px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', direction: 'rtl', textAlign: 'center' }}>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontWeight: 900,
-              fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-              color: 'var(--text)',
-              marginBottom: 12,
-            }}
-          >
-            מה תמצאו ב-Effecxio
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            style={{
-              fontFamily: "'Heebo', sans-serif",
-              fontSize: 16,
-              color: '#fff',
-              marginBottom: 48,
-            }}
-          >
-            כל מה שצריך לבנות אתר מרשים — מאורגן, מוכן להעתקה, ועובד עם כל AI.
-          </motion.p>
-
-          <div
-            className="cards-3d-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 24,
-            }}
-          >
-            <Card3D
-              href="/effects"
-              image="/images/fx.png"
-              title="אפקטים"
-              description="למעלה מ-110 אפקטי CSS ו-JS מוכנים להעתקה. אנימציות, מעברים, רקעים ועוד."
-              color="#c8f53b"
-            />
-            <Card3D
-              href="/templates"
-              image="/images/templates.png"
-              title="טמפלייטים"
-              description="תבניות אתר מוכנות: Landing pages, dashboards, portfolios — העתק והתחל לבנות."
-              color="#a855f7"
-            />
-            <Card3D
-              href="/specials"
-              image="/images/speacils.png"
-              title="ספיישלים"
-              description="46 אפקטים מיוחדים ומרשימים. אנימציות 3D, מעברים מורכבים ועוד."
-              color="#f59e0b"
-            />
-            <Card3D
-              href="/icons"
-              image="/images/icons.png"
-              title="אייקונים"
-              description="480+ אייקונים בסגנון אחיד. SVG נקי שאפשר להדביק ישר בקוד."
-              color="#38bdf8"
-            />
-            <Card3D
-              href="/fonts"
-              image="/images/fonts.png"
-              title="פונטים"
-              description="זוגות פונטים שעובדים יחד. עברית ואנגלית, עם הוראות שימוש."
-              color="#ff6b6b"
-            />
-            <Card3D
-              href="/libraries"
-              image="/images/libraries.png"
-              title="ספריות"
-              description="הספריות הכי שימושיות לפיתוח. מוכן להעתקה עם פרומפט מותאם."
-              color="#10b981"
-            />
-          </div>
-        </div>
-      </section>
+      {/* ═══════════════ SECTION 2 — 3D Card Animation ═══════════════ */}
+      <Card3DSection />
 
       {/* ═══════════════ SECTION 3 — How It Works ═══════════════ */}
       <HowItWorks />
