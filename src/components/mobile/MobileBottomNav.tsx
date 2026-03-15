@@ -85,21 +85,23 @@ export default function MobileBottomNav() {
   }, [pathname, router]);
 
   return (
-    <nav className="mobile-bottom-nav" role="navigation" aria-label="ניווט ראשי">
-      {NAV_ITEMS.map((item) => {
-        const isActive = pathname === item.href;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`mobile-nav-item ${isActive ? 'active' : ''}`}
-            aria-current={isActive ? 'page' : undefined}
-          >
-            {item.icon}
-            <span>{item.label}</span>
-          </Link>
-        );
-      })}
+    <nav className="mobile-bottom-nav" role="navigation" aria-label="ניווט ראשי" data-scroll-horizontal>
+      <div className="mobile-bottom-nav-scroll">
+        {NAV_ITEMS.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`mobile-nav-item ${isActive ? 'active' : ''}`}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }
