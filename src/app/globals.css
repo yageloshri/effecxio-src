@@ -23,11 +23,17 @@
   padding: 0;
 }
 
+html {
+  background-color: #050505;
+  overscroll-behavior-y: none;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Heebo', sans-serif;
   direction: rtl;
+  overscroll-behavior-y: none;
 }
 
 ::-webkit-scrollbar {

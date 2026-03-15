@@ -134,9 +134,9 @@ export default function Header() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
+      className="fixed top-0 left-0 right-0 z-50"
       style={{
-        background: 'rgba(5, 5, 5, 0.85)',
+        background: '#050505',
         borderBottom: '1px solid var(--border)',
         height: 64,
       }}
