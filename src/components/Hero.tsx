@@ -234,7 +234,7 @@ export default function Hero() {
         .hero-deco-line {
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(200, 245, 59, 0.3), transparent);
-          animation: hero-line-grow 1.2s ease-out 0.8s both;
+          animation: hero-line-grow 0.5s ease-out 0.05s both;
           transform-origin: center;
         }
 
@@ -289,7 +289,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.3, delay: 0 }}
             style={{
               fontFamily: "'Space Mono', monospace",
               fontWeight: 700,
@@ -318,7 +318,7 @@ export default function Hero() {
           }}
           initial={prefersReduced ? {} : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.4, delay: 0, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           תפסיקו לבנות
         </motion.div>
@@ -337,7 +337,7 @@ export default function Hero() {
           }}
           initial={prefersReduced ? {} : { opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.4, delay: 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           אתרים גנריים
         </motion.div>
@@ -361,7 +361,7 @@ export default function Hero() {
           }}
           initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.35, delay: 0.1 }}
         >
           <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 400 }}>
             קולקציית אפקטים מקצועיים שאתה פשוט מעתיק ומדביק.
@@ -389,7 +389,7 @@ export default function Hero() {
           style={{ marginBottom: 48 }}
           initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          transition={{ duration: 0.35, delay: 0.15 }}
         >
           <button
             onClick={scrollToFeatured}
@@ -452,7 +452,7 @@ export default function Hero() {
           className="hero-stats flex items-center justify-center gap-10"
           initial={prefersReduced ? {} : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.85 }}
+          transition={{ duration: 0.35, delay: 0.2 }}
         >
           {[
             { value: 110, suffix: '', label: 'אפקטים' },
@@ -504,7 +504,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1 }}
+            transition={{ duration: 0.3, delay: 0.25 }}
             style={{
               display: 'flex',
               flexWrap: 'wrap',
