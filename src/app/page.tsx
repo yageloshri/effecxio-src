@@ -7,7 +7,7 @@ import { PreviewStateContext } from '@/context/PreviewStateContext';
 import FilmGrain from '@/components/home/FilmGrain';
 import Hero from '@/components/Hero';
 import DevTestimonials from '@/components/DevTestimonials';
-import SpotlightCard from '@/components/home/SpotlightCard';
+import Card3D from '@/components/home/Card3D';
 import HowItWorks from '@/components/home/HowItWorks';
 import CountUp from '@/components/home/CountUp';
 import Footer from '@/components/Footer';
@@ -98,35 +98,54 @@ export default function HomePage() {
           </motion.p>
 
           <div
+            className="cards-3d-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 20,
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 24,
             }}
           >
-            <SpotlightCard
+            <Card3D
               href="/effects"
-              icon={<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>}
+              image="/images/fx.png"
               title="אפקטים"
               description="למעלה מ-110 אפקטי CSS ו-JS מוכנים להעתקה. אנימציות, מעברים, רקעים ועוד."
+              color="#c8f53b"
             />
-            <SpotlightCard
+            <Card3D
               href="/templates"
-              icon={<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>}
+              image="/images/templates.png"
               title="טמפלייטים"
               description="תבניות אתר מוכנות: Landing pages, dashboards, portfolios — העתק והתחל לבנות."
+              color="#a855f7"
             />
-            <SpotlightCard
+            <Card3D
+              href="/specials"
+              image="/images/speacils.png"
+              title="ספיישלים"
+              description="46 אפקטים מיוחדים ומרשימים. אנימציות 3D, מעברים מורכבים ועוד."
+              color="#f59e0b"
+            />
+            <Card3D
               href="/icons"
-              icon={<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>}
+              image="/images/icons.png"
               title="אייקונים"
               description="480+ אייקונים בסגנון אחיד. SVG נקי שאפשר להדביק ישר בקוד."
+              color="#38bdf8"
             />
-            <SpotlightCard
+            <Card3D
               href="/fonts"
-              icon={<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>}
+              image="/images/fonts.png"
               title="פונטים"
               description="זוגות פונטים שעובדים יחד. עברית ואנגלית, עם הוראות שימוש."
+              color="#ff6b6b"
+            />
+            <Card3D
+              href="/libraries"
+              image="/images/libraries.png"
+              title="ספריות"
+              description="הספריות הכי שימושיות לפיתוח. מוכן להעתקה עם פרומפט מותאם."
+              color="#10b981"
             />
           </div>
         </div>

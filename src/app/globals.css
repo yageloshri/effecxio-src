@@ -90,3 +90,77 @@ body {
 [data-preview-state="active"] * {
   animation-play-state: running;
 }
+
+/* ── 3D Card gradient blur (from 3D Card Animation special) ── */
+.gradient-blur-card {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  inset: auto 0 0 0;
+  pointer-events: none;
+}
+.gradient-blur-card > div,
+.gradient-blur-card::before,
+.gradient-blur-card::after {
+  position: absolute;
+  inset: 0;
+  --p1: 0%; --p2: 12.5%; --p3: 25%; --p4: 37.5%;
+  --p5: 50%; --p6: 62.5%; --p7: 75%; --p8: 87.5%; --p9: 100%;
+}
+.gradient-blur-card::before {
+  content: "";
+  z-index: 1;
+  backdrop-filter: blur(0.5px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p1), rgba(0,0,0,1) var(--p2), rgba(0,0,0,1) var(--p3), rgba(0,0,0,0) var(--p4));
+}
+.gradient-blur-card > div:nth-of-type(1) {
+  z-index: 2; backdrop-filter: blur(1px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p2), rgba(0,0,0,1) var(--p3), rgba(0,0,0,1) var(--p4), rgba(0,0,0,0) var(--p5));
+}
+.gradient-blur-card > div:nth-of-type(2) {
+  z-index: 3; backdrop-filter: blur(2px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p3), rgba(0,0,0,1) var(--p4), rgba(0,0,0,1) var(--p5), rgba(0,0,0,0) var(--p6));
+}
+.gradient-blur-card > div:nth-of-type(3) {
+  z-index: 4; backdrop-filter: blur(4px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p4), rgba(0,0,0,1) var(--p5), rgba(0,0,0,1) var(--p6), rgba(0,0,0,0) var(--p7));
+}
+.gradient-blur-card > div:nth-of-type(4) {
+  z-index: 5; backdrop-filter: blur(8px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p5), rgba(0,0,0,1) var(--p6), rgba(0,0,0,1) var(--p7), rgba(0,0,0,0) var(--p8));
+}
+.gradient-blur-card > div:nth-of-type(5) {
+  z-index: 6; backdrop-filter: blur(16px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p6), rgba(0,0,0,1) var(--p7), rgba(0,0,0,1) var(--p8), rgba(0,0,0,0) var(--p9));
+}
+.gradient-blur-card > div:nth-of-type(6) {
+  z-index: 7; backdrop-filter: blur(32px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p7), rgba(0,0,0,1) var(--p8), rgba(0,0,0,1) var(--p9));
+}
+.gradient-blur-card::after {
+  content: "";
+  z-index: 8; backdrop-filter: blur(64px);
+  mask: linear-gradient(to bottom, rgba(0,0,0,0) var(--p8), rgba(0,0,0,1) var(--p9));
+}
+
+/* ── 3D Card hover image lift ── */
+.card3d-img {
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+a:hover .card3d-img {
+  transform: scale(1.08) translateY(-4px);
+}
+
+/* ── 3D Card grid responsive ── */
+@media (max-width: 768px) {
+  .cards-3d-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 16px;
+  }
+}
+@media (max-width: 480px) {
+  .cards-3d-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
