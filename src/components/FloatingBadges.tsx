@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Bubble {
   text: string;
@@ -13,13 +13,13 @@ interface Bubble {
 
 const BUBBLES: Bubble[] = [
   // Bottom center — below content
-  { text: 'שיפור נראות האתר בקלות',   emoji: '★',   originX: 48, originY: 86, size: 'lg', tail: 'top-left' },
-  // Upper pair — symmetric
-  { text: '110 אפקטים מוכנים',       emoji: '✦',   originX: 19, originY: 26, size: 'md', tail: 'bottom-right' },
-  { text: 'הכל ב״העתק הדבק״',        emoji: '⌘',   originX: 71, originY: 26, size: 'md', tail: 'bottom-left' },
-  // Lower pair — symmetric
-  { text: 'מושלם לוויב קודרים',       emoji: '</>', originX: 16, originY: 50, size: 'md', tail: 'top-right' },
-  { text: '0 כאבי ראש',              emoji: '◈',   originX: 74, originY: 50, size: 'md', tail: 'top-left' },
+  { text: 'שיפור נראות האתר בקלות',   emoji: '★',   originX: 42, originY: 88, size: 'lg', tail: 'top-left' },
+  // Upper pair — pushed to edges
+  { text: '110 אפקטים מוכנים',       emoji: '✦',   originX: 4,  originY: 18, size: 'md', tail: 'bottom-right' },
+  { text: 'הכל ב״העתק הדבק״',        emoji: '⌘',   originX: 84, originY: 18, size: 'md', tail: 'bottom-left' },
+  // Lower pair — pushed to edges
+  { text: 'מושלם לוויב קודרים',       emoji: '</>', originX: 2,  originY: 52, size: 'md', tail: 'top-right' },
+  { text: '0 כאבי ראש',              emoji: '◈',   originX: 86, originY: 52, size: 'md', tail: 'top-left' },
 ];
 
 const SIZE_STYLES = {
@@ -240,8 +240,18 @@ interface FloatingBadgesProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
+const MIN_WIDTH = 1300;
+
 export default function FloatingBadges({ containerRef }: FloatingBadgesProps) {
   const mousePos = useRef({ x: -9999, y: -9999 });
+  const [wide, setWide] = useState(false);
+
+  useEffect(() => {
+    const check = () => setWide(window.innerWidth >= MIN_WIDTH);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -250,6 +260,8 @@ export default function FloatingBadges({ containerRef }: FloatingBadgesProps) {
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
+
+  if (!wide) return null;
 
   return (
     <>
