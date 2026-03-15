@@ -12,14 +12,12 @@ interface Bubble {
 }
 
 const BUBBLES: Bubble[] = [
-  // Bottom center — below content
-  { text: 'שיפור נראות האתר בקלות',   emoji: '★',   originX: 42, originY: 88, size: 'lg', tail: 'top-left' },
   // Upper pair — pushed to edges
-  { text: '110 אפקטים מוכנים',       emoji: '✦',   originX: 4,  originY: 18, size: 'md', tail: 'bottom-right' },
-  { text: 'הכל ב״העתק הדבק״',        emoji: '⌘',   originX: 84, originY: 18, size: 'md', tail: 'bottom-left' },
+  { text: '110 אפקטים מוכנים',       emoji: '✦',   originX: 2,  originY: 18, size: 'md', tail: 'bottom-right' },
+  { text: 'הכל ב״העתק הדבק״',        emoji: '⌘',   originX: 85, originY: 18, size: 'md', tail: 'bottom-left' },
   // Lower pair — pushed to edges
-  { text: 'מושלם לוויב קודרים',       emoji: '</>', originX: 2,  originY: 52, size: 'md', tail: 'top-right' },
-  { text: '0 כאבי ראש',              emoji: '◈',   originX: 86, originY: 52, size: 'md', tail: 'top-left' },
+  { text: 'מושלם לוויב קודרים',       emoji: '</>', originX: 1,  originY: 52, size: 'md', tail: 'top-right' },
+  { text: '0 כאבי ראש',              emoji: '◈',   originX: 87, originY: 52, size: 'md', tail: 'top-left' },
 ];
 
 const SIZE_STYLES = {
@@ -240,7 +238,7 @@ interface FloatingBadgesProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const MIN_WIDTH = 1300;
+const MIN_WIDTH = 1500;
 
 export default function FloatingBadges({ containerRef }: FloatingBadgesProps) {
   const mousePos = useRef({ x: -9999, y: -9999 });
