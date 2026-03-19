@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLAZE | Smash Burgers & Fries</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#1A0A00;--surface:#2A1508;--border:#3D2010;--fg:#FFF5EC;--fg-muted:#B89070;--red:#DC2626;--yellow:#FACC15;--display:'Archivo Black',sans-serif;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--display);font-size:1.4rem;color:var(--yellow);letter-spacing:2px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:600}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--red);color:#fff;padding:10px 22px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;font-family:var(--display);letter-spacing:1px}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text .badge{display:inline-block;padding:6px 14px;background:var(--red);border-radius:4px;font-family:var(--display);font-size:.7rem;letter-spacing:2px;margin-bottom:16px}
+.hero-text h1{font-family:var(--display);font-size:clamp(2.4rem,5vw,4rem);line-height:.95;letter-spacing:1px;margin-bottom:16px}
+.hero-text h1 .yellow{color:var(--yellow)}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px}
+.hero-btns{display:flex;gap:10px}
+.btn-red{padding:14px 28px;background:var(--red);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.92rem;font-family:var(--display);letter-spacing:1px;cursor:pointer}
+.btn-outline{padding:14px 28px;border:2px solid var(--border);border-radius:8px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-img{position:relative}
+.hero-img img{width:100%;border-radius:16px;object-fit:cover;aspect-ratio:1}
+.hero-img .flame{position:absolute;top:-20px;right:-20px;font-size:3rem;animation:flicker 1.5s infinite alternate}
+@keyframes flicker{0%{transform:scale(1) rotate(0)}100%{transform:scale(1.1) rotate(5deg)}}
+/* Menu */
+.menu{max-width:1100px;margin:0 auto;padding:60px 40px}
+.menu-header{text-align:center;margin-bottom:40px}
+.menu-header h2{font-family:var(--display);font-size:1.6rem;letter-spacing:2px;color:var(--yellow)}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.menu-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .3s}
+.menu-card:hover{transform:scale(1.02)}
+.menu-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.menu-card .info{padding:16px}
+.menu-card .info .row{display:flex;justify-content:space-between;align-items:center}
+.menu-card .info h3{font-family:var(--display);font-size:.88rem;letter-spacing:.5px}
+.menu-card .info .price{font-family:var(--display);color:var(--yellow);font-size:.95rem}
+.menu-card .info p{font-size:.75rem;color:var(--fg-muted);margin-top:4px}
+.menu-card .info .spicy{display:inline-block;margin-top:6px;font-size:.65rem;padding:2px 8px;background:rgba(220,38,38,.15);color:var(--red);border-radius:4px;font-weight:700}
+/* Specials */
+.specials{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.special-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;gap:16px;align-items:center}
+.special-card .emoji{font-size:2rem}
+.special-card h3{font-family:var(--display);font-size:.88rem;letter-spacing:.5px;margin-bottom:2px}
+.special-card p{font-size:.78rem;color:var(--fg-muted)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--red);border-radius:16px;padding:48px}
+.cta-box h2{font-family:var(--display);font-size:1.6rem;letter-spacing:2px;margin-bottom:8px;color:var(--yellow)}
+.cta-box p{opacity:.85;margin-bottom:20px;font-size:.88rem}
+.cta-box button{background:var(--yellow);color:#000;padding:14px 32px;border:none;border-radius:8px;font-weight:700;font-family:var(--display);font-size:.9rem;letter-spacing:1px;cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.hero{grid-template-columns:1fr}.menu-grid{grid-template-columns:1fr}.specials{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">BLAZE</div><div class="nav-links"><a href="#">Menu</a><a href="#">Locations</a><a href="#">Deals</a><a href="#">About</a></div><a class="nav-btn" href="#">ORDER NOW</a></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<div class="badge">NEW LOCATION OPEN</div>
+<h1>SMASH BURGERS THAT HIT <span class="yellow">DIFFERENT</span></h1>
+<p>Double-stacked, flame-kissed, and loaded with attitude. Our smash burgers are made with 100% fresh beef, never frozen.</p>
+<div class="hero-btns"><button class="btn-red">ORDER NOW</button><button class="btn-outline">See Menu</button></div>
+</div>
+<div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=500&fit=crop" alt="" loading="lazy"><div class="flame">&#128293;</div></div>
+</section>
+
+<section class="menu">
+<div class="menu-header reveal"><h2>OUR MENU</h2></div>
+<div class="menu-grid">
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>THE CLASSIC</h3><span class="price">$12</span></div><p>Double patty, American cheese, pickles, special sauce</p></div></div>
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>BLAZE MASTER</h3><span class="price">$16</span></div><p>Triple smash, bacon, jalape&ntilde;o, ghost pepper mayo</p><div class="spicy">&#128293; EXTRA HOT</div></div></div>
+<div class="menu-card reveal"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><div class="row"><h3>LOADED FRIES</h3><span class="price">$8</span></div><p>Cheese sauce, bacon bits, chives, truffle drizzle</p></div></div>
+</div>
+</section>
+
+<div class="specials reveal">
+<div class="special-card"><div class="emoji">&#127846;</div><div><h3>SHAKE IT UP</h3><p>Hand-spun milkshakes. Vanilla, chocolate, Oreo, or seasonal.</p></div></div>
+<div class="special-card"><div class="emoji">&#127839;</div><div><h3>MEAL DEALS</h3><p>Burger + fries + drink from $15. Available all day.</p></div></div>
+</div>
+
+<section class="cta"><div class="cta-box reveal"><h2>HUNGRY YET?</h2><p>Free delivery on orders over $30. Available on all platforms.</p><button>ORDER DELIVERY</button></div></section>
+
+<footer class="footer">&copy; 2025 BLAZE Burgers. Allenby 88, Tel Aviv.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

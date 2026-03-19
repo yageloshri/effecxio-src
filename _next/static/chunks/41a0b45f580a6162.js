@@ -1,0 +1,13 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,78,e=>{"use strict";var t=e.i(25764),o=e.i(45444),n=e.i(87726),i=e.i(3938);let a=`
+@keyframes magfield-cursor {
+  0%   { left: 25%; top: 50%; }
+  25%  { left: 60%; top: 30%; }
+  50%  { left: 75%; top: 60%; }
+  75%  { left: 40%; top: 70%; }
+  100% { left: 25%; top: 50%; }
+}
+@keyframes magfield-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+`,r=[];for(let e=0;e<3;e++)for(let t=0;t<5;t++)r.push({x:15+17.5*t,y:25+25*e});let s=(0,n.memo)(function(){let e,s,l,c,d,u,f,m,p=(0,o.c)(14),h=(0,i.useReducedMotion)(),y=(0,n.useRef)(null);p[0]===Symbol.for("react.memo_cache_sentinel")?(e=()=>{let e=document.createElement("style");return e.textContent=a,document.head.appendChild(e),y.current=e,()=>{y.current&&(document.head.removeChild(y.current),y.current=null)}},s=[],p[0]=e,p[1]=s):(e=p[0],s=p[1]),(0,n.useEffect)(e,s),p[2]===Symbol.for("react.memo_cache_sentinel")?(l={width:"100%",height:220,display:"flex",alignItems:"center",justifyContent:"center",background:"var(--bg)",overflow:"hidden",position:"relative"},p[2]=l):l=p[2],p[3]!==h?(c=r.map((e,o)=>(0,t.jsx)("div",{style:{position:"absolute",left:`${e.x}%`,top:`${e.y}%`,width:10,height:10,borderRadius:"50%",background:"var(--accent)",opacity:.5,transform:"translate(-50%, -50%)",animation:h?"none":`magfield-pulse ${2+o%3*.5}s ease-in-out ${.15*o}s infinite`,willChange:"transform, opacity"},children:(0,t.jsx)("div",{style:{position:"absolute",inset:-3,borderRadius:"50%",border:"1px solid var(--accent)",opacity:.2}})},o)),p[3]=h,p[4]=c):c=p[4];let b=h?"none":"magfield-cursor 5s ease-in-out infinite";p[5]!==b?(d=(0,t.jsx)("div",{style:{position:"absolute",width:12,height:12,borderRadius:"50%",background:"var(--accent2)",boxShadow:"0 0 20px var(--accent2)",pointerEvents:"none",transform:"translate(-50%, -50%)",animation:b,willChange:"left, top",zIndex:10}}),p[5]=b,p[6]=d):d=p[6];let g=h?"none":"magfield-cursor 5s ease-in-out infinite";return p[7]!==g?(u=(0,t.jsx)("div",{style:{position:"absolute",width:80,height:80,borderRadius:"50%",border:"1px solid var(--accent2)",opacity:.15,pointerEvents:"none",transform:"translate(-50%, -50%)",animation:g,willChange:"left, top",zIndex:9}}),p[7]=g,p[8]=u):u=p[8],p[9]===Symbol.for("react.memo_cache_sentinel")?(f=(0,t.jsx)("span",{style:{position:"absolute",bottom:14,fontSize:12,color:"var(--muted)",opacity:.5,pointerEvents:"none",zIndex:20},children:"Magnetic Field"}),p[9]=f):f=p[9],p[10]!==c||p[11]!==d||p[12]!==u?(m=(0,t.jsxs)("div",{style:l,children:[c,d,u,f]}),p[10]=c,p[11]=d,p[12]=u,p[13]=m):m=p[13],m});e.s(["default",0,s])}]);

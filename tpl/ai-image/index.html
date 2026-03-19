@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canvas AI | Image Generation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0A0A0F;--surface:#13131A;--surface2:#1A1A25;--border:#2A2A3A;
+--fg:#EEEEF2;--fg-muted:#8888A0;
+--p1:#A855F7;--p2:#EC4899;--p3:#F97316;--gradient:linear-gradient(135deg,#A855F7,#EC4899,#F97316);
+--sans:'Poppins',sans-serif;--mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--p1);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.3rem;font-weight:700;text-decoration:none;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--gradient);color:#fff;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none}
+
+.hero{max-width:1100px;margin:0 auto;padding:140px 40px 80px;text-align:center}
+.hero-badge{display:inline-block;background:var(--surface2);border:1px solid var(--border);padding:6px 16px;border-radius:20px;font-size:.8rem;color:var(--p1);margin-bottom:24px;font-weight:500}
+.hero h1{font-size:clamp(2.5rem,6vw,4.8rem);font-weight:800;line-height:1.1;margin-bottom:20px}
+.hero h1 .grad{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--fg-muted);max-width:560px;margin:0 auto 40px;line-height:1.7}
+
+/* Prompt Input */
+.prompt-box{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:6px;display:flex;gap:0;transition:border-color .3s}
+.prompt-box:focus-within{border-color:var(--p1)}
+.prompt-box input{flex:1;background:transparent;border:none;color:var(--fg);padding:14px 18px;font-size:.95rem;font-family:var(--sans);outline:none}
+.prompt-box input::placeholder{color:var(--fg-muted)}
+.prompt-box button{background:var(--gradient);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:var(--sans);white-space:nowrap}
+
+/* Gallery */
+.gallery{max-width:1100px;margin:60px auto 0;padding:0 40px}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gallery-item{border-radius:12px;overflow:hidden;aspect-ratio:1;position:relative;background:var(--surface)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-item .prompt-tag{
+position:absolute;bottom:0;left:0;right:0;padding:12px;
+background:linear-gradient(transparent,rgba(0,0,0,.8));
+font-size:.7rem;color:rgba(255,255,255,.8);opacity:0;transition:opacity .3s;
+font-family:var(--mono);
+}
+.gallery-item:hover .prompt-tag{opacity:1}
+
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:100px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.8rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .3s}
+.feat-card:hover{border-color:var(--p1);transform:translateY(-4px)}
+.feat-card .icon{width:44px;height:44px;border-radius:10px;background:rgba(168,85,247,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-card .icon svg{width:22px;height:22px;stroke:var(--p1);fill:none;stroke-width:2}
+.feat-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Styles Showcase */
+.styles{max-width:1100px;margin:0 auto;padding:80px 40px}
+.style-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:40px}
+.style-chip{
+background:var(--surface);border:1px solid var(--border);border-radius:10px;
+padding:16px;text-align:center;transition:all .3s;cursor:pointer;
+}
+.style-chip:hover{border-color:var(--p1);transform:translateY(-2px)}
+.style-chip .s-preview{width:60px;height:60px;border-radius:8px;margin:0 auto 10px;overflow:hidden}
+.style-chip .s-preview img{width:100%;height:100%;object-fit:cover}
+.style-chip span{font-size:.75rem;font-weight:500}
+
+/* Pricing */
+.pricing{max-width:900px;margin:0 auto;padding:80px 40px;text-align:center}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:right;transition:border-color .3s}
+.price-card:hover{border-color:var(--p1)}
+.price-card.pop{border-color:var(--p1);position:relative}
+.price-card.pop::after{content:'Best Value';position:absolute;top:-11px;right:16px;background:var(--gradient);color:#fff;font-size:.65rem;padding:3px 10px;border-radius:6px;font-weight:600}
+.pc-name{font-weight:700;margin-bottom:6px}
+.pc-price{font-size:2rem;font-weight:800;margin-bottom:4px}
+.pc-price span{font-size:.8rem;font-weight:400;color:var(--fg-muted)}
+.pc-desc{font-size:.8rem;color:var(--fg-muted);margin-bottom:16px}
+.pc-list{list-style:none;margin-bottom:20px;text-align:right}
+.pc-list li{font-size:.8rem;padding:5px 0;color:var(--fg-muted)}
+.pc-btn{display:block;padding:11px;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:600;text-align:center}
+.pc-btn.fill{background:var(--gradient);color:#fff}
+.pc-btn.out{border:1px solid var(--border);color:var(--fg)}
+
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:60px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;inset:0;background:var(--gradient);opacity:.05}
+.cta-box h2{font-size:2rem;font-weight:800;margin-bottom:12px;position:relative}
+.cta-box p{color:var(--fg-muted);margin-bottom:28px;position:relative}
+.cta-box a{display:inline-block;background:var(--gradient);color:#fff;padding:14px 32px;border-radius:10px;font-weight:700;text-decoration:none;position:relative}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.gallery-grid{grid-template-columns:repeat(2,1fr)}.feat-grid{grid-template-columns:1fr 1fr}.style-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.gallery-grid{grid-template-columns:1fr 1fr}.feat-grid,.price-grid{grid-template-columns:1fr}.style-grid{grid-template-columns:repeat(2,1fr)}.prompt-box{flex-direction:column}.prompt-box button{border-radius:10px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Canvas AI</a>
+<div class="nav-links">
+<a href="#features">Features</a><a href="#styles">Styles</a><a href="#pricing">Pricing</a>
+<a href="#" class="nav-cta">Create Free</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-badge">Powered by Diffusion 3.0</div>
+<h1>Imagine It.<br><span class="grad">Create It.</span></h1>
+<p>Turn text into stunning visuals in seconds. Professional-quality AI image generation for designers, marketers, and creators.</p>
+<div class="prompt-box">
+<input type="text" placeholder="A serene mountain lake at golden hour, oil painting style..." id="promptInput">
+<button onclick="this.textContent='Creating...';setTimeout(()=>this.textContent='Generate',2000)">Generate</button>
+</div>
+</section>
+
+<div class="gallery reveal">
+<div class="gallery-grid">
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Neon cyberpunk city at night"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1518893883800-45cd0954574b?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Abstract watercolor flowers"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Mountain lake at golden hour"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Surreal floating islands"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Geometric abstract art"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Misty forest, dreamlike"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Alpine peaks, cinematic"</div></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=400&h=400&fit=crop" alt="AI Art" loading="lazy"><div class="prompt-tag">"Retro space exploration"</div></div>
+</div>
+</div>
+
+<section class="features" id="features">
+<div class="s-center">
+<div class="s-tag reveal">Features</div>
+<div class="s-title reveal">Create Without Limits</div>
+</div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>4-Second Generation</h3><p>Our optimized pipeline generates stunning 4K images in under 4 seconds.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><h3>Inpainting & Editing</h3><p>Edit specific areas of any image. Add, remove, or modify elements with precision.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><h3>3D-Aware Generation</h3><p>Generate images with consistent 3D perspective. Control camera angle and lighting.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div><h3>Upscale to 8K</h3><p>AI upscaling maintains detail and sharpness. Print-ready quality at any size.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM8 12l4-4 4 4M12 16V8"/></svg></div><h3>Style Transfer</h3><p>Apply any artistic style to your images. From Van Gogh to anime, 50+ built-in styles.</p></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg></div><h3>API Access</h3><p>Integrate Canvas AI into your app. RESTful API with SDKs for all major languages.</p></div>
+</div>
+</section>
+
+<section class="styles" id="styles">
+<div class="s-center">
+<div class="s-tag reveal">Styles</div>
+<div class="s-title reveal">50+ Artistic Styles</div>
+</div>
+<div class="style-grid reveal">
+<div class="style-chip"><div class="s-preview"><img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=120&h=120&fit=crop" alt=""></div><span>Oil Paint</span></div>
+<div class="style-chip"><div class="s-preview"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=120&h=120&fit=crop" alt=""></div><span>Watercolor</span></div>
+<div class="style-chip"><div class="s-preview"><img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=120&h=120&fit=crop" alt=""></div><span>Abstract</span></div>
+<div class="style-chip"><div class="s-preview"><img src="https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=120&h=120&fit=crop" alt=""></div><span>Cyberpunk</span></div>
+<div class="style-chip"><div class="s-preview"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=120&fit=crop" alt=""></div><span>Cinematic</span></div>
+<div class="style-chip"><div class="s-preview"><img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=120&h=120&fit=crop" alt=""></div><span>Fantasy</span></div>
+</div>
+</section>
+
+<section class="pricing" id="pricing">
+<div class="s-center">
+<div class="s-tag reveal">Pricing</div>
+<div class="s-title reveal">Start Creating Today</div>
+</div>
+<div class="price-grid">
+<div class="price-card reveal"><div class="pc-name">Free</div><div class="pc-price">$0<span>/mo</span></div><div class="pc-desc">Try it out</div><ul class="pc-list"><li>50 images/month</li><li>1024x1024 max</li><li>Basic styles</li></ul><a href="#" class="pc-btn out">Get Started</a></div>
+<div class="price-card pop reveal"><div class="pc-name">Creator</div><div class="pc-price">$19<span>/mo</span></div><div class="pc-desc">For creators</div><ul class="pc-list"><li>2,000 images/month</li><li>4K resolution</li><li>All styles + inpainting</li><li>API access</li></ul><a href="#" class="pc-btn fill">Start Trial</a></div>
+<div class="price-card reveal"><div class="pc-name">Team</div><div class="pc-price">$49<span>/mo</span></div><div class="pc-desc">For teams</div><ul class="pc-list"><li>10,000 images/month</li><li>8K resolution</li><li>Priority generation</li><li>Custom fine-tuning</li></ul><a href="#" class="pc-btn out">Contact Us</a></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start Creating Beautiful Images</h2>
+<p>50 free images every month. No credit card required.</p>
+<a href="#">Try Canvas AI Free &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Canvas AI. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

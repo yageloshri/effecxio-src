@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ritual | Modern Cafe</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#F9F5F0;--surface:#FFF;--fg:#2C2420;--fg-muted:#8A7B6F;
+--brown:#8B6F4E;--brown-light:#F0E8DE;--green:#5B7553;--cream:#FDF8F2;
+--border:#E8DDD2;
+--serif:'Fraunces',serif;--sans:'Nunito Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--brown);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;transition:all .3s}
+.nav.scrolled{background:rgba(249,245,240,.95);backdrop-filter:blur(10px);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.nav-brand{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--brown);text-decoration:none}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:var(--brown)}
+.nav-cta{background:var(--brown);color:#fff;padding:9px 22px;border-radius:24px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:90vh;align-items:center;max-width:1200px;margin:0 auto;padding:120px 40px 80px;gap:60px}
+.hero-tag{font-size:.8rem;color:var(--brown);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-family:var(--serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.15;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--brown)}
+.hero p{color:var(--fg-muted);line-height:1.8;margin-bottom:28px}
+.hero-btns{display:flex;gap:12px}
+.btn-b{background:var(--brown);color:#fff;padding:13px 28px;border-radius:24px;font-weight:700;text-decoration:none;font-size:.9rem}
+.btn-g{background:var(--green);color:#fff;padding:13px 28px;border-radius:24px;font-weight:700;text-decoration:none;font-size:.9rem}
+.hero-img{border-radius:20px;overflow:hidden;aspect-ratio:4/5}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+
+/* Menu Highlights */
+.menu{max-width:1100px;margin:0 auto;padding:100px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.8rem;color:var(--brown);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.s-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.menu-card{background:var(--surface);border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.menu-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.menu-card .card-img{aspect-ratio:4/3;overflow:hidden}
+.menu-card .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.menu-card:hover .card-img img{transform:scale(1.05)}
+.menu-card .card-body{padding:20px}
+.menu-card h3{font-family:var(--serif);font-size:1.1rem;margin-bottom:6px}
+.menu-card p{font-size:.85rem;color:var(--fg-muted);margin-bottom:8px}
+.menu-card .price{font-family:var(--serif);font-weight:700;color:var(--brown);font-size:1rem}
+
+/* Story */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto;padding:80px 40px}
+.story-img{border-radius:20px;overflow:hidden;aspect-ratio:3/4}
+.story-img img{width:100%;height:100%;object-fit:cover}
+.story-content .s-tag{text-align:right}
+.story-content h2{font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:16px}
+.story-content p{color:var(--fg-muted);line-height:1.8;margin-bottom:12px}
+
+/* Atmosphere */
+.atmos{padding:80px 40px}
+.atmos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1100px;margin:0 auto}
+.atmos-item{border-radius:12px;overflow:hidden;aspect-ratio:1}
+.atmos-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s;filter:brightness(.9)}
+.atmos-item:hover img{transform:scale(1.05);filter:brightness(1)}
+
+/* Hours + CTA */
+.info{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.info-box{background:var(--brown-light);border-radius:20px;padding:50px;text-align:center}
+.info-box h2{font-family:var(--serif);font-size:2rem;font-weight:700;margin-bottom:20px;color:var(--brown)}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;text-align:center;margin-bottom:24px}
+.info-grid h4{font-family:var(--serif);font-size:1rem;margin-bottom:8px;color:var(--brown)}
+.info-grid p{font-size:.9rem;color:var(--fg-muted);line-height:1.8}
+.info-box a{display:inline-block;background:var(--brown);color:#fff;padding:14px 32px;border-radius:24px;font-weight:700;text-decoration:none;font-size:.9rem}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.hero,.story{grid-template-columns:1fr}.menu-grid{grid-template-columns:1fr 1fr}.atmos-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.menu-grid,.atmos-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+<a href="#" class="nav-brand">Ritual</a>
+<div class="nav-links"><a href="#menu">Menu</a><a href="#story">Our Story</a><a href="#visit">Visit</a><a href="#" class="nav-cta">Order Online</a></div>
+</nav>
+
+<section class="hero">
+<div>
+<div class="hero-tag reveal">Specialty Coffee & Kitchen</div>
+<h1 class="reveal">Your Daily<br><em>Coffee Ritual</em></h1>
+<p class="reveal">Artisan coffee, fresh pastries, and seasonal plates. A neighborhood cafe where quality meets warmth.</p>
+<div class="hero-btns reveal"><a href="#menu" class="btn-b">See Menu</a><a href="#" class="btn-g">Order Pickup</a></div>
+</div>
+<div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&h=750&fit=crop" alt="Coffee" loading="lazy"></div>
+</section>
+
+<section class="menu" id="menu">
+<div class="s-center"><div class="s-tag reveal">Menu Highlights</div><div class="s-title reveal">Crafted with Care</div></div>
+<div class="menu-grid">
+<div class="menu-card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&h=375&fit=crop" alt="" loading="lazy"></div><div class="card-body"><h3>Flat White</h3><p>Double ristretto, silky microfoam, house blend</p><div class="price">$5.50</div></div></div>
+<div class="menu-card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&h=375&fit=crop" alt="" loading="lazy"></div><div class="card-body"><h3>Avocado Toast</h3><p>Sourdough, smashed avo, poached eggs, chili flakes</p><div class="price">$16</div></div></div>
+<div class="menu-card reveal"><div class="card-img"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&h=375&fit=crop" alt="" loading="lazy"></div><div class="card-body"><h3>Cardamom Cake</h3><p>House-baked, orange glaze, whipped mascarpone</p><div class="price">$9</div></div></div>
+</div>
+</section>
+
+<section class="story" id="story">
+<div class="story-img reveal"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=500&h=660&fit=crop" alt="Barista" loading="lazy"></div>
+<div class="story-content">
+<div class="s-tag reveal">Our Story</div>
+<h2 class="reveal">From Bean to Cup</h2>
+<p class="reveal">Ritual started in 2019 with a simple belief: great coffee is a daily ritual worth celebrating. We source beans directly from farms in Ethiopia, Colombia, and Guatemala.</p>
+<p class="reveal">Every cup is roasted in-house, ground to order, and prepared by baristas who care. Our kitchen follows the same philosophy &mdash; seasonal, local, and made fresh every morning.</p>
+</div>
+</section>
+
+<div class="atmos">
+<div class="atmos-grid">
+<div class="atmos-item reveal"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=400&fit=crop" alt="" loading="lazy"></div>
+<div class="atmos-item reveal"><img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=400&fit=crop" alt="" loading="lazy"></div>
+<div class="atmos-item reveal"><img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&h=400&fit=crop" alt="" loading="lazy"></div>
+<div class="atmos-item reveal"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=400&fit=crop" alt="" loading="lazy"></div>
+</div>
+</div>
+
+<section class="info" id="visit">
+<div class="info-box reveal">
+<h2>Visit Us</h2>
+<div class="info-grid">
+<div><h4>Hours</h4><p>Sun-Thu: 7:00 - 18:00<br>Fri: 7:00 - 14:00<br>Sat: Closed</p></div>
+<div><h4>Location</h4><p>12 Dizengoff St.<br>Tel Aviv, Israel<br>+972-3-555-0190</p></div>
+</div>
+<a href="#">Get Directions</a>
+</div>
+</section>
+
+<footer>&copy; 2025 Ritual Coffee & Kitchen. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

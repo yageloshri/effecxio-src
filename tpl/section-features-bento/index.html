@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Features Bento Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#09090B;--surface:#18181B;--surface2:#27272A;--border:#3F3F46;--fg:#FAFAFA;--fg-muted:#A1A1AA;--violet:#8B5CF6;--violet-dim:rgba(139,92,246,.08);--sans:'Plus Jakarta Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.section{max-width:1000px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;color:var(--violet);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em}
+.s-desc{font-size:1rem;color:var(--fg-muted);max-width:480px;margin:12px auto 0;line-height:1.7}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:14px}
+.bento-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .3s;overflow:hidden;position:relative}
+.bento-card:hover{border-color:var(--violet);transform:translateY(-3px)}
+.bento-card.wide{grid-column:span 2}
+.bento-card.tall{grid-row:span 2}
+.bento-card .bc-icon{width:40px;height:40px;background:var(--violet-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.bento-card .bc-icon svg{width:20px;height:20px}
+.bento-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.bento-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+/* Visual elements inside cards */
+.card-visual{margin-top:16px;background:var(--surface2);border-radius:8px;padding:12px;overflow:hidden}
+.mini-chart{display:flex;align-items:flex-end;gap:3px;height:60px}
+.mini-chart .bar{flex:1;background:var(--violet);border-radius:2px;opacity:.6}
+.mini-dots{display:flex;gap:6px;flex-wrap:wrap}
+.mini-dots .dot{width:8px;height:8px;border-radius:50%;background:var(--violet);opacity:.3}
+.mini-dots .dot.active{opacity:1}
+.mini-code{font-family:monospace;font-size:.72rem;color:var(--fg-muted);line-height:1.6}
+.mini-code .kw{color:var(--violet)}
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.bento{grid-template-columns:1fr}.bento-card.wide,.bento-card.tall{grid-column:span 1;grid-row:span 1}}
+</style>
+</head>
+<body>
+<section class="section">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Everything You Need</div><div class="s-desc reveal">A modern bento grid layout showcasing features with visual elements, mixed card sizes, and smooth interactions.</div></div>
+<div class="bento">
+<div class="bento-card wide reveal"><div class="bc-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 12l4-4 3 3 5-7" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Real-Time Analytics</h3><p>Track every metric that matters with live dashboards and instant alerts.</p><div class="card-visual"><div class="mini-chart" id="chart1"></div></div></div>
+<div class="bento-card reveal"><div class="bc-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#8B5CF6" stroke-width="1.5"/><path d="M7 10h6M10 7v6" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Integrations</h3><p>Connect 200+ tools in one click.</p><div class="card-visual"><div class="mini-dots" id="dots"></div></div></div>
+<div class="bento-card reveal"><div class="bc-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#8B5CF6" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Automation</h3><p>Set it and forget it. Rules engine runs 24/7.</p></div>
+<div class="bento-card reveal"><div class="bc-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2L4 5v4c0 4.5 2.6 7 6 9 3.4-2 6-4.5 6-9V5l-6-3z" stroke="#8B5CF6" stroke-width="1.5"/></svg></div><h3>Security</h3><p>SOC 2 compliant. E2E encryption. Zero-trust architecture.</p></div>
+<div class="bento-card wide reveal"><div class="bc-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 16V6h3v10M8 16V4h3v12M13 16V8h3v8" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Developer API</h3><p>Build anything with our REST and GraphQL APIs. Full SDK support for Node, Python, Go, and Ruby.</p><div class="card-visual"><div class="mini-code"><span class="kw">const</span> data = <span class="kw">await</span> sdk.query({<br>&nbsp;&nbsp;metric: <span style="color:#86EFAC">"revenue"</span>,<br>&nbsp;&nbsp;period: <span style="color:#86EFAC">"30d"</span><br>})</div></div></div>
+</div>
+</section>
+<script>
+const isPreview=(self!==top);
+const chart1=document.getElementById('chart1');
+if(chart1){for(let i=0;i<20;i++){const b=document.createElement('div');b.className='bar';b.style.height=(20+Math.random()*80)+'%';chart1.appendChild(b)}}
+const dots=document.getElementById('dots');
+if(dots){for(let i=0;i<24;i++){const d=document.createElement('div');d.className='dot'+(Math.random()>.6?' active':'');dots.appendChild(d)}}
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

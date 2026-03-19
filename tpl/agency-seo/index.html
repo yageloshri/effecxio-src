@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RankUp | SEO Growth Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0C1015;--surface:#141A22;--border:#1F2937;--fg:#F3F4F6;--fg-muted:#6B7280;--green:#22C55E;--green-dim:rgba(34,197,94,.08);--green-dark:#15803D;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:6px}
+.nav-logo svg{width:22px;height:22px}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--green);color:#000;padding:9px 18px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:80px 40px 60px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero-text .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);border-radius:50px;font-size:.72rem;font-weight:600;color:var(--green);margin-bottom:20px}
+.hero-text .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-text h1{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin-bottom:14px}
+.hero-text h1 span{color:var(--green)}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px}
+.hero-btns{display:flex;gap:10px}
+.btn-green{padding:12px 24px;background:var(--green);color:#000;border:none;border-radius:8px;font-weight:700;font-size:.88rem;font-family:var(--sans);cursor:pointer}
+.btn-dim{padding:12px 24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+/* Chart mock */
+.hero-chart{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
+.hc-title{font-size:.78rem;color:var(--fg-muted);margin-bottom:4px}
+.hc-value{font-size:1.8rem;font-weight:800;margin-bottom:4px}
+.hc-change{font-size:.78rem;color:var(--green);font-weight:600;margin-bottom:16px}
+.hc-canvas{height:120px;position:relative}
+.hc-canvas canvas{width:100%;height:100%}
+/* Services */
+.services{max-width:1100px;margin:0 auto;padding:60px 40px}
+.sec-header{text-align:center;margin-bottom:40px}
+.sec-header .tag{font-size:.72rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.sec-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .3s}
+.svc-card:hover{border-color:var(--green)}
+.svc-card .icon{width:40px;height:40px;border-radius:8px;background:var(--green-dim);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.svc-card .icon svg{width:18px;height:18px}
+.svc-card h3{font-size:.92rem;font-weight:700;margin-bottom:6px}
+.svc-card p{font-size:.78rem;color:var(--fg-muted);line-height:1.6}
+/* Results */
+.results{max-width:1100px;margin:0 auto;padding:40px}
+.res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.res-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.res-card .num{font-size:1.8rem;font-weight:800;color:var(--green)}
+.res-card .label{font-size:.72rem;color:var(--fg-muted);margin-top:4px}
+/* Testimonials */
+.test{max-width:1100px;margin:0 auto;padding:60px 40px}
+.test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.test-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.test-card blockquote{font-size:.88rem;line-height:1.6;margin-bottom:14px;font-style:italic;color:var(--fg)}
+.test-card .author{display:flex;align-items:center;gap:10px}
+.test-card .author img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.test-card .author .name{font-weight:700;font-size:.82rem}
+.test-card .author .role{font-size:.68rem;color:var(--fg-muted)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px}
+.cta-box h2{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.hero{grid-template-columns:1fr}}
+@media(max-width:768px){.svc-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.test-grid{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo"><svg viewBox="0 0 22 22" fill="none"><path d="M4 16l5-6 3 4 6-8" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>RankUp</div><div class="nav-links"><a href="#">Services</a><a href="#">Results</a><a href="#">Pricing</a><a href="#">Blog</a></div><a class="nav-btn" href="#">Free SEO Audit</a></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<div class="badge"><div class="dot"></div>Accepting new clients</div>
+<h1>We help SaaS companies <span>dominate Google</span></h1>
+<p>RankUp is an SEO growth agency specialized in B2B SaaS. We've driven $42M+ in pipeline through organic search for our clients.</p>
+<div class="hero-btns"><button class="btn-green">Get Free SEO Audit</button><button class="btn-dim">See Results</button></div>
+</div>
+<div class="hero-chart reveal">
+<div class="hc-title">Organic Traffic</div>
+<div class="hc-value">148,320</div>
+<div class="hc-change">+287% YoY</div>
+<div class="hc-canvas"><canvas id="trafficChart"></canvas></div>
+</div>
+</section>
+
+<section class="services">
+<div class="sec-header reveal"><div class="tag">Services</div><h2>Full-stack SEO for SaaS</h2></div>
+<div class="svc-grid">
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M2 14l4-5 3 3 6-7" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Technical SEO</h3><p>Site audits, Core Web Vitals, crawlability, and structured data optimization.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M3 3h12v12H3z" stroke="#22C55E" stroke-width="1.5"/><path d="M3 7h12" stroke="#22C55E" stroke-width="1.5"/></svg></div><h3>Content Strategy</h3><p>Keyword research, content mapping, and SEO-optimized article production at scale.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2v14M5 6l4-4 4 4" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Link Building</h3><p>White-hat outreach, digital PR, and high-authority backlink acquisition.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#22C55E" stroke-width="1.5"/><path d="M9 6v3l2 2" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Conversion Optimization</h3><p>Landing page optimization, A/B testing, and funnel analysis to turn traffic into pipeline.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="3" stroke="#22C55E" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Analytics & Reporting</h3><p>Custom dashboards, monthly reporting, and data-driven recommendations.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4l2-4z" stroke="#22C55E" stroke-width="1.5"/></svg></div><h3>Programmatic SEO</h3><p>Automated page generation and templatized content for massive keyword coverage.</p></div>
+</div>
+</section>
+
+<div class="results reveal">
+<div class="res-grid">
+<div class="res-card"><div class="num">$42M+</div><div class="label">Pipeline Generated</div></div>
+<div class="res-card"><div class="num">287%</div><div class="label">Avg Traffic Growth</div></div>
+<div class="res-card"><div class="num">40+</div><div class="label">SaaS Clients</div></div>
+<div class="res-card"><div class="num">12K+</div><div class="label">Keywords Ranked #1</div></div>
+</div>
+</div>
+
+<section class="test">
+<div class="sec-header reveal"><h2>What our clients say</h2></div>
+<div class="test-grid">
+<div class="test-card reveal"><blockquote>"RankUp took our organic traffic from 5K to 85K/month in 12 months. The ROI is incredible."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Alon Berger</div><div class="role">VP Marketing, CloudSync</div></div></div></div>
+<div class="test-card reveal"><blockquote>"The content strategy alone generated 340+ qualified leads in Q4. Best SEO investment we've made."</blockquote><div class="author"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Maya Kohen</div><div class="role">CMO, DataPulse</div></div></div></div>
+</div>
+</section>
+
+<section class="cta"><div class="cta-box reveal"><h2>Get your free SEO audit</h2><p>Find out exactly where your SEO gaps are — and how to fix them. No strings attached.</p><button class="btn-green">Claim Free Audit &rarr;</button></div></section>
+
+<footer class="footer">&copy; 2025 RankUp SEO Agency.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Traffic chart
+const c=document.getElementById('trafficChart');if(c){const ctx=c.getContext('2d');c.width=c.offsetWidth*2;c.height=c.offsetHeight*2;ctx.scale(2,2);const w=c.offsetWidth,h=c.offsetHeight;const pts=[8,12,15,14,22,28,35,42,38,48,55,62,70,78,85,82,90,95];ctx.beginPath();ctx.moveTo(0,h);for(let i=0;i<pts.length;i++){const x=(i/(pts.length-1))*w;const y=h-(pts[i]/100)*h;ctx.lineTo(x,y)}ctx.lineTo(w,h);ctx.closePath();const g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,'rgba(34,197,94,.2)');g.addColorStop(1,'rgba(34,197,94,0)');ctx.fillStyle=g;ctx.fill();ctx.beginPath();for(let i=0;i<pts.length;i++){const x=(i/(pts.length-1))*w;const y=h-(pts[i]/100)*h;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle='#22C55E';ctx.lineWidth=2;ctx.stroke()}
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

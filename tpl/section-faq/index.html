@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive FAQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--fg:#18181B;--fg-muted:#71717A;--teal:#0D9488;--teal-light:#F0FDFA;--sans:'Manrope',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.section{max-width:700px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-size:.75rem;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-.02em}
+.s-desc{font-size:1rem;color:var(--fg-muted);margin-top:8px;line-height:1.7}
+/* Accordion */
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--teal)}
+.faq-q{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:.95rem;transition:color .2s;user-select:none}
+.faq-item.open .faq-q{color:var(--teal)}
+.faq-q .icon{width:24px;height:24px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.faq-item.open .faq-q .icon{background:var(--teal-light);transform:rotate(45deg)}
+.faq-q .icon svg{width:12px;height:12px}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.faq-item.open .faq-a{max-height:200px;padding:0 20px 18px}
+.faq-a p{font-size:.88rem;color:var(--fg-muted);line-height:1.7}
+/* Contact */
+.contact{text-align:center;margin-top:40px;padding:24px;background:var(--teal-light);border-radius:12px}
+.contact p{font-size:.9rem;color:var(--fg-muted)}
+.contact a{color:var(--teal);font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+<section class="section">
+<div class="s-center"><div class="s-tag">FAQ</div><div class="s-title">Frequently Asked</div><div class="s-desc">Can't find what you're looking for? Reach out to our support team.</div></div>
+<div class="faq-list" id="faq">
+<div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)">How does the free trial work?<div class="icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#0D9488" stroke-width="1.5" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>You get full access to all Pro features for 14 days. No credit card required. At the end of the trial, you can upgrade or continue with the free plan.</p></div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I cancel anytime?<div class="icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#0D9488" stroke-width="1.5" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Yes, you can cancel your subscription at any time from your account settings. You'll continue to have access until the end of your current billing period.</p></div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do you offer team discounts?<div class="icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#0D9488" stroke-width="1.5" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Teams of 10+ get 20% off. Teams of 50+ get 30% off. Contact sales for custom enterprise pricing.</p></div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is my data secure?<div class="icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#0D9488" stroke-width="1.5" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Absolutely. We're SOC 2 Type II certified, use end-to-end encryption, and your data is stored in ISO 27001 certified data centers.</p></div></div>
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What integrations do you support?<div class="icon"><svg viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#0D9488" stroke-width="1.5" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>We integrate with 200+ tools including Slack, Notion, GitHub, Jira, Linear, Figma, and more. We also offer a REST API and webhooks.</p></div></div>
+</div>
+<div class="contact"><p>Still have questions? <a href="#">Contact our support team &rarr;</a></p></div>
+</section>
+<script>
+const isPreview=(self!==top);
+function toggleFaq(el){const item=el.parentElement;const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')}
+</script>
+</body>
+</html>

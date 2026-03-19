@@ -1,0 +1,6 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,18277,e=>{"use strict";var t=e.i(25764),n=e.i(45444),i=e.i(87726),r=e.i(3938);let l=`
+@keyframes wavytext-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+`,o=(0,i.memo)(function(){let e,o,c,a,s,d,u=(0,n.c)(8),m=(0,r.useReducedMotion)(),f=(0,i.useRef)(null);return u[0]===Symbol.for("react.memo_cache_sentinel")?(e=()=>{let e=document.createElement("style");return e.textContent=l,document.head.appendChild(e),f.current=e,()=>{f.current&&(document.head.removeChild(f.current),f.current=null)}},o=[],u[0]=e,u[1]=o):(e=u[0],o=u[1]),(0,i.useEffect)(e,o),u[2]===Symbol.for("react.memo_cache_sentinel")?(c={width:"100%",height:220,display:"flex",alignItems:"center",justifyContent:"center",background:"var(--bg)",overflow:"hidden"},a={display:"flex"},u[2]=c,u[3]=a):(c=u[2],a=u[3]),u[4]!==m?(s="WAVE EFFECT".split("").map((e,n)=>(0,t.jsx)("span",{style:{fontSize:40,fontWeight:900,color:"var(--text)",display:"inline-block",width:" "===e?16:void 0,animation:m?"none":`wavytext-bounce 1.5s ease-in-out ${.08*n}s infinite`},children:" "===e?" ":e},n)),u[4]=m,u[5]=s):s=u[5],u[6]!==s?(d=(0,t.jsx)("div",{style:c,children:(0,t.jsx)("div",{style:a,children:s})}),u[6]=s,u[7]=d):d=u[7],d});e.s(["default",0,o])}]);

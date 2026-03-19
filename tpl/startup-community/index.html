@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hive | Community Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFFBF5;--surface:#FFF;--border:#F0E6D6;--fg:#2D1B00;--fg-muted:#8B7355;--amber:#D97706;--amber-light:#FEF3C7;--amber-dark:#92400E;--sans:'Plus Jakarta Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+/* Nav */
+.nav{max-width:1100px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.2rem;display:flex;align-items:center;gap:6px}
+.nav-logo svg{width:24px;height:24px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:.85rem;color:var(--fg-muted);text-decoration:none;font-weight:600;transition:color .2s}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--amber);color:#fff;padding:10px 20px;border-radius:50px;font-size:.85rem;font-weight:700;text-decoration:none;border:none;font-family:var(--sans);cursor:pointer}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:60px 40px 40px;text-align:center}
+.hero-avatars{display:flex;justify-content:center;margin-bottom:20px}
+.hero-avatars img{width:40px;height:40px;border-radius:50%;border:3px solid var(--bg);margin-right:-12px;object-fit:cover}
+.hero-avatars .count{width:40px;height:40px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--amber-dark);border:3px solid var(--bg)}
+.hero h1{font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin-bottom:16px}
+.hero h1 .highlight{position:relative;color:var(--amber)}
+.hero h1 .highlight::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:8px;background:var(--amber-light);z-index:-1;border-radius:4px}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:520px;margin:0 auto 30px;line-height:1.7}
+.hero-input{display:flex;gap:8px;max-width:400px;margin:0 auto 16px}
+.hero-input input{flex:1;padding:14px 18px;border:2px solid var(--border);border-radius:12px;font-size:.9rem;font-family:var(--sans);background:var(--surface)}
+.hero-input input:focus{outline:none;border-color:var(--amber)}
+.hero-input button{padding:14px 24px;background:var(--amber);color:#fff;border:none;border-radius:12px;font-weight:700;font-family:var(--sans);cursor:pointer;white-space:nowrap}
+.hero-note{font-size:.78rem;color:var(--fg-muted)}
+/* Community cards */
+.community{max-width:1100px;margin:0 auto;padding:60px 40px}
+.comm-header{text-align:center;margin-bottom:40px}
+.comm-header .tag{font-size:.75rem;color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.comm-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em}
+.comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.comm-card{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:24px;transition:all .2s}
+.comm-card:hover{border-color:var(--amber);transform:translateY(-2px)}
+.comm-card .emoji{font-size:1.8rem;margin-bottom:12px}
+.comm-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.comm-card p{font-size:.84rem;color:var(--fg-muted);line-height:1.6;margin-bottom:12px}
+.comm-card .members{display:flex;align-items:center;gap:8px}
+.comm-card .members .avatars{display:flex}
+.comm-card .members .avatars img{width:24px;height:24px;border-radius:50%;border:2px solid var(--surface);margin-right:-6px;object-fit:cover}
+.comm-card .members .text{font-size:.72rem;color:var(--fg-muted);font-weight:500}
+/* How it works */
+.how{max-width:1100px;margin:0 auto;padding:60px 40px}
+.how-header{text-align:center;margin-bottom:50px}
+.how-header .tag{font-size:.75rem;color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.how-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.how-step{text-align:center;padding:24px}
+.how-step .num{width:48px;height:48px;border-radius:50%;background:var(--amber-light);color:var(--amber-dark);font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.how-step h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.how-step p{font-size:.84rem;color:var(--fg-muted);line-height:1.6}
+/* Testimonials */
+.test{max-width:1100px;margin:0 auto;padding:60px 40px}
+.test-header{text-align:center;margin-bottom:40px}
+.test-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+.test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.test-card{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:24px}
+.test-card p{font-size:.92rem;line-height:1.7;margin-bottom:16px;font-style:italic;color:var(--fg)}
+.test-card .author{display:flex;align-items:center;gap:10px}
+.test-card .author img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.test-card .author .name{font-weight:700;font-size:.82rem}
+.test-card .author .role{font-size:.72rem;color:var(--fg-muted)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--amber);border-radius:24px;padding:48px;color:#fff}
+.cta-box h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:12px}
+.cta-box p{opacity:.85;margin-bottom:24px;font-size:.95rem}
+.cta-box button{background:#fff;color:var(--amber-dark);padding:14px 32px;border:none;border-radius:12px;font-weight:700;font-family:var(--sans);font-size:.95rem;cursor:pointer}
+/* Footer */
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.78rem;color:var(--fg-muted)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.comm-grid,.how-steps{grid-template-columns:1fr}.test-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-input{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Hive</div>
+<ul class="nav-links"><a href="#">Features</a><a href="#">Communities</a><a href="#">Pricing</a><a href="#">Blog</a></ul>
+<button class="nav-btn">Join Hive</button>
+</nav>
+
+<section class="hero reveal">
+<div class="hero-avatars">
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80&h=80&fit=crop&crop=face" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face" alt="" loading="lazy">
+<div class="count">+2K</div>
+</div>
+<h1>Where communities <span class="highlight">come alive</span></h1>
+<p>Hive is the all-in-one platform for building thriving online communities. Discussion forums, events, courses, and member management in one place.</p>
+<div class="hero-input"><input type="email" placeholder="you@email.com"><button>Get Started Free</button></div>
+<div class="hero-note">Free for up to 100 members. No credit card needed.</div>
+</section>
+
+<section class="community">
+<div class="comm-header reveal"><div class="tag">Popular Communities</div><h2>See what people are building</h2></div>
+<div class="comm-grid">
+<div class="comm-card reveal"><div class="emoji">&#128187;</div><h3>Indie Hackers IL</h3><p>Solo founders building profitable internet businesses.</p><div class="members"><div class="avatars"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=48&h=48&fit=crop&crop=face" alt="" loading="lazy"></div><div class="text">1,247 members</div></div></div>
+<div class="comm-card reveal"><div class="emoji">&#127912;</div><h3>Design Circle</h3><p>Product designers sharing work, feedback, and resources.</p><div class="members"><div class="avatars"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=48&h=48&fit=crop&crop=face" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=48&h=48&fit=crop&crop=face" alt="" loading="lazy"></div><div class="text">892 members</div></div></div>
+<div class="comm-card reveal"><div class="emoji">&#128640;</div><h3>Startup Founders</h3><p>Early-stage founders sharing lessons, fails, and wins.</p><div class="members"><div class="avatars"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=48&h=48&fit=crop&crop=face" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=48&h=48&fit=crop&crop=face" alt="" loading="lazy"></div><div class="text">2,104 members</div></div></div>
+</div>
+</section>
+
+<section class="how">
+<div class="how-header reveal"><div class="tag">How It Works</div><h2>Launch your community in 3 steps</h2></div>
+<div class="how-steps">
+<div class="how-step reveal"><div class="num">1</div><h3>Create Your Space</h3><p>Pick a template, customize your brand, and set up channels in under 5 minutes.</p></div>
+<div class="how-step reveal"><div class="num">2</div><h3>Invite Members</h3><p>Share your link or embed a signup widget. Import from existing lists or start fresh.</p></div>
+<div class="how-step reveal"><div class="num">3</div><h3>Grow & Engage</h3><p>Host events, create courses, run challenges. Our tools make engagement effortless.</p></div>
+</div>
+</section>
+
+<section class="test">
+<div class="test-header reveal"><h2>Community leaders love Hive</h2></div>
+<div class="test-grid">
+<div class="test-card reveal"><p>"Hive replaced 4 tools for us — Slack, Circle, Teachable, and Luma. Everything in one beautiful platform."</p><div class="author"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Maya Goldstein</div><div class="role">Founder, Design IL</div></div></div></div>
+<div class="test-card reveal"><p>"Member engagement went up 3x after switching to Hive. The events and courses features are game changers."</p><div class="author"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt="" loading="lazy"><div><div class="name">Eitan Levy</div><div class="role">Community Lead, TechTLV</div></div></div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Build your community today</h2>
+<p>Join 2,000+ community leaders already using Hive.</p>
+<button>Start Free &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Hive Communities Ltd.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

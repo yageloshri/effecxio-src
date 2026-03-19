@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mono | Task Management</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;
+--fg:#171717;--fg-muted:#737373;
+--accent:#171717;
+--sans:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--fg);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,250,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--fg);text-decoration:none;letter-spacing:1px}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--fg);color:#fff;padding:9px 22px;border-radius:6px;font-size:.85rem;font-weight:600;text-decoration:none}
+
+.hero{max-width:800px;margin:0 auto;padding:180px 40px 80px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:700;line-height:1.1;margin-bottom:16px;letter-spacing:-.03em}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:480px;margin:0 auto 32px;line-height:1.7}
+.hero-input{display:flex;gap:8px;max-width:380px;margin:0 auto}
+.hero-input input{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;font-family:var(--sans);background:var(--surface)}
+.hero-input button{background:var(--fg);color:#fff;border:none;padding:12px 20px;border-radius:6px;font-weight:600;font-size:.85rem;cursor:pointer;font-family:var(--sans)}
+.hero-sub{font-size:.75rem;color:var(--fg-muted);margin-top:12px}
+
+/* Logos */
+.logos{max-width:700px;margin:40px auto;padding:0 40px;text-align:center}
+.logos p{font-size:.7rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.logo-row{display:flex;justify-content:center;gap:32px;opacity:.35;font-family:var(--mono);font-size:.85rem;font-weight:700;flex-wrap:wrap}
+
+/* Features */
+.features{max-width:800px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700}
+.feat-list{display:flex;flex-direction:column;gap:0}
+.feat-item{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border)}
+.feat-item:first-child{border-top:1px solid var(--border)}
+.feat-item .num{font-family:var(--mono);font-size:.8rem;color:var(--fg-muted);min-width:30px;padding-top:2px}
+.feat-item h3{font-size:1rem;font-weight:600;margin-bottom:4px}
+.feat-item p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Screenshot */
+.screenshot{max-width:900px;margin:40px auto;padding:0 40px}
+.ss-frame{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.ss-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--border)}
+.ss-bar .dot{width:8px;height:8px;border-radius:50%}
+.ss-body{padding:20px;font-family:var(--mono);font-size:.75rem;color:var(--fg-muted)}
+.ss-body .task-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.ss-body .task-row .cb{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0}
+.ss-body .task-row .cb.done{background:var(--fg);border-color:var(--fg);position:relative}
+.ss-body .task-row .cb.done::after{content:'';position:absolute;top:2px;right:4px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.ss-body .task-row .text{flex:1;font-family:var(--sans);font-size:.8rem}
+.ss-body .task-row .text.crossed{text-decoration:line-through;color:var(--fg-muted)}
+.ss-body .task-row .tag{font-size:.6rem;padding:2px 6px;border-radius:4px;font-weight:600}
+.ss-body .task-row .tag.high{background:#FEE2E2;color:#DC2626}
+.ss-body .task-row .tag.med{background:#FEF3C7;color:#D97706}
+.ss-body .task-row .tag.low{background:#ECFDF5;color:#059669}
+
+/* Pricing */
+.pricing{max-width:700px;margin:0 auto;padding:80px 40px}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px;transition:all .3s}
+.price-card:hover{transform:translateY(-3px)}
+.price-card.dark{background:var(--fg);color:#fff;border-color:var(--fg)}
+.pc-name{font-weight:600;margin-bottom:8px;font-size:.9rem}
+.pc-price{font-size:2.2rem;font-weight:700;margin-bottom:4px}
+.pc-price span{font-size:.8rem;font-weight:400;opacity:.6}
+.pc-desc{font-size:.8rem;color:var(--fg-muted);margin-bottom:16px}
+.dark .pc-desc{color:rgba(255,255,255,.6)}
+.pc-list{list-style:none;margin-bottom:20px}
+.pc-list li{font-size:.8rem;padding:4px 0;color:var(--fg-muted)}
+.dark .pc-list li{color:rgba(255,255,255,.6)}
+.pc-btn{display:block;padding:11px;border-radius:6px;text-decoration:none;font-size:.85rem;font-weight:600;text-align:center}
+.pc-btn.fill{background:var(--fg);color:#fff}
+.pc-btn.white{background:#fff;color:var(--fg)}
+.pc-btn.out{border:1px solid var(--border);color:var(--fg)}
+
+/* CTA */
+.cta{max-width:600px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta h2{font-size:1.8rem;font-weight:700;margin-bottom:10px}
+.cta p{color:var(--fg-muted);margin-bottom:24px}
+.cta a{display:inline-block;background:var(--fg);color:#fff;padding:13px 28px;border-radius:6px;font-weight:600;text-decoration:none}
+
+footer{padding:40px;text-align:center;font-family:var(--mono);font-size:.75rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){.nav-links{display:none}.hero-input{flex-direction:column}.price-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">mono.</a>
+<div class="nav-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#" class="nav-cta">Sign Up</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Do less, better.</h1>
+<p class="reveal">The task manager that gets out of your way. No clutter, no distractions — just your work, organized.</p>
+<div class="hero-input reveal"><input type="email" placeholder="you@company.com"><button>Get Started</button></div>
+<div class="hero-sub reveal">Free forever for individuals. No credit card.</div>
+</section>
+
+<div class="logos reveal">
+<p>Used by teams at</p>
+<div class="logo-row"><span>Linear</span><span>Vercel</span><span>Raycast</span><span>Supabase</span><span>Resend</span></div>
+</div>
+
+<div class="screenshot reveal">
+<div class="ss-frame">
+<div class="ss-bar"><div class="dot" style="background:#FF5F57"></div><div class="dot" style="background:#FEBC2E"></div><div class="dot" style="background:#28C840"></div></div>
+<div class="ss-body">
+<div class="task-row"><div class="cb done"></div><div class="text crossed">Write API documentation</div><div class="tag low">Low</div></div>
+<div class="task-row"><div class="cb done"></div><div class="text crossed">Review PR #247</div><div class="tag med">Med</div></div>
+<div class="task-row"><div class="cb"></div><div class="text">Design new onboarding flow</div><div class="tag high">High</div></div>
+<div class="task-row"><div class="cb"></div><div class="text">Fix auth redirect bug</div><div class="tag high">High</div></div>
+<div class="task-row"><div class="cb"></div><div class="text">Update pricing page copy</div><div class="tag med">Med</div></div>
+<div class="task-row"><div class="cb"></div><div class="text">Set up CI/CD pipeline</div><div class="tag med">Med</div></div>
+<div class="task-row"><div class="cb"></div><div class="text">Research analytics tools</div><div class="tag low">Low</div></div>
+</div>
+</div>
+</div>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-title reveal">Why Mono</div></div>
+<div class="feat-list">
+<div class="feat-item reveal"><div class="num">01</div><div><h3>Keyboard First</h3><p>Full keyboard navigation. Create, move, and organize tasks without touching the mouse. CMD+K for everything.</p></div></div>
+<div class="feat-item reveal"><div class="num">02</div><div><h3>Instant Search</h3><p>Find any task in milliseconds. Fuzzy search across all projects, tags, and descriptions.</p></div></div>
+<div class="feat-item reveal"><div class="num">03</div><div><h3>Views That Fit</h3><p>List, board, timeline, or calendar. Switch views instantly without losing context.</p></div></div>
+<div class="feat-item reveal"><div class="num">04</div><div><h3>Zero Setup</h3><p>Start working in seconds. Import from Asana, Trello, or Jira with one click.</p></div></div>
+<div class="feat-item reveal"><div class="num">05</div><div><h3>Offline Ready</h3><p>Works without internet. Changes sync automatically when you reconnect.</p></div></div>
+</div>
+</section>
+
+<section class="pricing" id="pricing">
+<div class="s-center"><div class="s-title reveal">Simple Pricing</div></div>
+<div class="price-grid">
+<div class="price-card reveal"><div class="pc-name">Free</div><div class="pc-price">$0</div><div class="pc-desc">For individuals</div><ul class="pc-list"><li>Unlimited tasks</li><li>3 projects</li><li>Basic integrations</li></ul><a href="#" class="pc-btn out">Get Started</a></div>
+<div class="price-card dark reveal"><div class="pc-name">Pro</div><div class="pc-price">$8<span>/user/mo</span></div><div class="pc-desc">For teams</div><ul class="pc-list"><li>Unlimited everything</li><li>Team collaboration</li><li>Priority support</li><li>API access</li></ul><a href="#" class="pc-btn white">Start Trial</a></div>
+</div>
+</section>
+
+<section class="cta">
+<h2 class="reveal">Less noise. More work.</h2>
+<p class="reveal">Join 50,000+ people who simplified their workflow.</p>
+<a href="#" class="reveal">Get Started Free &rarr;</a>
+</section>
+
+<footer>mono. &copy; 2025</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

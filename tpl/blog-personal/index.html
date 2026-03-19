@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oren Tal | Personal Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FDFDFC;--surface:#FFF;--border:#E8E8E4;--fg:#2C2C2A;--fg-muted:#7A7A72;--ink:#2C2C2A;--serif:'Libre Baskerville',serif;--sans:'Source Sans 3',sans-serif}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--ink);color:#fff}
+.header{max-width:640px;margin:0 auto;padding:80px 40px 40px}
+.header .name{font-family:var(--serif);font-size:1.6rem;font-weight:700;margin-bottom:8px}
+.header .bio{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:16px}
+.header .links{display:flex;gap:16px}
+.header .links a{color:var(--fg-muted);text-decoration:none;font-size:.82rem;font-weight:600;transition:color .2s}.header .links a:hover{color:var(--ink)}
+/* Posts */
+.posts{max-width:640px;margin:0 auto;padding:20px 40px 80px}
+.post{padding:28px 0;border-bottom:1px solid var(--border)}
+.post:first-child{border-top:1px solid var(--border)}
+.post .date{font-size:.75rem;color:var(--fg-muted);margin-bottom:8px}
+.post h2{font-family:var(--serif);font-size:1.3rem;font-weight:700;line-height:1.4;margin-bottom:8px}
+.post h2 a{color:var(--fg);text-decoration:none;transition:color .2s}.post h2 a:hover{color:var(--fg-muted)}
+.post p{font-size:.92rem;color:var(--fg-muted);line-height:1.8}
+.post .tags{display:flex;gap:6px;margin-top:10px}
+.post .tag{font-size:.7rem;background:var(--border);color:var(--fg-muted);padding:3px 8px;border-radius:4px;font-weight:600}
+/* Featured quote */
+.quote{max-width:640px;margin:0 auto;padding:40px 40px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.quote blockquote{font-family:var(--serif);font-size:1.3rem;font-style:italic;line-height:1.6;color:var(--fg)}
+.quote cite{display:block;font-style:normal;font-size:.8rem;color:var(--fg-muted);margin-top:12px}
+/* Subscribe */
+.subscribe{max-width:640px;margin:0 auto;padding:60px 40px;text-align:center}
+.subscribe h3{font-family:var(--serif);font-size:1.3rem;margin-bottom:8px}
+.subscribe p{font-size:.9rem;color:var(--fg-muted);margin-bottom:20px}
+.subscribe .sub-form{display:flex;gap:8px;max-width:400px;margin:0 auto}
+.subscribe .sub-form input{flex:1;padding:12px 16px;border:1px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:.9rem}
+.subscribe .sub-form input:focus{outline:none;border-color:var(--ink)}
+.subscribe .sub-form button{background:var(--ink);color:#fff;border:none;padding:12px 20px;border-radius:6px;font-family:var(--sans);font-weight:700;cursor:pointer}
+footer{max-width:640px;margin:0 auto;padding:30px 40px;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.subscribe .sub-form{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="header reveal">
+<div class="name">Oren Tal</div>
+<div class="bio">Product designer, writer, and occasional runner. I write about building products, creative work, and things I'm learning along the way.</div>
+<div class="links"><a href="#">Twitter</a><a href="#">LinkedIn</a><a href="#">About</a></div>
+</header>
+<main class="posts">
+<article class="post reveal">
+<div class="date">March 5, 2025</div>
+<h2><a href="#">The Art of Saying No to Features</a></h2>
+<p>Every feature you add is a promise you're making to maintain forever. The best products aren't defined by what they include, but by what they have the courage to leave out.</p>
+<div class="tags"><span class="tag">Product</span><span class="tag">Design</span></div>
+</article>
+<article class="post reveal">
+<div class="date">February 21, 2025</div>
+<h2><a href="#">Why I Switched From Figma to Paper</a></h2>
+<p>For three months, I started every design project with pencil and paper. Here's what changed — and what I learned about the relationship between constraints and creativity.</p>
+<div class="tags"><span class="tag">Design</span><span class="tag">Process</span></div>
+</article>
+<article class="post reveal">
+<div class="date">February 8, 2025</div>
+<h2><a href="#">Building in Public: Month 6 Update</a></h2>
+<p>Six months into building my side project in public. Revenue, learnings, mistakes, and the unexpected joy of sharing your work before it's ready.</p>
+<div class="tags"><span class="tag">Indie</span><span class="tag">Building</span></div>
+</article>
+<article class="post reveal">
+<div class="date">January 24, 2025</div>
+<h2><a href="#">The Taste Gap</a></h2>
+<p>Ira Glass was right — the gap between your taste and your ability is the most painful part of creative work. But it's also the most important.</p>
+<div class="tags"><span class="tag">Creativity</span></div>
+</article>
+</main>
+<div class="quote reveal"><blockquote>"The scariest moment is always just before you start. After that, things can only get better."</blockquote><cite>Stephen King</cite></div>
+<section class="subscribe reveal">
+<h3>Get New Posts</h3>
+<p>Subscribe to get my latest writing delivered to your inbox.</p>
+<div class="sub-form"><input type="email" placeholder="your@email.com"><button>Subscribe</button></div>
+</section>
+<footer>&copy; 2025 Oren Tal. Written with care.</footer>
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

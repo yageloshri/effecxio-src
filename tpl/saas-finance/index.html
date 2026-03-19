@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vault | Financial Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FAFAF8;--surface:#FFF;--surface2:#F5F5F0;--border:#E5E5DC;
+--fg:#1C1C1A;--fg-muted:#71716A;
+--green:#16A34A;--green-light:#F0FDF4;--navy:#0F172A;
+--sans:'DM Sans',sans-serif;--mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--green);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--navy);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;max-width:1200px;margin:0 auto;padding:140px 40px 80px;gap:60px}
+.hero-tag{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--green);margin-bottom:16px}
+.hero h1{font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:700;line-height:1.12;margin-bottom:16px;letter-spacing:-.02em}
+.hero p{color:var(--fg-muted);line-height:1.8;margin-bottom:28px;font-size:.95rem}
+.hero-btns{display:flex;gap:12px}
+.btn-d{background:var(--navy);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+.btn-o{border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+/* Finance card mockup */
+.finance-mock{background:var(--navy);border-radius:16px;padding:28px;color:#fff;position:relative;overflow:hidden}
+.finance-mock::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(22,163,74,.15),transparent);top:-40px;left:-40px;border-radius:50%}
+.fm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;position:relative}
+.fm-header h3{font-size:1rem;font-weight:600}
+.fm-header .badge{background:rgba(22,163,74,.15);color:var(--green);padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700}
+.fm-balance{font-family:var(--mono);font-size:2.4rem;font-weight:700;margin-bottom:6px;position:relative}
+.fm-change{font-size:.8rem;color:var(--green);margin-bottom:24px;position:relative}
+.fm-chart{height:100px;position:relative}
+.fm-chart canvas{width:100%;height:100%}
+.fm-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;position:relative}
+.fm-stat{background:rgba(255,255,255,.05);border-radius:8px;padding:12px}
+.fm-stat .lbl{font-size:.65rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px}
+.fm-stat .val{font-family:var(--mono);font-size:1rem;margin-top:4px}
+
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;display:flex;gap:16px;transition:all .3s}
+.feat-card:hover{border-color:var(--green);transform:translateY(-3px)}
+.feat-card .fi{width:44px;height:44px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-card .fi svg{width:22px;height:22px}
+.feat-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Trust */
+.trust{max-width:800px;margin:0 auto;padding:60px 40px}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;margin-top:30px}
+.trust-item .t-num{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--navy)}
+.trust-item .t-lbl{font-size:.75rem;color:var(--fg-muted);margin-top:4px}
+
+/* Security */
+.security{background:var(--navy);color:#fff;padding:80px 40px;text-align:center}
+.sec-inner{max-width:700px;margin:0 auto}
+.sec-inner h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:12px}
+.sec-inner p{color:rgba(255,255,255,.6);margin-bottom:30px;line-height:1.7}
+.sec-badges{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.sec-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600}
+.sec-badge svg{width:18px;height:18px}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:var(--surface);border:2px solid var(--green);border-radius:16px;padding:50px}
+.cta-box h2{font-size:2rem;font-weight:700;margin-bottom:10px}
+.cta-box p{color:var(--fg-muted);margin-bottom:24px}
+.cta-box a{display:inline-block;background:var(--navy);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.hero{grid-template-columns:1fr}.feat-grid{grid-template-columns:1fr}.trust-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.hero-btns{flex-direction:column}.trust-grid{grid-template-columns:1fr 1fr}.sec-badges{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">VAULT</a>
+<div class="nav-links"><a href="#features">Features</a><a href="#security">Security</a><a href="#" class="nav-cta">Open Account</a></div>
+</nav>
+
+<section class="hero">
+<div>
+<div class="hero-tag reveal">Financial Platform</div>
+<h1 class="reveal">Smart Money<br>Management</h1>
+<p class="reveal">Business banking, invoicing, expense tracking, and financial reporting — all in one platform. Built for modern companies.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-d">Open Free Account</a><a href="#features" class="btn-o">Learn More</a></div>
+</div>
+<div class="finance-mock reveal">
+<div class="fm-header"><h3>Portfolio Overview</h3><div class="badge">+12.4%</div></div>
+<div class="fm-balance">$284,592</div>
+<div class="fm-change">+$31,240 this month</div>
+<div class="fm-chart"><canvas id="fm-canvas"></canvas></div>
+<div class="fm-row">
+<div class="fm-stat"><div class="lbl">Revenue</div><div class="val">$142K</div></div>
+<div class="fm-stat"><div class="lbl">Expenses</div><div class="val">$89K</div></div>
+</div>
+</div>
+</section>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Complete Financial Control</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#16A34A" stroke-width="1.5"/><path d="M8 11h6M11 8v6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>Multi-Currency Accounts</h3><p>Hold, send, and receive in 30+ currencies with real-time exchange rates.</p></div></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 22 22" fill="none"><path d="M3 16l5-5 3 3 8-10" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h3>Real-Time Reports</h3><p>Instant P&L, cash flow, and balance sheet reports with AI-powered insights.</p></div></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="12" rx="2" stroke="#16A34A" stroke-width="1.5"/><path d="M3 9h16" stroke="#16A34A" stroke-width="1.5"/></svg></div><div><h3>Smart Invoicing</h3><p>Create, send, and track invoices. Auto-match payments with bank transactions.</p></div></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#16A34A" stroke-width="1.5"/><path d="M11 7v4l3 2" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>Expense Management</h3><p>Snap receipts, auto-categorize expenses, and set spending limits per team.</p></div></div>
+</div>
+</section>
+
+<div class="trust reveal">
+<div class="s-center"><div class="s-tag">Trusted By</div><div class="s-title">Numbers That Matter</div></div>
+<div class="trust-grid">
+<div class="trust-item"><div class="t-num" data-target="8500">0</div><div class="t-lbl">Companies</div></div>
+<div class="trust-item"><div class="t-num" data-target="2">0</div><div class="t-lbl">Billion $ Processed</div></div>
+<div class="trust-item"><div class="t-num" data-target="30">0</div><div class="t-lbl">Currencies</div></div>
+<div class="trust-item"><div class="t-num" data-target="99">0</div><div class="t-lbl">% Uptime</div></div>
+</div>
+</div>
+
+<section class="security" id="security">
+<div class="sec-inner reveal">
+<h2>Bank-Grade Security</h2>
+<p>Your money and data are protected by the highest standards of security. We're SOC 2 Type II certified and PCI DSS compliant.</p>
+<div class="sec-badges">
+<div class="sec-badge"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2L3 5v4c0 4.4 2.6 7 6 9 3.4-2 6-4.6 6-9V5L9 2z" stroke="#16A34A" stroke-width="1.5"/><path d="M7 9l2 2 3-4" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>SOC 2 Type II</div>
+<div class="sec-badge"><svg viewBox="0 0 18 18" fill="none"><rect x="4" y="8" width="10" height="8" rx="2" stroke="#16A34A" stroke-width="1.5"/><path d="M6 8V6a3 3 0 016 0v2" stroke="#16A34A" stroke-width="1.5"/></svg>256-bit Encryption</div>
+<div class="sec-badge"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#16A34A" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>PCI DSS</div>
+</div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Take Control of Your Finances</h2>
+<p>Free business account. No monthly fees. No minimums.</p>
+<a href="#">Open Account &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Vault Financial. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+document.querySelectorAll('[data-target]').forEach(el=>{
+  const co=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){const t=parseInt(el.dataset.target);let c=0;const s=Math.max(1,Math.floor(t/50));
+  const i=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(i)}el.textContent=c.toLocaleString()},30);co.unobserve(el)}})},{threshold:.5});co.observe(el);
+});
+// Finance chart
+const fc=document.getElementById('fm-canvas');
+if(fc){
+  const fx=fc.getContext('2d');
+  function drawFm(){
+    const w=fc.parentElement.clientWidth;const h=100;fc.width=w;fc.height=h;
+    const pts=[30,35,32,45,42,50,48,55,52,60,58,65,62,72,68,75,80];
+    const step=w/(pts.length-1);
+    fx.beginPath();fx.moveTo(0,h-pts[0]/100*h);
+    for(let i=1;i<pts.length;i++){const x=i*step;const y=h-pts[i]/100*h;
+    if(i>0){const px=(i-1)*step;const py=h-pts[i-1]/100*h;const cx1=px+step/3;const cx2=x-step/3;fx.bezierCurveTo(cx1,py,cx2,y,x,y)}}
+    fx.strokeStyle='#16A34A';fx.lineWidth=2;fx.stroke();
+    fx.lineTo(w,h);fx.lineTo(0,h);fx.closePath();
+    const grd=fx.createLinearGradient(0,0,0,h);grd.addColorStop(0,'rgba(22,163,74,.2)');grd.addColorStop(1,'rgba(22,163,74,0)');
+    fx.fillStyle=grd;fx.fill();
+  }
+  drawFm();window.addEventListener('resize',drawFm);
+}
+</script>
+</body>
+</html>

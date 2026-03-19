@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pocket | Mobile-First Banking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0F4F8;--surface:#FFF;--border:#E2E8F0;--fg:#1A202C;--fg-muted:#718096;--green:#10B981;--green-light:#ECFDF5;--green-dark:#065F46;--purple:#7C3AED;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.2rem;display:flex;align-items:center;gap:6px}
+.nav-logo .icon{width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo .icon svg{width:16px;height:16px}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:.85rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btns{display:flex;gap:10px}
+.nav-btns a{font-size:.85rem;text-decoration:none;font-weight:600;padding:9px 18px;border-radius:10px}
+.nav-btns .ghost{color:var(--fg)}
+.nav-btns .solid{background:var(--green);color:#fff}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center}
+.hero-content h1{font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;line-height:1.12;letter-spacing:-.03em;margin-bottom:16px}
+.hero-content h1 .green{color:var(--green)}
+.hero-content p{font-size:1.05rem;color:var(--fg-muted);line-height:1.7;margin-bottom:28px;max-width:460px}
+.store-btns{display:flex;gap:12px}
+.store-btn{display:flex;align-items:center;gap:10px;padding:12px 22px;background:var(--fg);color:#fff;border-radius:12px;text-decoration:none}
+.store-btn .text{font-size:.7rem;line-height:1.2}.store-btn .text strong{display:block;font-size:.9rem}
+.store-btn svg{width:24px;height:24px;flex-shrink:0}
+/* Phone mockup */
+.phone{width:280px;height:560px;background:var(--fg);border-radius:36px;padding:8px;position:relative;box-shadow:0 40px 80px rgba(0,0,0,.15)}
+.phone-screen{background:var(--surface);border-radius:30px;height:100%;overflow:hidden;padding:20px;display:flex;flex-direction:column}
+.phone-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.phone-header .greeting{font-size:.78rem;color:var(--fg-muted)}
+.phone-header .greeting strong{display:block;font-size:1.1rem;color:var(--fg)}
+.phone-header .avatar{width:36px;height:36px;border-radius:50%;background:var(--green-light)}
+.phone-balance{background:linear-gradient(135deg,var(--green),#059669);border-radius:16px;padding:20px;color:#fff;margin-bottom:16px}
+.phone-balance .label{font-size:.7rem;opacity:.8}
+.phone-balance .amount{font-size:1.8rem;font-weight:800;margin:4px 0}
+.phone-balance .change{font-size:.72rem;opacity:.9}
+.phone-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.phone-actions .act{text-align:center}
+.phone-actions .act .circle{width:40px;height:40px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
+.phone-actions .act .circle svg{width:16px;height:16px}
+.phone-actions .act span{font-size:.6rem;color:var(--fg-muted)}
+.phone-tx{flex:1}
+.phone-tx .tx-title{font-size:.72rem;color:var(--fg-muted);font-weight:600;margin-bottom:8px}
+.phone-tx .tx-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bg)}
+.phone-tx .tx-item .left{display:flex;align-items:center;gap:8px}
+.phone-tx .tx-item .ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.phone-tx .tx-item .name{font-size:.75rem;font-weight:600}
+.phone-tx .tx-item .date{font-size:.6rem;color:var(--fg-muted)}
+.phone-tx .tx-item .amt{font-size:.78rem;font-weight:700}
+.phone-tx .tx-item .amt.neg{color:#EF4444}.phone-tx .tx-item .amt.pos{color:var(--green)}
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:80px 40px}
+.feat-header{text-align:center;margin-bottom:50px}
+.feat-header .tag{font-size:.75rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.feat-header h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.feat-card{background:var(--surface);border-radius:16px;padding:28px;border:1px solid var(--border);display:flex;gap:16px;transition:box-shadow .2s}
+.feat-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.feat-card .icon{width:48px;height:48px;border-radius:12px;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-card .icon svg{width:22px;height:22px}
+.feat-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.84rem;color:var(--fg-muted);line-height:1.6}
+/* Stats */
+.stats{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat-card{background:var(--surface);border-radius:14px;padding:24px;text-align:center;border:1px solid var(--border)}
+.stat-card .num{font-size:2rem;font-weight:800;color:var(--green)}
+.stat-card .label{font-size:.78rem;color:var(--fg-muted);margin-top:4px}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;margin-bottom:12px;letter-spacing:-.02em}
+.cta p{color:var(--fg-muted);margin-bottom:24px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--green);color:#fff;border:none;border-radius:12px;font-weight:700;font-family:var(--sans);font-size:.95rem;cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.78rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.hero{grid-template-columns:1fr;text-align:center;justify-items:center}.hero-content p{margin:0 auto 28px}.store-btns{justify-content:center}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo"><div class="icon"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4h8v8H4z" stroke="#fff" stroke-width="1.5"/><path d="M8 4v8" stroke="#fff" stroke-width="1.5"/></svg></div>Pocket</div>
+<div class="nav-links"><a href="#">Features</a><a href="#">Security</a><a href="#">Pricing</a><a href="#">Blog</a></div>
+<div class="nav-btns"><a class="ghost" href="#">Log in</a><a class="solid" href="#">Download</a></div>
+</nav>
+
+<section class="hero">
+<div class="hero-content reveal">
+<h1>Banking that fits in your <span class="green">pocket</span></h1>
+<p>Send, save, and invest — all from one app. No hidden fees. No minimum balance. Just smart money management.</p>
+<div class="store-btns">
+<a class="store-btn" href="#"><svg viewBox="0 0 24 24" fill="none"><path d="M17.5 12.5c0-1.58-.79-2.98-2-3.83l1-1.73A7.96 7.96 0 0120.5 13" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M12 3v4M8 5l2 3M16 5l-2 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg><div class="text">Download on the<strong>App Store</strong></div></a>
+<a class="store-btn" href="#"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4l9.5 8L4 20V4z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 4l12 7M4 20l12-7" stroke="#fff" stroke-width="1.5"/></svg><div class="text">Get it on<strong>Google Play</strong></div></a>
+</div>
+</div>
+<div class="phone reveal">
+<div class="phone-screen">
+<div class="phone-header"><div class="greeting">Good morning<strong>Sarah</strong></div><div class="avatar"></div></div>
+<div class="phone-balance"><div class="label">Total Balance</div><div class="amount">$12,847.60</div><div class="change">+$342.15 this month</div></div>
+<div class="phone-actions">
+<div class="act"><div class="circle"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/></svg></div><span>Add</span></div>
+<div class="act"><div class="circle"><svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8 4l4 4-4 4" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/></svg></div><span>Send</span></div>
+<div class="act"><div class="circle"><svg viewBox="0 0 16 16" fill="none"><path d="M3 12l4-4 3 3 4-5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/></svg></div><span>Invest</span></div>
+<div class="act"><div class="circle"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="4" stroke="#10B981" stroke-width="1.5"/></svg></div><span>More</span></div>
+</div>
+<div class="phone-tx">
+<div class="tx-title">Recent Transactions</div>
+<div class="tx-item"><div class="left"><div class="ico" style="background:#FEF3C7">&#9749;</div><div><div class="name">Cafe Nono</div><div class="date">Today</div></div></div><div class="amt neg">-$4.50</div></div>
+<div class="tx-item"><div class="left"><div class="ico" style="background:#ECFDF5">&#128176;</div><div><div class="name">Salary</div><div class="date">Mar 1</div></div></div><div class="amt pos">+$5,200</div></div>
+<div class="tx-item"><div class="left"><div class="ico" style="background:#EDE9FE">&#127917;</div><div><div class="name">Netflix</div><div class="date">Feb 28</div></div></div><div class="amt neg">-$15.99</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="features">
+<div class="feat-header reveal"><div class="tag">Features</div><h2>Everything you need, nothing you don't</h2></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 2v18M6 7l5-5 5 5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>Instant Transfers</h3><p>Send money anywhere in the world. Free transfers between Pocket users.</p></div></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><path d="M4 14l5-5 3 3 6-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h3>Auto-Invest</h3><p>Round up spare change and invest it automatically. Watch your money grow.</p></div></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="6" width="16" height="10" rx="2" stroke="#10B981" stroke-width="1.5"/><path d="M3 10h16" stroke="#10B981" stroke-width="1.5"/></svg></div><div><h3>Virtual Cards</h3><p>Create unlimited virtual cards for subscriptions, online shopping, or travel.</p></div></div>
+<div class="feat-card reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><path d="M11 2a9 9 0 110 18 9 9 0 010-18z" stroke="#10B981" stroke-width="1.5"/><path d="M11 6v5l3 3" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>Smart Budgets</h3><p>AI-powered spending insights. Know exactly where your money goes.</p></div></div>
+</div>
+</section>
+
+<div class="stats reveal">
+<div class="stat-card"><div class="num">2M+</div><div class="label">Active Users</div></div>
+<div class="stat-card"><div class="num">$4.2B</div><div class="label">Processed Monthly</div></div>
+<div class="stat-card"><div class="num">4.9</div><div class="label">App Store Rating</div></div>
+<div class="stat-card"><div class="num">0</div><div class="label">Hidden Fees</div></div>
+</div>
+
+<section class="cta reveal">
+<h2>Ready to take control?</h2>
+<p>Download Pocket and start managing your money smarter.</p>
+<button class="cta-btn">Download Free &rarr;</button>
+</section>
+
+<footer class="footer">&copy; 2025 Pocket Financial, Inc. FDIC insured.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

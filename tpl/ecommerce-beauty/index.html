@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow | Clean Beauty</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FBF7F4;--surface:#FFF;--border:#EDE5DB;--fg:#2D2319;--fg-muted:#9C8B7A;--rose:#C9536C;--rose-light:#FDF2F5;--serif:'Instrument Serif',serif;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.topbar{background:var(--rose);color:#fff;text-align:center;padding:8px;font-size:.72rem;font-weight:500}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--serif);font-size:1.6rem}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-icons{display:flex;gap:16px;align-items:center}
+.nav-icons a{color:var(--fg);text-decoration:none}
+.nav-icons svg{width:18px;height:18px}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text .tag{font-size:.72rem;color:var(--rose);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.hero-text h1{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1.15;margin-bottom:14px}
+.hero-text h1 em{font-style:italic;color:var(--rose)}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px}
+.hero-btns{display:flex;gap:10px}
+.btn-rose{padding:12px 28px;background:var(--rose);color:#fff;border:none;border-radius:50px;font-weight:600;font-size:.88rem;font-family:var(--sans);cursor:pointer}
+.btn-outline{padding:12px 28px;border:2px solid var(--border);border-radius:50px;font-weight:500;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-img img{width:100%;border-radius:20px;aspect-ratio:4/5;object-fit:cover}
+/* Products */
+.products{max-width:1100px;margin:0 auto;padding:60px 40px}
+.prod-header{text-align:center;margin-bottom:40px}
+.prod-header .tag{font-size:.72rem;color:var(--rose);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.prod-header h2{font-family:var(--serif);font-size:1.6rem}
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.prod-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .3s}
+.prod-card:hover{transform:translateY(-4px)}
+.prod-card .img-wrap{position:relative;background:var(--rose-light)}
+.prod-card img{width:100%;aspect-ratio:1;object-fit:cover}
+.prod-card .badge{position:absolute;top:10px;right:10px;background:var(--rose);color:#fff;font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:4px}
+.prod-card .info{padding:14px}
+.prod-card .info h3{font-size:.85rem;font-weight:600;margin-bottom:2px}
+.prod-card .info .category{font-size:.68rem;color:var(--fg-muted)}
+.prod-card .info .price-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+.prod-card .info .price{font-weight:700;font-size:.9rem}
+.prod-card .info .old-price{font-size:.78rem;color:var(--fg-muted);text-decoration:line-through}
+.prod-card .info .stars{color:var(--rose);font-size:.72rem;margin-top:4px}
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feat{text-align:center;padding:20px}
+.feat .icon{font-size:1.4rem;margin-bottom:8px}
+.feat h3{font-size:.82rem;font-weight:600;margin-bottom:2px}
+.feat p{font-size:.7rem;color:var(--fg-muted)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--rose-light);border:1px solid rgba(201,83,108,.15);border-radius:20px;padding:44px}
+.cta-box h2{font-family:var(--serif);font-size:1.4rem;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.cta-form{display:flex;gap:8px;max-width:380px;margin:0 auto}
+.cta-form input{flex:1;padding:12px 16px;border:1px solid var(--border);border-radius:50px;font-family:var(--sans);font-size:.85rem}
+.cta-form input:focus{outline:none;border-color:var(--rose)}
+.cta-form button{padding:12px 22px;background:var(--rose);color:#fff;border:none;border-radius:50px;font-weight:600;font-family:var(--sans);cursor:pointer;white-space:nowrap}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.prod-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.hero{grid-template-columns:1fr}.hero-img{order:-1}.prod-grid{grid-template-columns:1fr 1fr}.features{grid-template-columns:1fr 1fr}.nav-links{display:none}.cta-form{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="topbar">Free shipping on orders over $50 &#10024;</div>
+<nav class="nav"><div class="nav-logo">Glow</div><div class="nav-links"><a href="#">Shop</a><a href="#">Skincare</a><a href="#">About</a><a href="#">Blog</a></div><div class="nav-icons"><a href="#"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 16c0-3 2.7-5.5 6-5.5s6 2.5 6 5.5" stroke="currentColor" stroke-width="1.5"/></svg></a><a href="#"><svg viewBox="0 0 18 18" fill="none"><path d="M5 6h8l-1 7H6L5 6zM5 6l-.5-2H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a></div></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<div class="tag">New Collection</div>
+<h1>Clean beauty for your <em>glow</em> era</h1>
+<p>Skincare that works as hard as you do. Vegan, cruelty-free, and made with ingredients you can actually pronounce.</p>
+<div class="hero-btns"><button class="btn-rose">Shop Now</button><button class="btn-outline">Our Story</button></div>
+</div>
+<div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&h=625&fit=crop" alt="" loading="lazy"></div>
+</section>
+
+<section class="products">
+<div class="prod-header reveal"><div class="tag">Best Sellers</div><h2>Most loved products</h2></div>
+<div class="prod-grid">
+<div class="prod-card reveal"><div class="img-wrap"><img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300&h=300&fit=crop" alt="" loading="lazy"><div class="badge">Best Seller</div></div><div class="info"><h3>Hydra Serum</h3><div class="category">Face Serum</div><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; (342)</div><div class="price-row"><span class="price">$48</span></div></div></div>
+<div class="prod-card reveal"><div class="img-wrap"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=300&h=300&fit=crop" alt="" loading="lazy"></div><div class="info"><h3>Rose Toner</h3><div class="category">Toner</div><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734; (218)</div><div class="price-row"><span class="price">$32</span></div></div></div>
+<div class="prod-card reveal"><div class="img-wrap"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4a38691?w=300&h=300&fit=crop" alt="" loading="lazy"><div class="badge">New</div></div><div class="info"><h3>Vitamin C Cream</h3><div class="category">Moisturizer</div><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; (156)</div><div class="price-row"><span class="price">$42</span><span class="old-price">$56</span></div></div></div>
+<div class="prod-card reveal"><div class="img-wrap"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=300&h=300&fit=crop" alt="" loading="lazy"></div><div class="info"><h3>Clay Mask</h3><div class="category">Mask</div><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; (89)</div><div class="price-row"><span class="price">$28</span></div></div></div>
+</div>
+</section>
+
+<div class="features reveal">
+<div class="feat"><div class="icon">&#127807;</div><h3>100% Vegan</h3><p>No animal-derived ingredients</p></div>
+<div class="feat"><div class="icon">&#128300;</div><h3>Lab Tested</h3><p>Dermatologist approved</p></div>
+<div class="feat"><div class="icon">&#9852;&#65039;</div><h3>Cruelty Free</h3><p>Never tested on animals</p></div>
+<div class="feat"><div class="icon">&#128230;</div><h3>Free Returns</h3><p>30-day money back</p></div>
+</div>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Get 15% off your first order</h2>
+<p>Join our newsletter for exclusive deals and skincare tips.</p>
+<div class="cta-form"><input type="email" placeholder="your@email.com"><button>Subscribe</button></div>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Glow Beauty. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

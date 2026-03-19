@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forma | Branding Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F5F0EB;--surface:#FFF;--border:#E0D8CE;--fg:#1A1612;--fg-muted:#8C8278;--terracotta:#C65D3E;--terracotta-light:#FBF0EC;--serif:'Instrument Serif',serif;--sans:'Syne',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1200px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--sans);font-weight:800;font-size:1.3rem;letter-spacing:-1px}
+.nav-links{display:flex;gap:28px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--fg);color:var(--bg);padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;text-decoration:none}
+/* Hero */
+.hero{max-width:1200px;margin:0 auto;padding:80px 40px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text h1{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;margin-bottom:16px;font-weight:400}
+.hero-text h1 .italic{font-style:italic;color:var(--terracotta)}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.8;margin-bottom:28px;max-width:440px}
+.hero-btns{display:flex;gap:12px}
+.btn-dark{padding:14px 28px;background:var(--fg);color:var(--bg);border:none;border-radius:50px;font-weight:700;font-size:.88rem;font-family:var(--sans);cursor:pointer}
+.btn-outline{padding:14px 28px;border:1px solid var(--border);border-radius:50px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-visual{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero-visual img{width:100%;border-radius:14px;object-fit:cover}
+.hero-visual img:first-child{aspect-ratio:1;grid-row:span 2}
+.hero-visual img:nth-child(2){aspect-ratio:4/3}
+.hero-visual img:nth-child(3){aspect-ratio:4/3}
+/* Marquee */
+.marquee{overflow:hidden;padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.marquee-track{display:flex;gap:48px;animation:slide 25s linear infinite;width:max-content}
+@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-track .item{font-family:var(--serif);font-size:2.5rem;font-weight:400;font-style:italic;color:var(--fg);opacity:.15;white-space:nowrap}
+/* Work */
+.work{max-width:1200px;margin:0 auto;padding:80px 40px}
+.work-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+.work-header h2{font-family:var(--serif);font-size:1.8rem;font-weight:400}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.work-card{border-radius:16px;overflow:hidden;position:relative;cursor:pointer}
+.work-card img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;transition:transform .5s}
+.work-card:hover img{transform:scale(1.04)}
+.work-card .overlay{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
+.work-card .overlay h3{color:#fff;font-size:1rem;font-weight:700}
+.work-card .overlay p{color:rgba(255,255,255,.7);font-size:.78rem}
+/* Services */
+.services{max-width:1200px;margin:0 auto;padding:60px 40px}
+.svc-header{margin-bottom:40px}
+.svc-header h2{font-family:var(--serif);font-size:1.8rem;font-weight:400}
+.svc-list{display:flex;flex-direction:column}
+.svc-row{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:padding .2s}
+.svc-row:hover{padding-right:16px}
+.svc-row .left h3{font-size:1.1rem;font-weight:700;margin-bottom:2px}
+.svc-row .left p{font-size:.78rem;color:var(--fg-muted)}
+.svc-row .arrow{font-size:1.4rem;color:var(--terracotta);opacity:0;transition:opacity .2s}
+.svc-row:hover .arrow{opacity:1}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:16px;font-weight:400}
+.cta h2 em{font-style:italic;color:var(--terracotta)}
+.cta p{color:var(--fg-muted);margin-bottom:28px}
+.footer{max-width:1200px;margin:0 auto;padding:30px 40px;display:flex;justify-content:space-between;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.footer a{color:var(--fg-muted);text-decoration:none}.footer a:hover{color:var(--fg)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.hero{grid-template-columns:1fr}.hero-visual{grid-template-columns:1fr}.hero-visual img:first-child{grid-row:auto;aspect-ratio:16/9}.work-grid{grid-template-columns:1fr}.nav-links{display:none}.footer{flex-direction:column;gap:8px;text-align:center}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">forma</div><div class="nav-links"><a href="#">Work</a><a href="#">Services</a><a href="#">About</a><a href="#">Journal</a></div><a class="nav-btn" href="#">Start a Project</a></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<h1>We craft brands that <span class="italic">resonate</span></h1>
+<p>Forma is a branding and identity studio. We work with ambitious companies to create visual identities that are memorable, meaningful, and built to last.</p>
+<div class="hero-btns"><button class="btn-dark">Our Work</button><button class="btn-outline">About Us</button></div>
+</div>
+<div class="hero-visual reveal">
+<img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=400&h=400&fit=crop" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=300&h=225&fit=crop" alt="" loading="lazy">
+<img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=300&h=225&fit=crop" alt="" loading="lazy">
+</div>
+</section>
+
+<div class="marquee"><div class="marquee-track" id="mTrack"><div class="item">Brand Strategy</div><div class="item">&mdash;</div><div class="item">Visual Identity</div><div class="item">&mdash;</div><div class="item">Packaging</div><div class="item">&mdash;</div><div class="item">Digital Design</div><div class="item">&mdash;</div><div class="item">Art Direction</div><div class="item">&mdash;</div></div></div>
+
+<section class="work">
+<div class="work-header reveal"><h2>Selected Work</h2></div>
+<div class="work-grid">
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>Nomad Coffee</h3><p>Brand Identity &bull; Packaging</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&h=400&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>Oura Health</h3><p>Visual Identity &bull; Web</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>Maison Fleur</h3><p>Luxury Branding</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1555421689-d68471e189f2?w=600&h=400&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>UrbanRoast</h3><p>Brand &bull; Packaging &bull; Web</p></div></div>
+</div>
+</section>
+
+<section class="services">
+<div class="svc-header reveal"><h2>What we do</h2></div>
+<div class="svc-row reveal"><div class="left"><h3>Brand Strategy</h3><p>Positioning, messaging, and competitive analysis</p></div><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><div class="left"><h3>Visual Identity</h3><p>Logo, typography, color, and brand guidelines</p></div><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><div class="left"><h3>Packaging Design</h3><p>Structural and graphic design for physical products</p></div><span class="arrow">&rarr;</span></div>
+<div class="svc-row reveal"><div class="left"><h3>Digital & Web</h3><p>Brand-led website design and digital experiences</p></div><span class="arrow">&rarr;</span></div>
+</section>
+
+<section class="cta reveal">
+<h2>Let's build something <em>beautiful</em> together</h2>
+<p>We're currently accepting new projects for Q2 2025.</p>
+<button class="btn-dark">Start a Project &rarr;</button>
+</section>
+
+<footer class="footer"><span>&copy; 2025 Forma Studio</span><div><a href="#">Instagram</a> &middot; <a href="#">Behance</a> &middot; <a href="#">LinkedIn</a></div></footer>
+
+<script>
+const isPreview=(self!==top);
+const mt=document.getElementById('mTrack');if(mt)mt.innerHTML+=mt.innerHTML;
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

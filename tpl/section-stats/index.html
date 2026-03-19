@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stats Counter Section</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A10;--surface:#12121A;--border:#1E1E30;--fg:#EEEEF4;--fg-muted:#6A6A88;--blue:#3B82F6;--sans:'Space Grotesk',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);min-height:100vh;display:flex;align-items:center}
+.section{max-width:1000px;margin:0 auto;padding:80px 40px;width:100%}
+.s-center{text-align:center;margin-bottom:60px}
+.s-tag{font-size:.75rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.02em}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;text-align:center;position:relative;overflow:hidden;transition:all .3s}
+.stat-card:hover{border-color:var(--blue);transform:translateY(-3px)}
+.stat-card .stat-num{font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700;letter-spacing:-.03em;margin-bottom:4px;background:linear-gradient(180deg,var(--fg),var(--fg-muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .stat-label{font-size:.85rem;color:var(--fg-muted);font-weight:500}
+.stat-card .stat-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--border)}
+.stat-card .stat-bar-fill{height:100%;background:var(--blue);border-radius:0 3px 0 0;width:0;transition:width 1.5s ease}
+/* Detailed stats row */
+.detail-row{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px}
+.detail-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;align-items:center;gap:20px}
+.detail-card .dc-chart{width:80px;height:80px;position:relative}
+.detail-card .dc-chart canvas{width:100%;height:100%}
+.detail-card .dc-chart .dc-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700}
+.detail-card .dc-info h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.detail-card .dc-info p{font-size:.82rem;color:var(--fg-muted);line-height:1.5}
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.stats-grid,.detail-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<section class="section">
+<div class="s-center"><div class="s-tag reveal">By the Numbers</div><div class="s-title reveal">Trusted at Scale</div></div>
+<div class="stats-grid">
+<div class="stat-card reveal"><div class="stat-num" data-target="12400" data-suffix="+">0</div><div class="stat-label">Active Users</div><div class="stat-bar"><div class="stat-bar-fill" data-width="85%"></div></div></div>
+<div class="stat-card reveal"><div class="stat-num" data-target="99.9" data-suffix="%" data-decimal="1">0</div><div class="stat-label">Uptime SLA</div><div class="stat-bar"><div class="stat-bar-fill" data-width="99%"></div></div></div>
+<div class="stat-card reveal"><div class="stat-num" data-target="4200000" data-suffix="">0</div><div class="stat-label">API Requests / Day</div><div class="stat-bar"><div class="stat-bar-fill" data-width="72%"></div></div></div>
+<div class="stat-card reveal"><div class="stat-num" data-target="24" data-suffix="/7">0</div><div class="stat-label">Support</div><div class="stat-bar"><div class="stat-bar-fill" data-width="100%"></div></div></div>
+</div>
+<div class="detail-row">
+<div class="detail-card reveal"><div class="dc-chart"><canvas id="chart1" width="80" height="80"></canvas><div class="dc-pct">92%</div></div><div class="dc-info"><h3>Customer Satisfaction</h3><p>Based on 2,400+ survey responses in the last quarter.</p></div></div>
+<div class="detail-card reveal"><div class="dc-chart"><canvas id="chart2" width="80" height="80"></canvas><div class="dc-pct">78%</div></div><div class="dc-info"><h3>Time Saved</h3><p>Average reduction in manual work reported by teams.</p></div></div>
+</div>
+</section>
+<script>
+const isPreview=(self!==top);
+// Counter animation
+const counters=document.querySelectorAll('[data-target]');
+const cObs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){const t=+r.target.dataset.target;const s=r.target.dataset.suffix||'';const dec=+(r.target.dataset.decimal||0);let c=0;const inc=t/60;const timer=setInterval(()=>{c+=inc;if(c>=t){r.target.textContent=(dec?t.toFixed(dec):t.toLocaleString())+s;clearInterval(timer)}else{r.target.textContent=(dec?c.toFixed(dec):Math.ceil(c).toLocaleString())+s}},20);cObs.unobserve(r.target)}})},{threshold:.5});
+counters.forEach(c=>cObs.observe(c));
+// Bar fill animation
+const bars=document.querySelectorAll('.stat-bar-fill');
+const bObs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.style.width=r.target.dataset.width;bObs.unobserve(r.target)}})},{threshold:.5});
+bars.forEach(b=>bObs.observe(b));
+// Donut charts
+function drawDonut(id,pct,color){const cv=document.getElementById(id);if(!cv)return;const ctx=cv.getContext('2d');const cx=40,cy=40,r=32,lw=6;ctx.lineWidth=lw;ctx.lineCap='round';ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='#1E1E30';ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*(pct/100));ctx.strokeStyle=color;ctx.stroke()}
+drawDonut('chart1',92,'#3B82F6');drawDonut('chart2',78,'#3B82F6');
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

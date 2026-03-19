@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriPlan | Smart Meal Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F0FAF0;--surface:#FFF;--border:#D4EDD4;--fg:#1A2E1A;--fg-muted:#5C7A5C;--green:#16A34A;--green-light:#DCFCE7;--orange:#EA580C;--sans:'Plus Jakarta Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.nav{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:8px}
+.nav-logo svg{width:24px;height:24px;color:var(--green)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--green);color:#fff;padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;text-decoration:none}
+.hero{max-width:1100px;margin:0 auto;padding:50px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text .badge{display:inline-block;padding:5px 12px;background:var(--green-light);color:var(--green);font-size:.72rem;font-weight:700;border-radius:50px;margin-bottom:14px}
+.hero-text h1{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:14px}
+.hero-text h1 span{color:var(--green)}
+.hero-text p{font-size:.92rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px;font-weight:300}
+.hero-btns{display:flex;gap:10px}
+.btn-green{padding:14px 28px;background:var(--green);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer}
+.btn-out{padding:14px 28px;border:2px solid var(--border);border-radius:50px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer;background:transparent}
+.hero-img{position:relative}
+.hero-img img{width:100%;border-radius:20px;aspect-ratio:4/3;object-fit:cover}
+.hero-img .cal-badge{position:absolute;bottom:16px;left:16px;background:var(--surface);border-radius:12px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.1);font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.hero-img .cal-badge svg{width:16px;height:16px;color:var(--green)}
+.how{max-width:1100px;margin:0 auto;padding:60px 40px}
+.how-header{text-align:center;margin-bottom:40px}
+.how-header h2{font-size:1.4rem;font-weight:800}
+.how-header p{font-size:.88rem;color:var(--fg-muted);margin-top:4px}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.how-step{text-align:center;padding:24px 16px;background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.how-step .num{width:36px;height:36px;border-radius:50%;background:var(--green-light);color:var(--green);font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:.88rem}
+.how-step h3{font-size:.85rem;font-weight:700;margin-bottom:4px}
+.how-step p{font-size:.72rem;color:var(--fg-muted);line-height:1.5}
+.meals{max-width:1100px;margin:0 auto;padding:40px}
+.meals-header{text-align:center;margin-bottom:30px}
+.meals-header h2{font-size:1.3rem;font-weight:800}
+.meals-header p{font-size:.88rem;color:var(--fg-muted)}
+.meal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.meal-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .3s}
+.meal-card:hover{transform:translateY(-4px)}
+.meal-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.meal-card .info{padding:14px}
+.meal-card .info h3{font-size:.88rem;font-weight:700;margin-bottom:4px}
+.meal-card .info .macros{display:flex;gap:10px;margin-bottom:6px}
+.meal-card .info .macro{font-size:.65rem;padding:3px 8px;background:var(--green-light);color:var(--green);border-radius:4px;font-weight:600}
+.meal-card .info p{font-size:.72rem;color:var(--fg-muted)}
+.meal-card .info .cal{font-size:.78rem;font-weight:700;color:var(--orange);margin-top:6px}
+.features{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.features img{width:100%;border-radius:16px}
+.feat-list h2{font-size:1.3rem;font-weight:800;margin-bottom:20px}
+.feat-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.feat-item .icon{width:36px;height:36px;background:var(--green-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-item .icon svg{width:18px;height:18px;color:var(--green)}
+.feat-item h3{font-size:.82rem;font-weight:700;margin-bottom:2px}
+.feat-item p{font-size:.72rem;color:var(--fg-muted)}
+.plans{max-width:1100px;margin:0 auto;padding:40px}
+.plans-header{text-align:center;margin-bottom:30px}
+.plans-header h2{font-size:1.3rem;font-weight:800}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;transition:border-color .3s}
+.plan-card:hover{border-color:var(--green)}
+.plan-card.pop{border-color:var(--green)}
+.plan-card.pop::before{content:'Best Value';position:absolute;top:-10px;right:16px;background:var(--green);color:#fff;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:4px}
+.plan-card .name{font-size:.78rem;color:var(--green);font-weight:700;margin-bottom:4px}
+.plan-card .price{font-size:1.8rem;font-weight:800;margin-bottom:4px}
+.plan-card .price span{font-size:.78rem;font-weight:500;color:var(--fg-muted)}
+.plan-card ul{list-style:none;margin:14px 0}
+.plan-card li{font-size:.75rem;padding:4px 0;display:flex;align-items:center;gap:6px}
+.plan-card li svg{width:12px;height:12px;color:var(--green)}
+.plan-card button{width:100%;padding:11px;border-radius:50px;font-family:var(--sans);font-weight:700;font-size:.82rem;cursor:pointer}
+.plan-card .btn-fill{background:var(--green);color:#fff;border:none}
+.plan-card .btn-line{background:transparent;border:2px solid var(--border);color:var(--fg)}
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--green);border-radius:20px;padding:44px;color:#fff}
+.cta-box h2{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.cta-box p{opacity:.85;margin-bottom:20px;font-size:.88rem;font-weight:300}
+.cta-box button{background:#fff;color:var(--green);padding:14px 28px;border:none;border-radius:50px;font-weight:700;font-family:var(--sans);cursor:pointer}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.how-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.hero,.features{grid-template-columns:1fr}.how-grid,.meal-grid,.plan-grid{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>NutriPlan</div><div class="nav-links"><a href="#">Meals</a><a href="#">Plans</a><a href="#">Science</a><a href="#">Blog</a></div><a class="nav-btn" href="#">Get Started</a></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<div class="badge">AI-Powered Nutrition</div>
+<h1>Eat smarter, feel <span>amazing</span></h1>
+<p>Personalized meal plans built around your goals, preferences, and schedule. Powered by nutritional science and AI.</p>
+<div class="hero-btns"><button class="btn-green">Start Free Trial</button><button class="btn-out">View Sample Plan</button></div>
+</div>
+<div class="hero-img reveal">
+<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&h=375&fit=crop" alt="" loading="lazy">
+<div class="cal-badge"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 1,847 cal today</div>
+</div>
+</section>
+
+<section class="how">
+<div class="how-header reveal"><h2>How NutriPlan works</h2><p>Healthy eating made effortless.</p></div>
+<div class="how-grid">
+<div class="how-step reveal"><div class="num">1</div><h3>Set Goals</h3><p>Weight loss, muscle gain, maintenance, or specific dietary needs.</p></div>
+<div class="how-step reveal"><div class="num">2</div><h3>Get Your Plan</h3><p>AI generates a weekly meal plan matching your macros and taste.</p></div>
+<div class="how-step reveal"><div class="num">3</div><h3>Shop & Cook</h3><p>Auto-generated grocery lists and step-by-step recipes.</p></div>
+<div class="how-step reveal"><div class="num">4</div><h3>Track & Adapt</h3><p>Log meals, track progress, and watch your plan evolve.</p></div>
+</div>
+</section>
+
+<section class="meals">
+<div class="meals-header reveal"><h2>This week's highlights</h2><p>Fresh recipes updated every Monday.</p></div>
+<div class="meal-grid">
+<div class="meal-card reveal"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><h3>Grilled Salmon Bowl</h3><div class="macros"><span class="macro">38g Protein</span><span class="macro">24g Carbs</span><span class="macro">18g Fat</span></div><p>Wild salmon, quinoa, avocado, and miso dressing.</p><div class="cal">520 calories</div></div></div>
+<div class="meal-card reveal"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><h3>Mediterranean Wrap</h3><div class="macros"><span class="macro">28g Protein</span><span class="macro">42g Carbs</span><span class="macro">14g Fat</span></div><p>Chicken, hummus, veggies, and tahini in whole wheat.</p><div class="cal">440 calories</div></div></div>
+<div class="meal-card reveal"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="info"><h3>Veggie Stir Fry</h3><div class="macros"><span class="macro">22g Protein</span><span class="macro">36g Carbs</span><span class="macro">12g Fat</span></div><p>Tofu, broccoli, snap peas, and ginger-soy glaze.</p><div class="cal">380 calories</div></div></div>
+</div>
+</section>
+
+<section class="features reveal">
+<img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500&h=400&fit=crop" alt="" loading="lazy">
+<div class="feat-list">
+<h2>Built for real life</h2>
+<div class="feat-item"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2l2 4h4l-3 3 1 4-4-2.5L5 13l1-4-3-3h4l2-4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div><div><h3>Smart Swaps</h3><p>Don't like an ingredient? Swap it with one tap — macros stay balanced.</p></div></div>
+<div class="feat-item"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M2 7h14" stroke="currentColor" stroke-width="1.2"/></svg></div><div><h3>Grocery Lists</h3><p>Auto-generated shopping lists organized by aisle. Export or share.</p></div></div>
+<div class="feat-item"><div class="icon"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M9 6v3l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><h3>Meal Prep Mode</h3><p>Batch cooking instructions to save time on busy weeks.</p></div></div>
+</div>
+</section>
+
+<section class="plans">
+<div class="plans-header reveal"><h2>Choose your plan</h2></div>
+<div class="plan-grid">
+<div class="plan-card reveal">
+<div class="name">Free</div>
+<div class="price">$0 <span>/mo</span></div>
+<ul>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 3 recipes/week</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Basic macro tracking</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Grocery list</li>
+</ul>
+<button class="btn-line">Get Started</button>
+</div>
+<div class="plan-card pop reveal">
+<div class="name">Pro</div>
+<div class="price">$9 <span>/mo</span></div>
+<ul>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Unlimited recipes</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> AI meal planning</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Smart swaps</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Meal prep mode</li>
+</ul>
+<button class="btn-fill">Start Free Trial</button>
+</div>
+<div class="plan-card reveal">
+<div class="name">Family</div>
+<div class="price">$15 <span>/mo</span></div>
+<ul>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Everything in Pro</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Up to 6 profiles</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Kid-friendly meals</li>
+<li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Family portions</li>
+</ul>
+<button class="btn-line">Choose Family</button>
+</div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Start eating better today</h2>
+<p>Free 7-day trial. No credit card required. Cancel anytime.</p>
+<button>Start Free Trial &rarr;</button>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 NutriPlan. Fuel your best self.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

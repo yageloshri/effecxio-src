@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K. | Minimal Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FEFEFE;--fg:#1A1A1A;--fg-muted:#999;--border:#EEE;--serif:'EB Garamond',serif;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans)}
+.container{max-width:640px;margin:0 auto;padding:0 32px}
+/* Nav */
+.nav{padding:40px 0 0;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--serif);font-size:1.8rem;font-weight:700}
+.nav-links{display:flex;gap:20px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none}.nav-links a:hover{color:var(--fg)}
+/* Hero */
+.hero{padding:80px 0 48px}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:400;line-height:1.4;margin-bottom:16px}
+.hero h1 em{font-style:italic}
+.hero p{font-size:.95rem;color:var(--fg-muted);line-height:1.8;margin-bottom:24px}
+.hero-link{font-size:.88rem;color:var(--fg);text-decoration:none;border-bottom:1px solid var(--fg);padding-bottom:2px}
+/* Divider */
+.divider{height:1px;background:var(--border);margin:48px 0}
+/* Projects */
+.section-title{font-family:var(--serif);font-size:1.2rem;font-weight:500;margin-bottom:32px}
+.project{margin-bottom:40px;cursor:pointer}
+.project img{width:100%;border-radius:4px;margin-bottom:12px;transition:opacity .3s}
+.project:hover img{opacity:.85}
+.project h3{font-family:var(--serif);font-size:1.1rem;font-weight:500;margin-bottom:4px}
+.project p{font-size:.82rem;color:var(--fg-muted)}
+.project .year{font-size:.72rem;color:var(--fg-muted);margin-top:4px}
+/* Writing */
+.writing-item{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border)}
+.writing-item a{font-family:var(--serif);font-size:.95rem;text-decoration:none;color:var(--fg)}.writing-item a:hover{opacity:.6}
+.writing-item .date{font-size:.75rem;color:var(--fg-muted);white-space:nowrap}
+/* Footer */
+.footer{padding:48px 0 40px;font-size:.78rem;color:var(--fg-muted);display:flex;justify-content:space-between}
+.footer-links{display:flex;gap:16px}
+.footer-links a{color:var(--fg-muted);text-decoration:none}.footer-links a:hover{color:var(--fg)}
+.reveal{opacity:0;transform:translateY(12px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.container{padding:0 24px}}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="nav"><div class="nav-logo">K.</div><div class="nav-links"><a href="#">Work</a><a href="#">Writing</a><a href="#">About</a></div></nav>
+
+<section class="hero reveal">
+<h1>Designer and creative director based in Tel Aviv, working at the intersection of <em>brand</em> and <em>product</em>.</h1>
+<p>Currently leading design at Luminary. Previously at Google, Wix, and independent practice. I focus on thoughtful design that serves both business goals and human needs.</p>
+<a class="hero-link" href="#">Read more about me &rarr;</a>
+</section>
+
+<div class="divider"></div>
+
+<section class="reveal">
+<div class="section-title">Selected Work</div>
+<div class="project reveal"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=640&h=360&fit=crop" alt="" loading="lazy"><h3>Luminary — Brand Identity</h3><p>Visual identity and design system for a fintech startup</p><div class="year">2024</div></div>
+<div class="project reveal"><img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=640&h=360&fit=crop" alt="" loading="lazy"><h3>Sonder — Product Design</h3><p>End-to-end design for a travel experience platform</p><div class="year">2023</div></div>
+<div class="project reveal"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=640&h=360&fit=crop" alt="" loading="lazy"><h3>Mono — Design System</h3><p>Comprehensive design system serving 12 product teams</p><div class="year">2023</div></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="reveal">
+<div class="section-title">Writing</div>
+<div class="writing-item reveal"><a href="#">On the future of design tools</a><span class="date">Feb 2025</span></div>
+<div class="writing-item reveal"><a href="#">Why I stopped using Figma Auto Layout</a><span class="date">Jan 2025</span></div>
+<div class="writing-item reveal"><a href="#">Designing for trust in fintech</a><span class="date">Dec 2024</span></div>
+<div class="writing-item reveal"><a href="#">The case for slower design</a><span class="date">Oct 2024</span></div>
+</section>
+
+<div class="divider"></div>
+
+<footer class="footer">
+<span>&copy; 2025</span>
+<div class="footer-links"><a href="#">Twitter</a><a href="#">LinkedIn</a><a href="#">Dribbble</a><a href="#">Email</a></div>
+</footer>
+</div>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

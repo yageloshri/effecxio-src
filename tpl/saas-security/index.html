@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bastion | Cybersecurity Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#050A0E;--surface:#0A1118;--surface2:#0F1A24;--border:#1A2A38;
+--fg:#D0DEE8;--fg-muted:#6A8899;--green:#00E5A0;--green-dim:rgba(0,229,160,.1);
+--red:#FF4757;--amber:#FFB800;--blue:#0EA5E9;
+--sans:'Chakra Petch',sans-serif;--mono:'Source Code Pro',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--green);color:var(--bg)}
+
+canvas#grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.08}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(5,10,14,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.2rem;font-weight:700;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:10px;letter-spacing:2px;text-transform:uppercase}
+.nav-brand svg{width:24px;height:24px}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{background:var(--green);color:var(--bg);padding:8px 20px;border-radius:4px;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase}
+
+.hero{max-width:1100px;margin:0 auto;padding:160px 40px 100px;text-align:center;position:relative;z-index:1}
+.hero-status{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(0,229,160,.2);padding:6px 16px;border-radius:4px;font-size:.75rem;color:var(--green);margin-bottom:28px;font-family:var(--mono)}
+.hero-status .pulse{width:8px;height:8px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2.5rem,6vw,4.8rem);font-weight:700;line-height:1.05;margin-bottom:20px;letter-spacing:-.02em}
+.hero h1 .green{color:var(--green)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:560px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-g{background:var(--green);color:var(--bg);padding:14px 32px;font-size:.85rem;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:box-shadow .2s}
+.btn-g:hover{box-shadow:0 0 30px rgba(0,229,160,.3)}
+.btn-o{border:1px solid var(--border);color:var(--fg);padding:14px 32px;font-size:.85rem;font-weight:600;text-decoration:none;letter-spacing:1px;transition:border-color .2s}
+.btn-o:hover{border-color:var(--green)}
+
+/* Terminal */
+.terminal{max-width:700px;margin:60px auto 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);position:relative;z-index:1}
+.term-bar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.75rem;color:var(--fg-muted)}
+.term-bar span{width:10px;height:10px;border-radius:50%}
+.term-bar .r{background:#FF5F57}.term-bar .y{background:#FEBC2E}.term-bar .g{background:#28C840}
+.term-body{padding:20px;font-family:var(--mono);font-size:.8rem;line-height:2}
+.term-line{color:var(--fg-muted)}
+.term-line .cmd{color:var(--green)}
+.term-line .warn{color:var(--amber)}
+.term-line .ok{color:var(--green)}
+.term-line .err{color:var(--red)}
+.term-cursor{display:inline-block;width:8px;height:14px;background:var(--green);animation:blink 1s infinite}
+
+/* Threat Dashboard */
+.threat{max-width:1100px;margin:0 auto;padding:100px 40px;position:relative;z-index:1}
+.threat-header{text-align:center;margin-bottom:60px}
+.s-tag{font-size:.75rem;color:var(--green);text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-bottom:12px;font-family:var(--mono)}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-.01em}
+.threat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.threat-card{background:var(--surface);border:1px solid var(--border);padding:24px;transition:border-color .3s}
+.threat-card:hover{border-color:var(--green)}
+.threat-card .t-num{font-size:2rem;font-weight:700;margin-bottom:4px}
+.threat-card .t-label{font-size:.75rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.threat-card .t-bar{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.threat-card .t-fill{height:100%;border-radius:2px}
+
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:80px 40px;position:relative;z-index:1}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.f-card{background:var(--surface);border:1px solid var(--border);padding:28px;transition:all .3s}
+.f-card:hover{border-color:var(--green);transform:translateY(-4px)}
+.f-card .f-icon{width:40px;height:40px;border-radius:8px;background:var(--green-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.f-card .f-icon svg{width:20px;height:20px;stroke:var(--green);fill:none;stroke-width:2}
+.f-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.f-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Trust */
+.trust{padding:80px 40px;position:relative;z-index:1}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.trust-item{text-align:center;padding:30px}
+.trust-item .t-val{font-size:2.5rem;font-weight:700;color:var(--green)}
+.trust-item .t-desc{font-size:.8rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:2px;margin-top:6px}
+
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center;position:relative;z-index:1}
+.cta-box{background:var(--surface);border:1px solid var(--green);padding:60px;position:relative}
+.cta-box::before{content:'';position:absolute;inset:-1px;background:linear-gradient(var(--green),transparent);opacity:.05;pointer-events:none}
+.cta-box h2{font-size:2rem;font-weight:700;margin-bottom:12px}
+.cta-box p{color:var(--fg-muted);margin-bottom:28px}
+.cta-box a{display:inline-block;background:var(--green);color:var(--bg);padding:14px 36px;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase;font-size:.85rem}
+
+footer{padding:40px;border-top:1px solid var(--border);text-align:center;font-size:.75rem;color:var(--fg-muted);position:relative;z-index:1;font-family:var(--mono)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.threat-grid{grid-template-columns:1fr 1fr}.feat-grid{grid-template-columns:1fr 1fr}.trust-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.threat-grid,.feat-grid,.trust-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<canvas id="grid"></canvas>
+
+<nav class="nav">
+<a href="#" class="nav-brand">
+<svg viewBox="0 0 24 24" fill="none" stroke="#00E5A0" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+Bastion
+</a>
+<div class="nav-links">
+<a href="#features">Features</a><a href="#threat">Threat Intel</a><a href="#">Docs</a>
+<a href="#" class="nav-cta">Get Protected</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-status"><span class="pulse"></span> All systems operational</div>
+<h1>Defend Your<br>Digital <span class="green">Fortress</span></h1>
+<p>Enterprise-grade cybersecurity platform. Real-time threat detection, automated response, and complete visibility across your entire infrastructure.</p>
+<div class="hero-btns">
+<a href="#" class="btn-g">Start Free Scan</a>
+<a href="#" class="btn-o">Request Demo</a>
+</div>
+<div class="terminal reveal">
+<div class="term-bar"><span class="r"></span><span class="y"></span><span class="g"></span> bastion@shield ~ </div>
+<div class="term-body">
+<div class="term-line"><span class="cmd">$ bastion scan --target production</span></div>
+<div class="term-line"><span class="ok">[OK]</span> Scanning 2,847 endpoints...</div>
+<div class="term-line"><span class="ok">[OK]</span> Firewall rules validated</div>
+<div class="term-line"><span class="warn">[WARN]</span> 3 outdated SSL certificates found</div>
+<div class="term-line"><span class="ok">[OK]</span> 0 critical vulnerabilities detected</div>
+<div class="term-line"><span class="ok">[OK]</span> DDoS protection active</div>
+<div class="term-line"><span class="cmd">$ </span><span class="term-cursor"></span></div>
+</div>
+</div>
+</section>
+
+<section class="threat" id="threat">
+<div class="threat-header">
+<div class="s-tag reveal">Live Threat Dashboard</div>
+<div class="s-title reveal">Security at a Glance</div>
+</div>
+<div class="threat-grid">
+<div class="threat-card reveal">
+<div class="t-num" style="color:var(--green)" data-target="2847">0</div>
+<div class="t-label">Endpoints Protected</div>
+<div class="t-bar"><div class="t-fill" style="width:95%;background:var(--green)"></div></div>
+</div>
+<div class="threat-card reveal">
+<div class="t-num" style="color:var(--amber)" data-target="47">0</div>
+<div class="t-label">Threats Blocked Today</div>
+<div class="t-bar"><div class="t-fill" style="width:60%;background:var(--amber)"></div></div>
+</div>
+<div class="threat-card reveal">
+<div class="t-num" style="color:var(--blue)" data-target="99">0</div>
+<div class="t-label">Uptime Score %</div>
+<div class="t-bar"><div class="t-fill" style="width:99%;background:var(--blue)"></div></div>
+</div>
+<div class="threat-card reveal">
+<div class="t-num" style="color:var(--red)">0</div>
+<div class="t-label">Critical Alerts</div>
+<div class="t-bar"><div class="t-fill" style="width:2%;background:var(--red)"></div></div>
+</div>
+</div>
+</section>
+
+<section class="features" id="features">
+<div class="threat-header">
+<div class="s-tag reveal">Capabilities</div>
+<div class="s-title reveal">Complete Security Stack</div>
+</div>
+<div class="feat-grid">
+<div class="f-card reveal"><div class="f-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Threat Detection</h3><p>AI-powered anomaly detection identifies zero-day threats in real-time across your network.</p></div>
+<div class="f-card reveal"><div class="f-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3>Zero Trust Access</h3><p>Verify every user and device. Granular access controls with continuous authentication.</p></div>
+<div class="f-card reveal"><div class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h3>Incident Response</h3><p>Automated playbooks respond in milliseconds. Contain threats before they spread.</p></div>
+<div class="f-card reveal"><div class="f-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>SIEM Integration</h3><p>Unified log management. Correlate events across cloud, on-prem, and edge endpoints.</p></div>
+<div class="f-card reveal"><div class="f-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div><h3>Compliance Reports</h3><p>Auto-generate SOC 2, HIPAA, PCI-DSS, and ISO 27001 compliance reports.</p></div>
+<div class="f-card reveal"><div class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><h3>Global Edge</h3><p>300+ PoPs worldwide. DDoS mitigation at the edge with sub-10ms response times.</p></div>
+</div>
+</section>
+
+<div class="trust">
+<div class="trust-grid">
+<div class="trust-item reveal"><div class="t-val" data-target="300">0</div><div class="t-desc">Global PoPs</div></div>
+<div class="trust-item reveal"><div class="t-val" data-target="10">0</div><div class="t-desc">Billion Events/Day</div></div>
+<div class="trust-item reveal"><div class="t-val" data-target="500">0</div><div class="t-desc">Enterprise Clients</div></div>
+<div class="trust-item reveal"><div class="t-val" data-target="0">0</div><div class="t-desc">Data Breaches</div></div>
+</div>
+</div>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Secure Your Infrastructure</h2>
+<p>Start with a free security assessment. No credit card required.</p>
+<a href="#">Get Free Scan &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Bastion Security. SOC 2 Type II Certified.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Grid canvas
+const gc=document.getElementById('grid');
+if(gc&&!isPreview){
+  const ctx=gc.getContext('2d');let W,H;
+  function resize(){W=gc.width=window.innerWidth;H=gc.height=window.innerHeight}resize();
+  window.addEventListener('resize',resize);
+  const gap=40;
+  function drawGrid(){ctx.clearRect(0,0,W,H);ctx.strokeStyle='rgba(0,229,160,.15)';ctx.lineWidth=.5;
+  for(let x=0;x<W;x+=gap){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=gap){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}}
+  drawGrid();window.addEventListener('resize',drawGrid);
+}else if(gc){gc.style.display='none'}
+// Reveal
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+// Counters
+document.querySelectorAll('[data-target]').forEach(el=>{
+  const cObs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){const t=parseInt(el.dataset.target);if(t===0){el.textContent='0';cObs.unobserve(el);return}let c=0;const s=Math.max(1,Math.floor(t/50));const i=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(i)}el.textContent=c.toLocaleString()},30);cObs.unobserve(el)}})},{threshold:.5});cObs.observe(el);
+});
+</script>
+</body>
+</html>

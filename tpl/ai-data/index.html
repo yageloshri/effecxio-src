@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuralDB | AI Data Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0A0A14;--surface:#10101C;--surface2:#181828;--border:#242438;
+--fg:#E4E4F0;--fg-muted:#7474A0;
+--indigo:#6366F1;--indigo-dim:rgba(99,102,241,.08);--emerald:#34D399;--rose:#FB7185;
+--sans:'Rubik',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--indigo);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,20,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.1rem;font-weight:700;color:var(--indigo);text-decoration:none}
+.nav-brand span{color:var(--fg)}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--indigo)}
+.nav-cta{background:var(--indigo);color:#fff;padding:9px 20px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:1100px;margin:0 auto;padding:160px 40px 60px;text-align:center}
+.hero h1{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;line-height:1.08;margin-bottom:18px}
+.hero h1 .accent{color:var(--indigo)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:540px;margin:0 auto 32px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-i{background:var(--indigo);color:#fff;padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem}
+.btn-g{border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+/* Data viz mock */
+.viz{max-width:1000px;margin:50px auto;padding:0 40px}
+.viz-frame{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.viz-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.viz-card .vc-label{font-size:.65rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.viz-card .vc-val{font-family:var(--mono);font-size:1.5rem;font-weight:700}
+.viz-card .vc-change{font-size:.7rem;margin-top:4px}
+.viz-card .vc-change.up{color:var(--emerald)}
+.viz-card .vc-change.down{color:var(--rose)}
+.viz-wide{grid-column:1/-1;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;height:160px;position:relative}
+.viz-wide canvas{width:100%;height:100%}
+.viz-wide .vw-title{font-size:.65rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;color:var(--indigo);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .3s}
+.feat-card:hover{border-color:var(--indigo);transform:translateY(-3px)}
+.feat-card .fi{width:38px;height:38px;background:var(--indigo-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.feat-card .fi svg{width:18px;height:18px}
+.feat-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.8rem;color:var(--fg-muted);line-height:1.6}
+
+/* Code snippet */
+.code-section{max-width:700px;margin:0 auto;padding:60px 40px}
+.code-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.code-bar{padding:10px 14px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.7rem;color:var(--fg-muted);display:flex;justify-content:space-between}
+.code-body{padding:16px;font-family:var(--mono);font-size:.8rem;line-height:1.8;overflow-x:auto}
+.code-body .kw{color:var(--indigo)}
+.code-body .str{color:var(--emerald)}
+.code-body .cm{color:var(--fg-muted)}
+.code-body .fn{color:var(--rose)}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--indigo),#4F46E5);border-radius:16px;padding:50px;color:#fff}
+.cta-box h2{font-size:2rem;font-weight:800;margin-bottom:10px}
+.cta-box p{opacity:.85;margin-bottom:24px}
+.cta-box a{display:inline-block;background:#fff;color:var(--indigo);padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:30px 40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.feat-grid,.viz-frame{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid,.viz-frame{grid-template-columns:1fr}.viz-wide{grid-column:1}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Neural<span>DB</span></a>
+<div class="nav-links"><a href="#features">Features</a><a href="#code">API</a><a href="#" class="nav-cta">Start Free</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">AI-Powered<br><span class="accent">Data Platform</span></h1>
+<p class="reveal">Store, query, and analyze your data with natural language. Built-in vector search, real-time embeddings, and AI-native analytics.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-i">Get Started &rarr;</a><a href="#" class="btn-g">View Docs</a></div>
+</section>
+
+<div class="viz reveal">
+<div class="viz-frame">
+<div class="viz-card"><div class="vc-label">Documents</div><div class="vc-val" style="color:var(--indigo)">2.4M</div><div class="vc-change up">+18% this week</div></div>
+<div class="viz-card"><div class="vc-label">Queries/sec</div><div class="vc-val">14,200</div><div class="vc-change up">+5.2% avg</div></div>
+<div class="viz-card"><div class="vc-label">Latency</div><div class="vc-val" style="color:var(--emerald)">8ms</div><div class="vc-change up">p99 &lt; 20ms</div></div>
+<div class="viz-wide"><div class="vw-title">Query Volume (24h)</div><canvas id="data-chart"></canvas></div>
+</div>
+</div>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Data Meets Intelligence</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#6366F1" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Vector Search</h3><p>Semantic search across millions of documents in milliseconds using embeddings.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 18 18" fill="none"><path d="M2 14l4-5 3 3 7-8" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Natural Language Queries</h3><p>Ask questions in plain English. NeuralDB translates to optimized SQL.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="2" stroke="#6366F1" stroke-width="1.5"/><path d="M3 7h12M7 7v8" stroke="#6366F1" stroke-width="1.5"/></svg></div><h3>Auto Embeddings</h3><p>Automatically generate and index embeddings as data flows in.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2v14M2 9h14" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Real-Time Sync</h3><p>Stream data from Postgres, MongoDB, S3, and 40+ sources.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 18 18" fill="none"><path d="M12 2l4 4-4 4M6 16l-4-4 4-4" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Simple API</h3><p>RESTful and GraphQL APIs with SDKs for Python, JavaScript, and Go.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2L3 5v4c0 4 2.6 6.5 6 8.5 3.4-2 6-4.5 6-8.5V5L9 2z" stroke="#6366F1" stroke-width="1.5"/></svg></div><h3>Enterprise Security</h3><p>SOC 2, encryption at rest, role-based access, and audit logging.</p></div>
+</div>
+</section>
+
+<section class="code-section" id="code">
+<div class="s-center"><div class="s-tag reveal">API</div><div class="s-title reveal">Simple by Design</div></div>
+<div class="code-block reveal">
+<div class="code-bar"><span>query.py</span><span>Python</span></div>
+<div class="code-body">
+<span class="kw">from</span> neuraldb <span class="kw">import</span> Client<br><br>
+<span class="cm"># Natural language query</span><br>
+db = Client(<span class="str">"your-api-key"</span>)<br>
+results = db.<span class="fn">query</span>(<br>
+&nbsp;&nbsp;<span class="str">"Find users who signed up last week<br>
+&nbsp;&nbsp;&nbsp;and haven't completed onboarding"</span><br>
+)<br><br>
+<span class="cm"># Vector similarity search</span><br>
+similar = db.<span class="fn">search</span>(<br>
+&nbsp;&nbsp;collection=<span class="str">"products"</span>,<br>
+&nbsp;&nbsp;query=<span class="str">"wireless noise-cancelling headphones"</span>,<br>
+&nbsp;&nbsp;limit=<span class="kw">10</span><br>
+)
+</div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start Querying Smarter</h2>
+<p>Free tier: 1M documents, 10K queries/day. Scale as you grow.</p>
+<a href="#">Get API Key &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 NeuralDB. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+// Chart
+const cv=document.getElementById('data-chart');
+if(cv){
+  const cx=cv.getContext('2d');
+  function draw(){
+    const w=cv.parentElement.clientWidth;const h=cv.parentElement.clientHeight-30;
+    cv.width=w;cv.height=h;
+    const pts=[];for(let i=0;i<30;i++){pts.push(40+Math.sin(i*.3)*20+Math.random()*15)}
+    const step=w/(pts.length-1);
+    cx.strokeStyle='rgba(36,36,56,.6)';cx.lineWidth=1;
+    for(let i=0;i<4;i++){const y=h*i/3;cx.beginPath();cx.moveTo(0,y);cx.lineTo(w,y);cx.stroke()}
+    cx.beginPath();cx.moveTo(0,h-pts[0]/100*h);
+    for(let i=1;i<pts.length;i++){cx.lineTo(i*step,h-pts[i]/100*h)}
+    cx.strokeStyle='#6366F1';cx.lineWidth=2;cx.stroke();
+    cx.lineTo(w,h);cx.lineTo(0,h);cx.closePath();
+    const grd=cx.createLinearGradient(0,0,0,h);grd.addColorStop(0,'rgba(99,102,241,.12)');grd.addColorStop(1,'rgba(99,102,241,0)');
+    cx.fillStyle=grd;cx.fill();
+  }
+  draw();window.addEventListener('resize',draw);
+}
+</script>
+</body>
+</html>

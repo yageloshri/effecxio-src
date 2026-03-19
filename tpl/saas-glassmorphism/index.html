@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aether | Cloud Workspace</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800&family=Recursive:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0E0E1A;--glass:rgba(255,255,255,.05);--glass-border:rgba(255,255,255,.08);
+--fg:#F4F4FF;--fg-muted:#8888A8;
+--purple:#A855F7;--pink:#EC4899;--sky:#38BDF8;
+--grad:linear-gradient(135deg,#A855F7,#EC4899,#38BDF8);
+--sans:'Nunito Sans',sans-serif;--alt:'Recursive',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;position:relative}
+::selection{background:var(--purple);color:#fff}
+
+/* Floating orbs */
+.orb{position:fixed;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none}
+.orb-1{width:500px;height:500px;background:rgba(168,85,247,.12);top:-100px;right:-100px}
+.orb-2{width:400px;height:400px;background:rgba(236,72,153,.1);bottom:20%;left:-80px}
+.orb-3{width:350px;height:350px;background:rgba(56,189,248,.08);bottom:-50px;right:30%}
+
+.content{position:relative;z-index:1}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(14,14,26,.6);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border)}
+.nav-brand{font-family:var(--alt);font-size:1.2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);color:var(--fg);padding:9px 20px;border-radius:12px;font-size:.85rem;font-weight:700;text-decoration:none;transition:all .2s}
+.nav-cta:hover{background:rgba(255,255,255,.1)}
+
+.hero{max-width:1000px;margin:0 auto;padding:160px 40px 80px;text-align:center}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;line-height:1.08;margin-bottom:20px;letter-spacing:-.03em}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:520px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-grad{background:var(--grad);color:#fff;padding:14px 30px;border-radius:14px;font-weight:700;text-decoration:none;font-size:.9rem;transition:transform .2s}
+.btn-grad:hover{transform:translateY(-2px)}
+.btn-glass{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);color:var(--fg);padding:14px 30px;border-radius:14px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+/* Glass cards */
+.glass-section{max-width:1100px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800}
+
+.glass-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.glass-card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:20px;padding:32px;transition:all .3s}
+.glass-card:hover{transform:translateY(-4px);border-color:rgba(168,85,247,.3);box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.glass-card .gc-icon{width:48px;height:48px;background:rgba(168,85,247,.1);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.glass-card .gc-icon svg{width:24px;height:24px}
+.glass-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.glass-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.7}
+
+/* Bento grid */
+.bento{max-width:1100px;margin:0 auto;padding:40px 40px 80px}
+.bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:16px}
+.bento-card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;transition:all .3s}
+.bento-card:hover{border-color:rgba(168,85,247,.3)}
+.bento-card.wide{grid-column:span 2}
+.bento-card.tall{grid-row:span 2}
+.bento-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.bento-card p{font-size:.8rem;color:var(--fg-muted)}
+.bento-card .bc-num{font-family:var(--alt);font-size:2.5rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+
+/* Pricing */
+.pricing{max-width:900px;margin:0 auto;padding:80px 40px}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.price-card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:20px;padding:32px;text-align:center;transition:all .3s}
+.price-card:hover{transform:translateY(-4px)}
+.price-card.pop{border-color:var(--purple);background:rgba(168,85,247,.06)}
+.pc-name{font-weight:700;margin-bottom:8px;font-size:1rem}
+.pc-price{font-size:2.5rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.pc-price span{font-size:.8rem;-webkit-text-fill-color:var(--fg-muted);background:none}
+.pc-desc{font-size:.8rem;color:var(--fg-muted);margin-bottom:16px}
+.pc-list{list-style:none;text-align:right;margin-bottom:20px}
+.pc-list li{font-size:.8rem;padding:5px 0;color:var(--fg-muted)}
+.pc-btn{display:block;padding:12px;border-radius:12px;text-decoration:none;font-size:.85rem;font-weight:700;text-align:center}
+.pc-btn.fill{background:var(--grad);color:#fff}
+.pc-btn.out{border:1px solid var(--glass-border);color:var(--fg)}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--glass);backdrop-filter:blur(20px);border:1px solid rgba(168,85,247,.2);border-radius:24px;padding:50px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(168,85,247,.1),transparent);top:-50px;right:-50px;border-radius:50%}
+.cta-box h2{font-size:2rem;font-weight:800;margin-bottom:10px;position:relative}
+.cta-box p{color:var(--fg-muted);margin-bottom:24px;position:relative}
+.cta-box a{display:inline-block;background:var(--grad);color:#fff;padding:14px 30px;border-radius:14px;font-weight:700;text-decoration:none;position:relative}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--glass-border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.glass-grid,.price-grid{grid-template-columns:1fr 1fr}.bento-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.glass-grid,.price-grid,.bento-grid{grid-template-columns:1fr}.bento-card.wide{grid-column:span 1}.bento-card.tall{grid-row:span 1}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+
+<div class="content">
+
+<nav class="nav">
+<a href="#" class="nav-brand">Aether</a>
+<div class="nav-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#" class="nav-cta">Get Started</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Work Together,<br><span class="grad">Beautifully.</span></h1>
+<p class="reveal">The cloud workspace that brings your team, tools, and projects into one transparent, beautiful environment.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-grad">Start Free &rarr;</a><a href="#features" class="btn-glass">See Features</a></div>
+</section>
+
+<section class="glass-section" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Crystal Clear Productivity</div></div>
+<div class="glass-grid">
+<div class="glass-card reveal"><div class="gc-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="2" stroke="#A855F7" stroke-width="1.5"/><rect x="14" y="3" width="7" height="7" rx="2" stroke="#EC4899" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="2" stroke="#38BDF8" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="2" stroke="#A855F7" stroke-width="1.5"/></svg></div><h3>Unified Workspace</h3><p>Docs, tasks, wikis, and chat — all in one place. No more switching between apps.</p></div>
+<div class="glass-card reveal"><div class="gc-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#EC4899" stroke-width="1.5"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Real-Time Collab</h3><p>See teammates' cursors in real-time. Co-edit docs, boards, and designs together.</p></div>
+<div class="glass-card reveal"><div class="gc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>AI Assistant</h3><p>Summarize meetings, draft docs, automate workflows — powered by built-in AI.</p></div>
+</div>
+</section>
+
+<section class="bento">
+<div class="bento-grid">
+<div class="bento-card wide reveal"><div class="bc-num">99.9%</div><h4>Uptime Guarantee</h4><p>Enterprise-grade reliability you can count on</p></div>
+<div class="bento-card reveal"><div class="bc-num">50+</div><h4>Integrations</h4><p>Connect your favorite tools</p></div>
+<div class="bento-card reveal"><div class="bc-num">2M+</div><h4>Users</h4><p>Teams worldwide trust Aether</p></div>
+<div class="bento-card tall reveal"><div class="bc-num" style="font-size:1.8rem">SOC 2</div><h4>Enterprise Security</h4><p>SSO, SAML, audit logs, and advanced permissions for your team</p></div>
+<div class="bento-card reveal"><div class="bc-num">10x</div><h4>Faster Workflows</h4><p>Automation built in</p></div>
+<div class="bento-card wide reveal"><div class="bc-num">24/7</div><h4>Priority Support</h4><p>Dedicated success managers for enterprise plans</p></div>
+</div>
+</section>
+
+<section class="pricing" id="pricing">
+<div class="s-center"><div class="s-tag reveal">Pricing</div><div class="s-title reveal">Start Free, Scale Up</div></div>
+<div class="price-grid">
+<div class="price-card reveal"><div class="pc-name">Free</div><div class="pc-price">$0<span>/mo</span></div><div class="pc-desc">For individuals</div><ul class="pc-list"><li>Up to 5 projects</li><li>1GB storage</li><li>Basic integrations</li></ul><a href="#" class="pc-btn out">Get Started</a></div>
+<div class="price-card pop reveal"><div class="pc-name">Pro</div><div class="pc-price">$15<span>/user/mo</span></div><div class="pc-desc">For growing teams</div><ul class="pc-list"><li>Unlimited projects</li><li>50GB storage</li><li>AI assistant</li><li>Advanced integrations</li></ul><a href="#" class="pc-btn fill">Start Free Trial</a></div>
+<div class="price-card reveal"><div class="pc-name">Enterprise</div><div class="pc-price">Custom</div><div class="pc-desc">For large orgs</div><ul class="pc-list"><li>Unlimited everything</li><li>SSO & SAML</li><li>Dedicated support</li><li>Custom contracts</li></ul><a href="#" class="pc-btn out">Contact Sales</a></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Ready to Float?</h2>
+<p>Join 2 million users who work better with Aether.</p>
+<a href="#">Get Started Free &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Aether. All rights reserved.</footer>
+
+</div>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+// Subtle orb movement
+if(!isPreview){
+  const orbs=document.querySelectorAll('.orb');
+  window.addEventListener('mousemove',e=>{
+    const x=(e.clientX/window.innerWidth-.5)*20;
+    const y=(e.clientY/window.innerHeight-.5)*20;
+    orbs.forEach((o,i)=>{const f=(i+1)*.5;o.style.transform=`translate(${x*f}px,${y*f}px)`});
+  },{passive:true});
+}
+</script>
+</body>
+</html>

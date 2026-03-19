@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex | 3D Artist Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080C;--surface:#111118;--border:#222230;--fg:#F0F0F5;--fg-muted:#6E6E80;--cyan:#22D3EE;--cyan-dim:rgba(34,211,238,.08);--display:'Bebas Neue',sans-serif;--sans:'Work Sans',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+canvas#hero-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+.content{position:relative;z-index:1}
+.nav{max-width:1100px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--display);font-size:1.6rem;letter-spacing:2px;color:var(--cyan)}
+.nav-links{display:flex;gap:28px}.nav-links a{font-size:.84rem;color:var(--fg-muted);text-decoration:none;font-weight:500;transition:color .2s}.nav-links a:hover{color:var(--fg)}
+.nav-btn{border:1px solid var(--cyan);color:var(--cyan);padding:8px 18px;border-radius:6px;font-size:.82rem;font-weight:600;text-decoration:none}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:120px 40px 80px;text-align:center}
+.hero h1{font-family:var(--display);font-size:clamp(4rem,10vw,8rem);letter-spacing:4px;line-height:.95;margin-bottom:16px}
+.hero h1 .outline{-webkit-text-stroke:1px var(--fg);color:transparent}
+.hero p{font-size:1rem;color:var(--fg-muted);max-width:460px;margin:0 auto 32px;line-height:1.7}
+.hero-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.hero-tags span{padding:6px 14px;background:var(--cyan-dim);border:1px solid rgba(34,211,238,.15);border-radius:50px;font-size:.75rem;color:var(--cyan);font-weight:500}
+/* Projects */
+.projects{max-width:1100px;margin:0 auto;padding:80px 40px}
+.proj-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+.proj-header h2{font-family:var(--display);font-size:2rem;letter-spacing:2px}
+.proj-header a{font-size:.82rem;color:var(--cyan);text-decoration:none;font-weight:600}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s}
+.proj-card:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.proj-card img{width:100%;height:220px;object-fit:cover;display:block}
+.proj-card .info{padding:20px}
+.proj-card .info h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.proj-card .info p{font-size:.8rem;color:var(--fg-muted)}
+.proj-card .info .tags{display:flex;gap:6px;margin-top:10px}
+.proj-card .info .tags span{font-size:.65rem;padding:3px 8px;background:var(--cyan-dim);border-radius:4px;color:var(--cyan)}
+/* Skills */
+.skills{max-width:1100px;margin:0 auto;padding:60px 40px}
+.skills-header{margin-bottom:30px}
+.skills-header h2{font-family:var(--display);font-size:1.8rem;letter-spacing:2px}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.skill-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;transition:border-color .3s}
+.skill-item:hover{border-color:var(--cyan)}
+.skill-item .name{font-size:.88rem;font-weight:600;margin-bottom:6px}
+.skill-item .bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:8px}
+.skill-item .bar .fill{height:100%;background:var(--cyan);border-radius:2px}
+.skill-item .level{font-size:.68rem;color:var(--fg-muted);margin-top:4px}
+/* Contact */
+.contact{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.contact h2{font-family:var(--display);font-size:2.5rem;letter-spacing:2px;margin-bottom:12px}
+.contact p{color:var(--fg-muted);margin-bottom:24px}
+.contact-btn{display:inline-block;padding:14px 36px;background:var(--cyan);color:#000;font-weight:700;border-radius:8px;text-decoration:none;font-size:.95rem}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.proj-grid{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<canvas id="hero-canvas"></canvas>
+<div class="content">
+<nav class="nav"><div class="nav-logo">VERTEX</div><div class="nav-links"><a href="#">Work</a><a href="#">About</a><a href="#">Process</a><a href="#">Contact</a></div><a class="nav-btn" href="#">Hire Me</a></nav>
+
+<section class="hero reveal">
+<h1>3D <span class="outline">ARTIST</span> &<br>DESIGNER</h1>
+<p>I create immersive 3D experiences, product visualizations, and motion graphics for brands that want to stand out.</p>
+<div class="hero-tags"><span>Blender</span><span>Cinema 4D</span><span>Unreal Engine</span><span>Houdini</span><span>After Effects</span></div>
+</section>
+
+<section class="projects">
+<div class="proj-header reveal"><h2>SELECTED WORK</h2><a href="#">View All &rarr;</a></div>
+<div class="proj-grid">
+<div class="proj-card reveal"><img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=440&fit=crop" alt="" loading="lazy"><div class="info"><h3>Nike Air Max — Product Viz</h3><p>Photorealistic product visualization with dynamic lighting</p><div class="tags"><span>Blender</span><span>Product</span></div></div></div>
+<div class="proj-card reveal"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=440&fit=crop" alt="" loading="lazy"><div class="info"><h3>Nebula — Generative Art</h3><p>Procedural particle system creating cosmic landscapes</p><div class="tags"><span>Houdini</span><span>Generative</span></div></div></div>
+<div class="proj-card reveal"><img src="https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=600&h=440&fit=crop" alt="" loading="lazy"><div class="info"><h3>Archviz — Modern Villa</h3><p>Architectural visualization for luxury real estate</p><div class="tags"><span>Cinema 4D</span><span>Archviz</span></div></div></div>
+<div class="proj-card reveal"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=440&fit=crop" alt="" loading="lazy"><div class="info"><h3>Retro Wave — Motion</h3><p>Synthwave-inspired motion graphics loop</p><div class="tags"><span>After Effects</span><span>Motion</span></div></div></div>
+</div>
+</section>
+
+<section class="skills">
+<div class="skills-header reveal"><h2>SKILLS</h2></div>
+<div class="skills-grid">
+<div class="skill-item reveal"><div class="name">Blender</div><div class="bar"><div class="fill" style="width:95%"></div></div><div class="level">Expert</div></div>
+<div class="skill-item reveal"><div class="name">Cinema 4D</div><div class="bar"><div class="fill" style="width:88%"></div></div><div class="level">Advanced</div></div>
+<div class="skill-item reveal"><div class="name">Houdini</div><div class="bar"><div class="fill" style="width:75%"></div></div><div class="level">Intermediate</div></div>
+<div class="skill-item reveal"><div class="name">Unreal Engine</div><div class="bar"><div class="fill" style="width:82%"></div></div><div class="level">Advanced</div></div>
+<div class="skill-item reveal"><div class="name">After Effects</div><div class="bar"><div class="fill" style="width:90%"></div></div><div class="level">Expert</div></div>
+<div class="skill-item reveal"><div class="name">Substance</div><div class="bar"><div class="fill" style="width:78%"></div></div><div class="level">Advanced</div></div>
+<div class="skill-item reveal"><div class="name">ZBrush</div><div class="bar"><div class="fill" style="width:70%"></div></div><div class="level">Intermediate</div></div>
+<div class="skill-item reveal"><div class="name">WebGL/Three.js</div><div class="bar"><div class="fill" style="width:65%"></div></div><div class="level">Intermediate</div></div>
+</div>
+</section>
+
+<section class="contact reveal">
+<h2>LET'S CREATE TOGETHER</h2>
+<p>Available for freelance projects and full-time positions.</p>
+<a class="contact-btn" href="#">Get In Touch &rarr;</a>
+</section>
+
+<footer class="footer">&copy; 2025 Vertex Studio. All rights reserved.</footer>
+</div>
+
+<script>
+const isPreview=(self!==top);
+// Floating particles canvas
+const c=document.getElementById('hero-canvas');const ctx=c.getContext('2d');
+function resize(){c.width=window.innerWidth;c.height=window.innerHeight}resize();window.addEventListener('resize',resize);
+const pts=[];for(let i=0;i<60;i++)pts.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*2+1});
+function draw(){ctx.clearRect(0,0,c.width,c.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(34,211,238,.3)';ctx.fill()});
+for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);if(d<120){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(34,211,238,${.08*(1-d/120)})`;ctx.stroke()}}
+requestAnimationFrame(draw)}draw();
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

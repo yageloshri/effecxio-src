@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spectrum | Design Collaboration</title>
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700;800;900&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:'Satoshi';src:local('Satoshi')}
+:root{
+--bg:#FFFBF5;--surface:#FFF;--border:#F0E8DD;
+--fg:#1A1A2E;--fg-muted:#6E6E82;
+--g1:#FF6B35;--g2:#F72585;--g3:#7209B7;--g4:#3A0CA3;
+--grad:linear-gradient(135deg,#FF6B35,#F72585,#7209B7,#3A0CA3);
+--sans:'General Sans','Satoshi',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--g2);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,251,245,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.2rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:var(--g2)}
+.nav-cta{background:var(--grad);color:#fff;padding:10px 22px;border-radius:50px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:1000px;margin:0 auto;padding:160px 40px 60px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(247,37,133,.08));border:1px solid rgba(247,37,133,.12);padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;margin-bottom:28px}
+.hero-badge span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1{font-size:clamp(2.8rem,6vw,5rem);font-weight:900;line-height:1.05;margin-bottom:20px;letter-spacing:-.03em}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--fg-muted);max-width:520px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-grad{background:var(--grad);color:#fff;padding:14px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:.95rem;transition:transform .2s;box-shadow:0 8px 30px rgba(247,37,133,.2)}
+.btn-grad:hover{transform:translateY(-2px)}
+.btn-o{border:2px solid var(--border);color:var(--fg);padding:14px 32px;border-radius:50px;font-weight:600;text-decoration:none;font-size:.95rem}
+
+/* Gradient divider */
+.grad-divider{height:4px;background:var(--grad);margin:0 auto;border-radius:2px;max-width:200px;margin-top:60px}
+
+/* Features */
+.features{max-width:1100px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:50px}
+.s-tag{font-size:.75rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feat-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;right:0;width:100%;height:4px;background:var(--grad);opacity:0;transition:opacity .3s}
+.feat-card:hover::before{opacity:1}
+.feat-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.06)}
+.feat-card .fc-num{font-size:3rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:.15;margin-bottom:8px}
+.feat-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.7}
+
+/* Showcase */
+.showcase{max-width:1100px;margin:0 auto;padding:40px 40px 80px}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.sc-card{border-radius:20px;padding:40px;color:#fff;position:relative;overflow:hidden;min-height:280px;display:flex;flex-direction:column;justify-content:flex-end}
+.sc-card.a{background:linear-gradient(135deg,#FF6B35,#F72585)}
+.sc-card.b{background:linear-gradient(135deg,#7209B7,#3A0CA3)}
+.sc-card.c{background:linear-gradient(135deg,#F72585,#7209B7)}
+.sc-card.d{background:linear-gradient(135deg,#3A0CA3,#4361EE)}
+.sc-card h3{font-size:1.4rem;font-weight:800;margin-bottom:6px}
+.sc-card p{font-size:.9rem;opacity:.8;line-height:1.5}
+.sc-card .sc-icon{position:absolute;top:24px;left:24px;width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center}
+.sc-card .sc-icon svg{width:24px;height:24px}
+
+/* Testimonials */
+.test{max-width:1000px;margin:0 auto;padding:80px 40px}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.test-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative}
+.test-card::before{content:'\201C';position:absolute;top:16px;right:20px;font-size:3rem;line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:.2}
+.test-card p{font-size:.9rem;color:var(--fg-muted);line-height:1.7;margin-bottom:16px}
+.test-card .author{display:flex;align-items:center;gap:10px}
+.test-card .author img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.test-card .author .name{font-weight:700;font-size:.85rem}
+.test-card .author .role{font-size:.7rem;color:var(--fg-muted)}
+
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--grad);border-radius:24px;padding:60px;color:#fff;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;width:300px;height:300px;background:rgba(255,255,255,.08);border-radius:50%;top:-80px;left:-80px}
+.cta-box h2{font-size:2.2rem;font-weight:900;margin-bottom:12px;position:relative}
+.cta-box p{opacity:.85;margin-bottom:28px;position:relative}
+.cta-box a{display:inline-block;background:#fff;color:var(--g3);padding:14px 32px;border-radius:50px;font-weight:700;text-decoration:none;position:relative}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.feat-grid,.test-grid{grid-template-columns:1fr 1fr}.sc-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.feat-grid,.test-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Spectrum</a>
+<div class="nav-links"><a href="#features">Features</a><a href="#showcase">Use Cases</a><a href="#" class="nav-cta">Start Free</a></div>
+</nav>
+
+<section class="hero">
+<div class="hero-badge reveal"><span>New: AI-powered design reviews</span></div>
+<h1 class="reveal">Design <span class="grad">Without Limits</span></h1>
+<p class="reveal">The collaborative design platform for modern teams. Create, review, and ship beautiful products — together.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-grad">Try Spectrum Free</a><a href="#features" class="btn-o">Learn More</a></div>
+<div class="grad-divider reveal"></div>
+</section>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Everything You Need</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="fc-num">01</div><h3>Infinite Canvas</h3><p>Unlimited artboards, auto-layout, and vector networks. Design without boundaries.</p></div>
+<div class="feat-card reveal"><div class="fc-num">02</div><h3>Live Multiplayer</h3><p>Real-time collaboration with cursors, comments, and instant feedback loops.</p></div>
+<div class="feat-card reveal"><div class="fc-num">03</div><h3>Component System</h3><p>Build once, use everywhere. Variants, properties, and auto-documentation.</p></div>
+<div class="feat-card reveal"><div class="fc-num">04</div><h3>Dev Handoff</h3><p>Auto-generated specs, CSS, and tokens. Bridge the design-code gap effortlessly.</p></div>
+<div class="feat-card reveal"><div class="fc-num">05</div><h3>Prototyping</h3><p>Interactive prototypes with transitions, scroll behaviors, and smart animate.</p></div>
+<div class="feat-card reveal"><div class="fc-num">06</div><h3>Version Control</h3><p>Full design history with branching, merging, and compare views.</p></div>
+</div>
+</section>
+
+<section class="showcase" id="showcase">
+<div class="sc-grid">
+<div class="sc-card a reveal"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="#fff" stroke-width="1.5"/></svg></div><h3>Product Design</h3><p>Build pixel-perfect interfaces for web and mobile with smart constraints.</p></div>
+<div class="sc-card b reveal"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#fff" stroke-width="1.5"/></svg></div><h3>Brand Systems</h3><p>Create consistent brand identities with shared libraries and tokens.</p></div>
+<div class="sc-card c reveal"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Design Systems</h3><p>Scalable component libraries with docs, guidelines, and usage analytics.</p></div>
+<div class="sc-card d reveal"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Presentations</h3><p>Beautiful slides with motion, transitions, and embedded prototypes.</p></div>
+</div>
+</section>
+
+<section class="test">
+<div class="s-center"><div class="s-tag reveal">Testimonials</div><div class="s-title reveal">Teams Love Spectrum</div></div>
+<div class="test-grid">
+<div class="test-card reveal"><p>"Spectrum replaced three tools for us. Design, prototype, and handoff — all in one beautiful platform."</p><div class="author"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=72&h=72&fit=crop&crop=face" alt=""><div><div class="name">Mia Chen</div><div class="role">Design Director, Vercel</div></div></div></div>
+<div class="test-card reveal"><p>"The multiplayer editing is magic. Our distributed team feels like we're all in the same room."</p><div class="author"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=72&h=72&fit=crop&crop=face" alt=""><div><div class="name">Jake Wilson</div><div class="role">Head of Product, Linear</div></div></div></div>
+<div class="test-card reveal"><p>"Dev handoff used to take days. With Spectrum, engineers get specs instantly. Game changer."</p><div class="author"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=72&h=72&fit=crop&crop=face" alt=""><div><div class="name">Aya Tanaka</div><div class="role">CTO, Notion</div></div></div></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start Creating Today</h2>
+<p>Free for individuals. Team plans start at $12/editor/month.</p>
+<a href="#">Get Spectrum Free &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Spectrum Design. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

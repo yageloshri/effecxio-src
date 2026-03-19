@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Think | AI Writing Companion</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FCFCFA;--surface:#FFF;--border:#EAEAE4;
+--fg:#1A1A18;--fg-muted:#7A7A72;
+--accent:#1A1A18;
+--serif:'Instrument Serif',serif;--sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--fg);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(252,252,250,.9);backdrop-filter:blur(10px)}
+.nav-brand{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:var(--fg);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500}
+.nav-links a:hover{color:var(--fg)}
+.nav-cta{background:var(--fg);color:var(--bg);padding:9px 20px;border-radius:6px;font-size:.85rem;font-weight:600;text-decoration:none}
+
+.hero{max-width:700px;margin:0 auto;padding:200px 40px 80px;text-align:center}
+.hero h1{font-family:var(--serif);font-size:clamp(3rem,7vw,5rem);font-weight:400;font-style:italic;line-height:1.1;margin-bottom:20px}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:420px;margin:0 auto 36px;line-height:1.8}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-d{background:var(--fg);color:var(--bg);padding:13px 28px;border-radius:6px;font-weight:600;text-decoration:none;font-size:.9rem}
+.btn-o{border:1px solid var(--border);color:var(--fg);padding:13px 28px;border-radius:6px;font-weight:500;text-decoration:none;font-size:.9rem}
+
+/* Editor mock */
+.editor{max-width:700px;margin:40px auto;padding:0 40px}
+.editor-frame{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.03)}
+.editor-bar{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:6px}
+.editor-bar .dot{width:8px;height:8px;border-radius:50%}
+.editor-body{padding:28px;font-family:var(--serif);font-size:1.1rem;line-height:2;color:var(--fg)}
+.editor-body .ai-text{color:var(--fg-muted);background:rgba(0,0,0,.02);border-radius:4px;padding:2px 4px;border-right:2px solid var(--fg-muted);animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{border-color:var(--fg-muted)}50%{border-color:transparent}}
+
+/* What section */
+.what{max-width:600px;margin:0 auto;padding:80px 40px}
+.what h2{font-family:var(--serif);font-size:2rem;font-style:italic;text-align:center;margin-bottom:40px}
+.what-list{display:flex;flex-direction:column;gap:0}
+.what-item{padding:20px 0;border-bottom:1px solid var(--border);display:flex;gap:16px}
+.what-item:first-child{border-top:1px solid var(--border)}
+.what-item .icon{font-family:var(--serif);font-size:1.2rem;min-width:24px;color:var(--fg-muted)}
+.what-item h3{font-size:.95rem;font-weight:600;margin-bottom:4px}
+.what-item p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Quote */
+.quote{max-width:600px;margin:0 auto;padding:60px 40px;text-align:center}
+.quote blockquote{font-family:var(--serif);font-size:1.5rem;font-style:italic;line-height:1.6;margin-bottom:12px;color:var(--fg)}
+.quote cite{font-style:normal;font-size:.8rem;color:var(--fg-muted);font-family:var(--sans)}
+
+/* Simple pricing */
+.pricing{max-width:500px;margin:0 auto;padding:60px 40px}
+.pricing h2{font-family:var(--serif);font-size:2rem;font-style:italic;text-align:center;margin-bottom:30px}
+.price-cards{display:flex;flex-direction:column;gap:12px}
+.pr-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+.pr-card.dark{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.pr-card .pr-info .pr-name{font-weight:600;font-size:.9rem}
+.pr-card .pr-info .pr-desc{font-size:.75rem;color:var(--fg-muted);margin-top:2px}
+.pr-card.dark .pr-info .pr-desc{color:rgba(255,255,255,.5)}
+.pr-card .pr-price{font-family:var(--serif);font-size:1.4rem;font-style:italic}
+
+/* CTA */
+.cta{max-width:500px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta h2{font-family:var(--serif);font-size:2.5rem;font-style:italic;margin-bottom:12px}
+.cta p{color:var(--fg-muted);margin-bottom:24px}
+.cta a{display:inline-block;background:var(--fg);color:var(--bg);padding:13px 28px;border-radius:6px;font-weight:600;text-decoration:none}
+
+footer{padding:40px;text-align:center;font-family:var(--serif);font-size:.9rem;font-style:italic;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:all .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){.nav-links{display:none}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Think</a>
+<div class="nav-links"><a href="#what">About</a><a href="#pricing">Pricing</a><a href="#" class="nav-cta">Try Free</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Write with clarity.</h1>
+<p class="reveal">An AI writing companion that understands your voice. Not a replacement — a thinking partner.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-d">Start Writing</a><a href="#what" class="btn-o">Learn More</a></div>
+</section>
+
+<div class="editor reveal">
+<div class="editor-frame">
+<div class="editor-bar"><div class="dot" style="background:#FF5F57"></div><div class="dot" style="background:#FEBC2E"></div><div class="dot" style="background:#28C840"></div></div>
+<div class="editor-body">
+The best ideas often arrive quietly — not in bursts of inspiration, but in the slow process of putting words on a page. Writing is thinking made visible.<br><br>
+<span class="ai-text">When we write, we discover what we actually believe, as opposed to what we think we believe.</span>
+</div>
+</div>
+</div>
+
+<section class="what" id="what">
+<h2 class="reveal">What Think Does</h2>
+<div class="what-item reveal"><div class="icon">i.</div><div><h3>Completes Your Thoughts</h3><p>Start a sentence and Think finishes it — matching your tone, style, and intent perfectly.</p></div></div>
+<div class="what-item reveal"><div class="icon">ii.</div><div><h3>Restructures Your Ideas</h3><p>Highlight any paragraph and ask Think to clarify, expand, condense, or rephrase.</p></div></div>
+<div class="what-item reveal"><div class="icon">iii.</div><div><h3>Stays Out of the Way</h3><p>No popups, no toolbars. Just a clean editor that helps when you need it and disappears when you don't.</p></div></div>
+<div class="what-item reveal"><div class="icon">iv.</div><div><h3>Learns Your Voice</h3><p>The more you write, the better Think understands your style. It adapts to you.</p></div></div>
+</section>
+
+<div class="quote reveal">
+<blockquote>"The scariest moment is always just before you start."</blockquote>
+<cite>Stephen King</cite>
+</div>
+
+<section class="pricing" id="pricing">
+<h2 class="reveal">Pricing</h2>
+<div class="price-cards">
+<div class="pr-card reveal"><div class="pr-info"><div class="pr-name">Free</div><div class="pr-desc">5,000 words/month</div></div><div class="pr-price">$0</div></div>
+<div class="pr-card dark reveal"><div class="pr-info"><div class="pr-name">Writer</div><div class="pr-desc">Unlimited words + voice matching</div></div><div class="pr-price">$12/mo</div></div>
+<div class="pr-card reveal"><div class="pr-info"><div class="pr-name">Team</div><div class="pr-desc">Shared voice, brand guidelines</div></div><div class="pr-price">$8/user</div></div>
+</div>
+</section>
+
+<section class="cta">
+<h2 class="reveal">Start thinking.</h2>
+<p class="reveal">Free forever for personal use.</p>
+<a href="#" class="reveal">Open Editor &rarr;</a>
+</section>
+
+<footer>Think &copy; 2025</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

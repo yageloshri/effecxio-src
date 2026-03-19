@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cortex | AI Consulting Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#06060A;--surface:#0E0E14;--border:#1E1E2A;--fg:#E8E8F0;--fg-muted:#6E6E82;--indigo:#818CF8;--indigo-dim:rgba(129,140,248,.08);--sans:'Space Grotesk',sans-serif;--mono:'IBM Plex Mono',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+/* Gradient orb */
+.orb{position:fixed;top:20%;right:30%;width:400px;height:400px;background:radial-gradient(circle,rgba(129,140,248,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.content{position:relative;z-index:1}
+.nav{max-width:1100px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.nav-logo .dot{width:10px;height:10px;border-radius:3px;background:var(--indigo)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--indigo);color:#fff;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;text-decoration:none}
+/* Hero */
+.hero{max-width:1100px;margin:0 auto;padding:100px 40px 60px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--indigo-dim);border:1px solid rgba(129,140,248,.2);border-radius:50px;font-size:.72rem;font-weight:600;color:var(--indigo);margin-bottom:24px;font-family:var(--mono)}
+.hero h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
+.hero h1 span{background:linear-gradient(135deg,var(--indigo),#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:520px;margin:0 auto 32px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-primary{padding:14px 28px;background:var(--indigo);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.95rem;font-family:var(--sans);cursor:pointer}
+.btn-dim{padding:14px 28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.95rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+/* Services */
+.services{max-width:1100px;margin:0 auto;padding:80px 40px}
+.sec-header{text-align:center;margin-bottom:50px}
+.sec-header .tag{font-size:.72rem;color:var(--indigo);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-family:var(--mono)}
+.sec-header h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .3s}
+.svc-card:hover{border-color:var(--indigo)}
+.svc-card .icon{width:44px;height:44px;border-radius:10px;background:var(--indigo-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.svc-card .icon svg{width:20px;height:20px}
+.svc-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.svc-card p{font-size:.82rem;color:var(--fg-muted);line-height:1.6}
+/* Process */
+.process{max-width:1100px;margin:0 auto;padding:60px 40px}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.proc-step{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
+.proc-step .num{font-family:var(--mono);font-size:.72rem;color:var(--indigo);margin-bottom:10px}
+.proc-step h3{font-size:.9rem;font-weight:700;margin-bottom:6px}
+.proc-step p{font-size:.75rem;color:var(--fg-muted);line-height:1.5}
+/* Case studies */
+.cases{max-width:1100px;margin:0 auto;padding:60px 40px}
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.case-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .3s}
+.case-card:hover{border-color:var(--indigo)}
+.case-card .label{font-family:var(--mono);font-size:.68rem;color:var(--indigo);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.case-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.case-card p{font-size:.82rem;color:var(--fg-muted);line-height:1.6;margin-bottom:14px}
+.case-card .metric{display:flex;gap:20px}
+.case-card .metric .m{font-size:.78rem}
+.case-card .metric .m strong{color:var(--indigo)}
+/* CTA */
+.cta{max-width:800px;margin:0 auto;padding:80px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px}
+.cta-box h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:700;margin-bottom:12px}
+.cta-box p{color:var(--fg-muted);margin-bottom:24px}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.svc-grid{grid-template-columns:1fr}.proc-steps{grid-template-columns:1fr 1fr}.case-grid{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<div class="orb"></div>
+<div class="content">
+<nav class="nav"><div class="nav-logo"><div class="dot"></div>Cortex</div><div class="nav-links"><a href="#">Services</a><a href="#">Case Studies</a><a href="#">About</a><a href="#">Blog</a></div><a class="nav-btn" href="#">Book a Call</a></nav>
+
+<section class="hero reveal">
+<div class="hero-badge">AI Strategy &bull; Implementation &bull; Training</div>
+<h1>We help companies unlock the power of <span>AI</span></h1>
+<p>Cortex is a boutique AI consulting agency. We help businesses identify, build, and deploy AI solutions that drive measurable results.</p>
+<div class="hero-btns"><button class="btn-primary">Schedule Consultation</button><button class="btn-dim">View Case Studies</button></div>
+</section>
+
+<section class="services">
+<div class="sec-header reveal"><div class="tag">Services</div><h2>End-to-end AI expertise</h2></div>
+<div class="svc-grid">
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#818CF8" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>AI Strategy</h3><p>Assess your AI readiness, identify high-impact opportunities, and build a roadmap for implementation.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M4 16l4-5 3 3 5-8" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Custom AI Development</h3><p>Build bespoke AI models, LLM pipelines, and intelligent automation tailored to your business.</p></div>
+<div class="svc-card reveal"><div class="icon"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#818CF8" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>AI Training & Enablement</h3><p>Upskill your team with hands-on AI workshops, prompt engineering, and best practice playbooks.</p></div>
+</div>
+</section>
+
+<section class="process">
+<div class="sec-header reveal"><div class="tag">Process</div><h2>How we work</h2></div>
+<div class="proc-steps">
+<div class="proc-step reveal"><div class="num">01</div><h3>Discovery</h3><p>Deep dive into your business, data, and goals.</p></div>
+<div class="proc-step reveal"><div class="num">02</div><h3>Design</h3><p>Architecture and proof-of-concept development.</p></div>
+<div class="proc-step reveal"><div class="num">03</div><h3>Build</h3><p>Full implementation with testing and iteration.</p></div>
+<div class="proc-step reveal"><div class="num">04</div><h3>Scale</h3><p>Deployment, monitoring, and team training.</p></div>
+</div>
+</section>
+
+<section class="cases">
+<div class="sec-header reveal"><div class="tag">Case Studies</div><h2>Results that speak</h2></div>
+<div class="case-grid">
+<div class="case-card reveal"><div class="label">E-Commerce</div><h3>AI-Powered Product Recommendations</h3><p>Built a personalization engine for a $50M e-commerce brand, increasing average order value significantly.</p><div class="metric"><div class="m"><strong>+34%</strong> AOV</div><div class="m"><strong>2.1x</strong> Conversion</div></div></div>
+<div class="case-card reveal"><div class="label">Healthcare</div><h3>Automated Medical Document Processing</h3><p>Reduced manual document processing time by 85% for a healthcare provider processing 10K+ documents/month.</p><div class="metric"><div class="m"><strong>85%</strong> Time Saved</div><div class="m"><strong>99.2%</strong> Accuracy</div></div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal"><h2>Ready to bring AI to your business?</h2><p>Book a free 30-minute consultation to discuss your AI opportunities.</p><button class="btn-primary">Schedule a Call &rarr;</button></div>
+</section>
+
+<footer class="footer">&copy; 2025 Cortex AI Consulting.</footer>
+</div>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

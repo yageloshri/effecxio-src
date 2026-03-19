@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealth | Smart Money Management</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#060C18;--surface:#0D1526;--border:#1A2540;--fg:#E8ECF4;--fg-muted:#6B7A99;--emerald:#34D399;--emerald-dim:rgba(52,211,153,.08);--red:#EF4444;--sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1100px;margin:0 auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:8px}
+.nav-logo svg{width:22px;height:22px;color:var(--emerald)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--emerald);color:#000;padding:9px 18px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none}
+.hero{max-width:1100px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text .badge{display:inline-block;padding:5px 12px;background:var(--emerald-dim);color:var(--emerald);font-size:.72rem;font-weight:700;border-radius:6px;margin-bottom:14px;font-family:var(--mono)}
+.hero-text h1{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:14px}
+.hero-text h1 span{color:var(--emerald)}
+.hero-text p{font-size:.92rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px}
+.hero-btns{display:flex;gap:10px}
+.btn-em{padding:14px 28px;background:var(--emerald);color:#000;border:none;border-radius:10px;font-weight:700;font-size:.92rem;font-family:var(--sans);cursor:pointer}
+.btn-g{padding:14px 28px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+.phone-wrap{display:flex;justify-content:center}
+.phone{width:260px;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.phone-inner{background:var(--bg);border-radius:20px;padding:20px;min-height:420px}
+.phone-inner .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.phone-inner .header h3{font-size:.82rem;font-weight:700}
+.phone-inner .header .month{font-size:.65rem;color:var(--fg-muted)}
+.phone-inner .balance{margin-bottom:20px}
+.phone-inner .balance .label{font-size:.62rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px}
+.phone-inner .balance .amount{font-size:1.6rem;font-weight:800;font-family:var(--mono)}
+.phone-inner .balance .change{font-size:.68rem;color:var(--emerald);font-weight:600}
+.mini-chart{height:60px;position:relative;margin-bottom:16px}
+.mini-chart canvas{width:100%;height:100%}
+.phone-inner .txns{display:flex;flex-direction:column;gap:8px}
+.txn{display:flex;justify-content:space-between;align-items:center;padding:8px;background:var(--surface);border-radius:8px}
+.txn .left{display:flex;align-items:center;gap:8px}
+.txn .icon-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.txn .left .name{font-size:.68rem;font-weight:600}
+.txn .left .cat{font-size:.55rem;color:var(--fg-muted)}
+.txn .amount-tx{font-size:.72rem;font-weight:700;font-family:var(--mono)}
+.txn .amount-tx.neg{color:var(--red)}
+.txn .amount-tx.pos{color:var(--emerald)}
+.features{max-width:1100px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.feat .icon{width:40px;height:40px;background:var(--emerald-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.feat .icon svg{width:20px;height:20px;color:var(--emerald)}
+.feat h3{font-size:.88rem;font-weight:700;margin-bottom:4px}
+.feat p{font-size:.75rem;color:var(--fg-muted);line-height:1.5}
+.security{max-width:1100px;margin:0 auto;padding:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sec-card{text-align:center;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.sec-card svg{width:24px;height:24px;color:var(--emerald);margin-bottom:8px}
+.sec-card h3{font-size:.78rem;font-weight:700;margin-bottom:2px}
+.sec-card p{font-size:.65rem;color:var(--fg-muted)}
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:44px}
+.cta-box h2{font-size:1.3rem;font-weight:800;margin-bottom:8px}
+.cta-box p{color:var(--fg-muted);margin-bottom:20px;font-size:.88rem}
+.cta-box .stores{display:flex;gap:10px;justify-content:center}
+.store-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--emerald);color:#000;border-radius:10px;text-decoration:none;font-size:.75rem;font-weight:700}
+.footer{max-width:1100px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(16px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.hero{grid-template-columns:1fr}.features{grid-template-columns:1fr}.security{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M11 7v8M8 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Wealth</div><div class="nav-links"><a href="#">Features</a><a href="#">Security</a><a href="#">Pricing</a><a href="#">About</a></div><a class="nav-btn" href="#">Download</a></nav>
+
+<section class="hero">
+<div class="hero-text reveal">
+<div class="badge">v2.0 — Now with AI insights</div>
+<h1>Your money, <span>simplified</span></h1>
+<p>Track spending, set budgets, and grow your savings — all in one beautiful app. Connect all your accounts for a complete financial picture.</p>
+<div class="hero-btns"><button class="btn-em">Download Free</button><button class="btn-g">See Features</button></div>
+</div>
+<div class="phone-wrap reveal">
+<div class="phone">
+<div class="phone-inner">
+<div class="header"><h3>Wealth</h3><div class="month">Feb 2025</div></div>
+<div class="balance">
+<div class="label">Total Balance</div>
+<div class="amount">$24,650</div>
+<div class="change">+12.4% this month</div>
+</div>
+<div class="mini-chart"><canvas id="chart"></canvas></div>
+<div class="txns">
+<div class="txn"><div class="left"><div class="icon-circle" style="background:var(--emerald-dim)">&#128176;</div><div><div class="name">Salary</div><div class="cat">Income</div></div></div><div class="amount-tx pos">+$5,200</div></div>
+<div class="txn"><div class="left"><div class="icon-circle" style="background:rgba(239,68,68,.1)">&#127828;</div><div><div class="name">Groceries</div><div class="cat">Food</div></div></div><div class="amount-tx neg">-$142</div></div>
+<div class="txn"><div class="left"><div class="icon-circle" style="background:rgba(59,130,246,.1)">&#127968;</div><div><div class="name">Rent</div><div class="cat">Housing</div></div></div><div class="amount-tx neg">-$1,800</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="features">
+<div class="feat reveal">
+<div class="icon"><svg viewBox="0 0 20 20" fill="none"><path d="M3 14l4-4 3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<h3>Expense Tracking</h3>
+<p>Auto-categorize transactions from all your accounts. See where every dollar goes.</p>
+</div>
+<div class="feat reveal">
+<div class="icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<h3>Smart Budgets</h3>
+<p>AI-powered budgets that adapt to your spending patterns and goals.</p>
+</div>
+<div class="feat reveal">
+<div class="icon"><svg viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 10h2M12 10h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+<h3>Multi-Account</h3>
+<p>Connect banks, credit cards, and investments in one dashboard.</p>
+</div>
+</div>
+
+<div class="security reveal">
+<div class="sec-card"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5.5-3.8 10.7-8 12-4.2-1.3-8-6.5-8-12V6l8-4z" stroke="currentColor" stroke-width="1.5"/></svg><h3>Bank-Grade Security</h3><p>256-bit AES encryption</p></div>
+<div class="sec-card"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 11V7a4 4 0 018 0v4" stroke="currentColor" stroke-width="1.5"/></svg><h3>Biometric Auth</h3><p>Face ID & fingerprint</p></div>
+<div class="sec-card"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><h3>SOC 2 Compliant</h3><p>Audited & certified</p></div>
+<div class="sec-card"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><h3>Read-Only Access</h3><p>We never move your money</p></div>
+</div>
+
+<section class="cta">
+<div class="cta-box reveal">
+<h2>Start managing money smarter</h2>
+<p>Free to use. Premium features for $4.99/month.</p>
+<div class="stores">
+<a class="store-btn" href="#">App Store</a>
+<a class="store-btn" href="#">Google Play</a>
+</div>
+</div>
+</section>
+
+<footer class="footer">&copy; 2025 Wealth Technologies, Inc.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Mini chart
+const cv=document.getElementById('chart');if(cv){const x=cv.getContext('2d');cv.width=cv.parentElement.offsetWidth;cv.height=60;const pts=[20,30,25,40,35,50,42,55,48,52];const w=cv.width/(pts.length-1);x.beginPath();x.moveTo(0,cv.height-pts[0]);for(let i=1;i<pts.length;i++){x.lineTo(i*w,cv.height-pts[i])}x.strokeStyle='#34D399';x.lineWidth=2;x.stroke();x.lineTo(cv.width,cv.height);x.lineTo(0,cv.height);x.closePath();const g=x.createLinearGradient(0,0,0,cv.height);g.addColorStop(0,'rgba(52,211,153,.2)');g.addColorStop(1,'rgba(52,211,153,0)');x.fillStyle=g;x.fill()}
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

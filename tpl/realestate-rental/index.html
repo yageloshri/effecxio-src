@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nest | Rental Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F7F8FA;--surface:#FFF;--border:#E4E7EC;--fg:#111827;--fg-muted:#6B7280;--coral:#F43F5E;--coral-light:#FFF1F2;--sans:'Nunito',sans-serif;--mono:'Fira Code',monospace}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--coral);color:#fff}
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(247,248,250,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.2rem;font-weight:800;color:var(--coral);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:600}.nav-links a:hover{color:var(--coral)}
+.nav-cta{background:var(--coral);color:#fff;padding:9px 22px;border-radius:50px;font-size:.85rem;font-weight:700;text-decoration:none}
+.hero{max-width:900px;margin:0 auto;padding:160px 40px 40px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,5.5vw,3.8rem);font-weight:800;line-height:1.1;margin-bottom:16px}
+.hero h1 .accent{color:var(--coral)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:480px;margin:0 auto 32px;line-height:1.7}
+/* Search bar */
+.search{max-width:600px;margin:0 auto 60px;padding:0 40px}
+.search-bar{display:flex;gap:0;background:var(--surface);border:2px solid var(--border);border-radius:50px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04)}
+.search-bar input{flex:1;padding:14px 20px;border:none;font-family:var(--sans);font-size:.9rem;background:transparent;outline:none}
+.search-bar button{background:var(--coral);color:#fff;border:none;padding:0 24px;font-family:var(--sans);font-weight:700;font-size:.85rem;cursor:pointer}
+/* Listings */
+.listings{max-width:1000px;margin:0 auto;padding:0 40px 60px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-size:.75rem;color:var(--coral);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800}
+.list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.list-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s}
+.list-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.list-card .img{height:160px;overflow:hidden;position:relative}
+.list-card .img img{width:100%;height:100%;object-fit:cover}
+.list-card .img .badge{position:absolute;top:10px;right:10px;background:var(--coral);color:#fff;font-size:.65rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.list-card .info{padding:14px}
+.list-card .info .price{font-size:1.1rem;font-weight:800;color:var(--coral);margin-bottom:4px}
+.list-card .info .price span{font-size:.75rem;font-weight:500;color:var(--fg-muted)}
+.list-card .info h3{font-size:.9rem;font-weight:700;margin-bottom:4px}
+.list-card .info .loc{font-size:.78rem;color:var(--fg-muted)}
+.list-card .info .specs{display:flex;gap:12px;margin-top:8px;font-size:.72rem;color:var(--fg-muted)}
+/* Features */
+.features{max-width:800px;margin:0 auto;padding:60px 40px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{text-align:center;padding:20px}
+.feat-card h3{font-size:.9rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.8rem;color:var(--fg-muted);line-height:1.6}
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--coral);border-radius:20px;padding:50px;color:#fff}
+.cta-box h2{font-size:2rem;font-weight:800;margin-bottom:10px}
+.cta-box p{opacity:.9;margin-bottom:24px}
+.cta-box a{display:inline-block;background:#fff;color:var(--coral);padding:13px 28px;border-radius:50px;font-weight:700;text-decoration:none}
+footer{padding:30px 40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:1024px){.list-grid,.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.list-grid,.feat-grid{grid-template-columns:1fr}.search-bar{flex-direction:column;border-radius:14px}.search-bar button{padding:14px}}
+</style>
+</head>
+<body>
+<nav class="nav"><a href="#" class="nav-brand">Nest</a><div class="nav-links"><a href="#listings">Listings</a><a href="#" class="nav-cta">List Your Property</a></div></nav>
+<section class="hero">
+<h1 class="reveal">Find Your Next <span class="accent">Nest</span></h1>
+<p class="reveal">Browse thousands of verified rental properties. No broker fees. Instant applications.</p>
+</section>
+<div class="search reveal"><div class="search-bar"><input type="text" placeholder="Search by city, neighborhood, or address..." value="Tel Aviv, Florentin"><button>Search</button></div></div>
+<section class="listings" id="listings">
+<div class="s-center"><div class="s-tag reveal">Featured Rentals</div><div class="s-title reveal">Top Picks For You</div></div>
+<div class="list-grid">
+<div class="list-card reveal"><div class="img"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=320&fit=crop" alt="" loading="lazy"><div class="badge">New</div></div><div class="info"><div class="price">$2,400<span>/mo</span></div><h3>Sunny 2BR in Florentin</h3><div class="loc">Tel Aviv, Florentin</div><div class="specs"><span>2 Beds</span><span>1 Bath</span><span>75 m&sup2;</span></div></div></div>
+<div class="list-card reveal"><div class="img"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=320&fit=crop" alt="" loading="lazy"></div><div class="info"><div class="price">$1,800<span>/mo</span></div><h3>Cozy Studio Downtown</h3><div class="loc">Jerusalem, City Center</div><div class="specs"><span>Studio</span><span>1 Bath</span><span>40 m&sup2;</span></div></div></div>
+<div class="list-card reveal"><div class="img"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=320&fit=crop" alt="" loading="lazy"></div><div class="info"><div class="price">$3,200<span>/mo</span></div><h3>Modern 3BR with View</h3><div class="loc">Haifa, Carmel</div><div class="specs"><span>3 Beds</span><span>2 Bath</span><span>110 m&sup2;</span></div></div></div>
+</div>
+</section>
+<section class="features">
+<div class="feat-grid">
+<div class="feat-card reveal"><h3>Verified Listings</h3><p>Every property is personally verified by our team before going live.</p></div>
+<div class="feat-card reveal"><h3>Zero Broker Fees</h3><p>Direct landlord connections. No middleman, no hidden fees.</p></div>
+<div class="feat-card reveal"><h3>Instant Apply</h3><p>One application works for all listings. Hear back within 48 hours.</p></div>
+</div>
+</section>
+<div class="cta"><div class="cta-box reveal"><h2>List Your Property</h2><p>Reach thousands of qualified tenants. First listing free.</p><a href="#">Get Started</a></div></div>
+<footer>&copy; 2025 Nest. Find your home.</footer>
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

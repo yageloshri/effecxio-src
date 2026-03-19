@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cubby | Fun Learning for Kids</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FFF9F0;--surface:#FFF;--surface2:#FFF3E0;--border:#FFE0B2;
+--fg:#2D2D2D;--fg-muted:#8D6E63;
+--orange:#FF6D00;--purple:#7C4DFF;--green:#00C853;--pink:#FF4081;--blue:#2979FF;
+--fun:'Fredoka',sans-serif;--body:'Quicksand',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);overflow-x:hidden}
+::selection{background:var(--orange);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,249,240,.92);backdrop-filter:blur(12px);border-bottom:2px solid var(--border)}
+.nav-brand{font-family:var(--fun);font-size:1.5rem;font-weight:700;color:var(--orange);text-decoration:none}
+.nav-brand span{color:var(--purple)}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:600}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{background:var(--orange);color:#fff;padding:10px 22px;border-radius:50px;font-size:.85rem;font-weight:700;text-decoration:none;font-family:var(--fun)}
+
+.hero{max-width:900px;margin:0 auto;padding:150px 40px 60px;text-align:center;position:relative}
+.hero h1{font-family:var(--fun);font-size:clamp(2.4rem,6vw,4rem);font-weight:700;line-height:1.2;margin-bottom:16px}
+.hero h1 .word-orange{color:var(--orange)}
+.hero h1 .word-purple{color:var(--purple)}
+.hero h1 .word-green{color:var(--green)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:480px;margin:0 auto 32px;line-height:1.8;font-weight:500}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-fun{background:var(--orange);color:#fff;padding:14px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:1rem;font-family:var(--fun);transition:transform .2s}
+.btn-fun:hover{transform:scale(1.05)}
+.btn-o{border:2px solid var(--border);color:var(--fg);padding:14px 32px;border-radius:50px;font-weight:600;text-decoration:none;font-size:.9rem}
+
+.floating-shapes{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:-1}
+.shape{position:absolute;border-radius:50%;opacity:.15;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(10deg)}}
+
+/* Subjects */
+.subjects{max-width:900px;margin:40px auto;padding:0 40px}
+.subj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.subj-card{background:var(--surface);border:2px solid var(--border);border-radius:20px;padding:24px 16px;text-align:center;transition:all .3s;cursor:default}
+.subj-card:hover{transform:translateY(-6px) rotate(-2deg);border-color:var(--orange)}
+.subj-card .icon{font-size:2.2rem;margin-bottom:8px}
+.subj-card .icon svg{width:48px;height:48px}
+.subj-card h3{font-family:var(--fun);font-size:.95rem;font-weight:600;margin-bottom:4px}
+.subj-card p{font-size:.75rem;color:var(--fg-muted);font-weight:500}
+
+/* How it works */
+.how{max-width:800px;margin:0 auto;padding:80px 40px}
+.s-center{text-align:center;margin-bottom:40px}
+.s-tag{font-family:var(--fun);font-size:.8rem;color:var(--purple);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.s-title{font-family:var(--fun);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{text-align:center;padding:24px}
+.step-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fun);font-size:1.4rem;font-weight:700;color:#fff;margin:0 auto 14px}
+.step h3{font-family:var(--fun);font-size:1rem;margin-bottom:6px}
+.step p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+
+/* Features */
+.features{max-width:900px;margin:0 auto;padding:60px 40px}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.feat-card{background:var(--surface);border:2px solid var(--border);border-radius:18px;padding:24px;display:flex;gap:16px;align-items:flex-start;transition:all .3s}
+.feat-card:hover{border-color:var(--green);transform:translateY(-3px)}
+.feat-card .fi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-card .fi svg{width:22px;height:22px}
+.feat-card h3{font-family:var(--fun);font-size:.95rem;margin-bottom:4px}
+.feat-card p{font-size:.8rem;color:var(--fg-muted);line-height:1.6}
+
+/* Testimonial */
+.testimonial{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.test-card{background:var(--surface2);border-radius:24px;padding:40px}
+.test-card blockquote{font-family:var(--fun);font-size:1.2rem;line-height:1.6;margin-bottom:16px;color:var(--fg)}
+.test-card cite{font-style:normal;font-size:.85rem;color:var(--purple);font-weight:600}
+.stars{color:var(--orange);font-size:1.2rem;margin-bottom:12px}
+
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--orange),var(--pink));border-radius:24px;padding:50px;color:#fff}
+.cta-box h2{font-family:var(--fun);font-size:2rem;margin-bottom:10px}
+.cta-box p{opacity:.9;margin-bottom:24px;font-weight:500}
+.cta-box a{display:inline-block;background:#fff;color:var(--orange);padding:14px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-family:var(--fun)}
+
+footer{padding:30px 40px;text-align:center;font-family:var(--fun);font-size:.85rem;color:var(--fg-muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.subj-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.subj-grid,.feat-grid,.steps{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Cu<span>bb</span>y</a>
+<div class="nav-links"><a href="#subjects">Subjects</a><a href="#features">Features</a><a href="#" class="nav-cta">Start Free</a></div>
+</nav>
+
+<section class="hero">
+<div class="floating-shapes" id="shapes"></div>
+<h1 class="reveal">Learning Made<br><span class="word-orange">Fun</span> & <span class="word-purple">Interactive</span></h1>
+<p class="reveal">An engaging learning platform for kids ages 4-12. Interactive lessons, games, and rewards that make education feel like play.</p>
+<div class="hero-btns reveal"><a href="#" class="btn-fun">Start Learning Free</a><a href="#subjects" class="btn-o">Explore Subjects</a></div>
+</section>
+
+<div class="subjects reveal" id="subjects">
+<div class="subj-grid">
+<div class="subj-card"><div class="icon"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="3" stroke="#FF6D00" stroke-width="2.5"/><path d="M18 24h12M24 18v12" stroke="#FF6D00" stroke-width="2.5" stroke-linecap="round"/></svg></div><h3>Math</h3><p>Numbers, shapes & puzzles</p></div>
+<div class="subj-card"><div class="icon"><svg viewBox="0 0 48 48" fill="none"><path d="M14 36V16a2 2 0 012-2h16a2 2 0 012 2v20" stroke="#7C4DFF" stroke-width="2.5"/><path d="M10 36h28" stroke="#7C4DFF" stroke-width="2.5" stroke-linecap="round"/><path d="M20 22h8M20 28h5" stroke="#7C4DFF" stroke-width="2.5" stroke-linecap="round"/></svg></div><h3>Reading</h3><p>Stories, phonics & vocab</p></div>
+<div class="subj-card"><div class="icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="10" stroke="#00C853" stroke-width="2.5"/><path d="M24 14V8M24 40v-6M14 24H8M40 24h-6" stroke="#00C853" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="#00C853"/></svg></div><h3>Science</h3><p>Experiments & discovery</p></div>
+<div class="subj-card"><div class="icon"><svg viewBox="0 0 48 48" fill="none"><path d="M12 36l6-16 6 10 6-8 6 14" stroke="#FF4081" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="16" r="4" stroke="#FF4081" stroke-width="2.5"/></svg></div><h3>Art</h3><p>Drawing, colors & crafts</p></div>
+</div>
+</div>
+
+<section class="how">
+<div class="s-center"><div class="s-tag reveal">How It Works</div><div class="s-title reveal">3 Simple Steps</div></div>
+<div class="steps">
+<div class="step reveal"><div class="step-num" style="background:var(--orange)">1</div><h3>Pick a Subject</h3><p>Choose from math, reading, science, art, and more.</p></div>
+<div class="step reveal"><div class="step-num" style="background:var(--purple)">2</div><h3>Play & Learn</h3><p>Interactive games adapt to your child's level automatically.</p></div>
+<div class="step reveal"><div class="step-num" style="background:var(--green)">3</div><h3>Earn Rewards</h3><p>Collect stars, badges, and unlock fun characters.</p></div>
+</div>
+</section>
+
+<section class="features" id="features">
+<div class="s-center"><div class="s-tag reveal">Features</div><div class="s-title reveal">Built for Young Minds</div></div>
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="fi" style="background:#FFF3E0"><svg viewBox="0 0 22 22" fill="none"><path d="M11 2l2.5 5 5.5.8-4 3.9.9 5.3L11 14.5 6.1 17l.9-5.3-4-3.9L8.5 7z" stroke="#FF6D00" stroke-width="1.5"/></svg></div><div><h3>Adaptive Learning</h3><p>AI adjusts difficulty based on each child's progress and pace.</p></div></div>
+<div class="feat-card reveal"><div class="fi" style="background:#EDE7F6"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#7C4DFF" stroke-width="1.5"/><path d="M11 7v4l3 2" stroke="#7C4DFF" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>15-Min Sessions</h3><p>Short, focused lessons designed for young attention spans.</p></div></div>
+<div class="feat-card reveal"><div class="fi" style="background:#E8F5E9"><svg viewBox="0 0 22 22" fill="none"><path d="M3 11l6 6L19 5" stroke="#00C853" stroke-width="2" stroke-linecap="round"/></svg></div><div><h3>Parent Dashboard</h3><p>Track progress, set daily goals, and manage screen time.</p></div></div>
+<div class="feat-card reveal"><div class="fi" style="background:#FCE4EC"><svg viewBox="0 0 22 22" fill="none"><path d="M11 3C7 3 3 7 3 11s4 8 8 8 8-4 8-8-4-8-8-8z" stroke="#FF4081" stroke-width="1.5"/><path d="M8 13s1.5 2 3 2 3-2 3-2M8 9h.01M14 9h.01" stroke="#FF4081" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>Safe & Ad-Free</h3><p>COPPA compliant. No ads, no external links, fully safe.</p></div></div>
+</div>
+</section>
+
+<div class="testimonial reveal">
+<div class="test-card">
+<div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+<blockquote>"My daughter asks to 'do her Cubby time' every day. She's reading a full grade level ahead now!"</blockquote>
+<cite>Rachel M., Parent of a 6-year-old</cite>
+</div>
+</div>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Start the Adventure</h2>
+<p>Free for the first 30 days. No credit card needed.</p>
+<a href="#">Try Cubby Free</a>
+</div>
+</div>
+
+<footer>Cubby &copy; 2025. Learning through play.</footer>
+
+<script>
+const isPreview=(self!==top);
+// Floating shapes
+const shapesEl=document.getElementById('shapes');
+if(shapesEl){
+const colors=['#FF6D00','#7C4DFF','#00C853','#FF4081','#2979FF'];
+for(let i=0;i<12;i++){
+const s=document.createElement('div');s.className='shape';
+const size=20+Math.random()*40;
+s.style.cssText=`width:${size}px;height:${size}px;background:${colors[i%5]};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${4+Math.random()*4}s;border-radius:${Math.random()>.5?'50%':'30%'}`;
+shapesEl.appendChild(s);
+}
+}
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

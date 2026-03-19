@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perceptor | AI Search Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#FEFEFE;--surface:#FFF;--surface2:#F6F6F9;--border:#ECECF0;
+--fg:#18181B;--fg-muted:#71717A;
+--blue:#2563EB;--blue-light:#EFF6FF;
+--sans:'Plus Jakarta Sans',sans-serif;--mono:'Source Code Pro',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--blue);color:#fff}
+
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(254,254,254,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:1.1rem;font-weight:800;color:var(--blue);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none}
+
+.hero{max-width:800px;margin:0 auto;padding:180px 40px 60px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,5.5vw,3.8rem);font-weight:800;line-height:1.08;margin-bottom:18px;letter-spacing:-.02em}
+.hero h1 .accent{color:var(--blue)}
+.hero p{font-size:1.05rem;color:var(--fg-muted);max-width:480px;margin:0 auto 36px;line-height:1.7}
+
+/* Search bar */
+.search-bar{max-width:600px;margin:0 auto;position:relative}
+.search-bar input{width:100%;padding:16px 20px 16px 48px;border:2px solid var(--border);border-radius:14px;font-size:1rem;font-family:var(--sans);background:var(--surface);transition:border-color .2s;box-shadow:0 4px 20px rgba(0,0,0,.04)}
+.search-bar input:focus{outline:none;border-color:var(--blue)}
+.search-bar .s-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%)}
+.search-bar .s-icon svg{width:20px;height:20px}
+
+/* Search result mock */
+.results{max-width:600px;margin:20px auto 0;padding:0 0 60px}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;transition:all .2s}
+.result-card:hover{border-color:var(--blue)}
+.result-card .rc-source{font-size:.7rem;color:var(--blue);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.result-card .rc-source .dot{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.result-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.result-card p{font-size:.85rem;color:var(--fg-muted);line-height:1.6}
+.result-card .highlight{background:var(--blue-light);padding:1px 4px;border-radius:3px;color:var(--blue);font-weight:600}
+
+/* AI answer */
+.ai-answer{max-width:600px;margin:0 auto;padding:0 0 40px}
+.answer-box{background:var(--blue-light);border:1px solid rgba(37,99,235,.12);border-radius:14px;padding:24px}
+.answer-box .ab-label{font-size:.7rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.answer-box .ab-label svg{width:14px;height:14px}
+.answer-box p{font-size:.9rem;line-height:1.8;color:var(--fg)}
+.answer-box .sources{margin-top:12px;font-size:.75rem;color:var(--fg-muted)}
+
+/* Features */
+.features{max-width:900px;margin:0 auto;padding:60px 40px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{padding:24px;text-align:center}
+.feat-card .fi{width:44px;height:44px;background:var(--blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.feat-card .fi svg{width:20px;height:20px}
+.feat-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.8rem;color:var(--fg-muted);line-height:1.6}
+
+/* CTA */
+.cta{max-width:600px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--blue);border-radius:16px;padding:50px;color:#fff}
+.cta-box h2{font-size:1.8rem;font-weight:800;margin-bottom:10px}
+.cta-box p{opacity:.85;margin-bottom:24px}
+.cta-box a{display:inline-block;background:#fff;color:var(--blue);padding:13px 28px;border-radius:8px;font-weight:700;text-decoration:none}
+
+footer{padding:40px;text-align:center;font-size:.8rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){.nav-links{display:none}.feat-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a href="#" class="nav-brand">Perceptor</a>
+<div class="nav-links"><a href="#features">Features</a><a href="#" class="nav-cta">Try Free</a></div>
+</nav>
+
+<section class="hero">
+<h1 class="reveal">Search that <span class="accent">understands</span> you.</h1>
+<p class="reveal">AI-powered search for your company's knowledge base. Ask questions, get answers — not just links.</p>
+<div class="search-bar reveal">
+<input type="text" placeholder="How do I reset a customer's billing cycle?" value="How do I reset a customer's billing cycle?">
+<div class="s-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#2563EB" stroke-width="1.5"/><path d="M14 14l4 4" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+</div>
+</section>
+
+<div class="ai-answer reveal">
+<div class="answer-box">
+<div class="ab-label"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#2563EB" stroke-width="1.2"/><path d="M7 5v3M7 10v.5" stroke="#2563EB" stroke-width="1.2" stroke-linecap="round"/></svg> AI Answer</div>
+<p>To reset a customer's billing cycle, navigate to <strong>Admin &rarr; Billing &rarr; Customer</strong>, select the account, and click "Reset Cycle". This will prorate the current period and start a new billing date from today. Note: This requires admin-level permissions.</p>
+<div class="sources">Sources: Billing Guide (updated 3 days ago), Admin API Docs</div>
+</div>
+</div>
+
+<div class="results reveal">
+<div class="result-card"><div class="rc-source"><span class="dot"></span>Billing Guide</div><h3>Managing Customer Billing Cycles</h3><p>Learn how to <span class="highlight">reset</span>, pause, and modify <span class="highlight">billing cycles</span> for individual customers...</p></div>
+<div class="result-card"><div class="rc-source"><span class="dot"></span>API Documentation</div><h3>POST /api/billing/reset</h3><p>API endpoint to programmatically <span class="highlight">reset a customer's billing</span> period with optional proration...</p></div>
+<div class="result-card"><div class="rc-source"><span class="dot"></span>Support Playbook</div><h3>Billing FAQ: Common Customer Requests</h3><p>Step-by-step guide for handling billing <span class="highlight">cycle</span> changes, refunds, and upgrades...</p></div>
+</div>
+
+<section class="features" id="features">
+<div class="feat-grid">
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 20 20" fill="none"><path d="M4 12l4-4 3 3 5-7" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>AI Answers</h3><p>Get synthesized answers from your docs, not just a list of links.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#2563EB" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Real-Time Index</h3><p>Content syncs in seconds from Notion, Confluence, Google Drive, and Slack.</p></div>
+<div class="feat-card reveal"><div class="fi"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2L4 5v4c0 4.4 2.6 7 6 9 3.4-2 6-4.6 6-9V5l-6-3z" stroke="#2563EB" stroke-width="1.5"/></svg></div><h3>Permission Aware</h3><p>Respects your existing access controls. Users only see what they're allowed to.</p></div>
+</div>
+</section>
+
+<div class="cta">
+<div class="cta-box reveal">
+<h2>Search Smarter</h2>
+<p>Connect your knowledge base in 5 minutes. Free for up to 1,000 documents.</p>
+<a href="#">Start Free &rarr;</a>
+</div>
+</div>
+
+<footer>&copy; 2025 Perceptor. All rights reserved.</footer>
+
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

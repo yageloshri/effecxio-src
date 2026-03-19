@@ -1,0 +1,6 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,49564,e=>{"use strict";var t=e.i(25764),n=e.i(45444),o=e.i(87726),r=e.i(3938);let a=`
+@keyframes dotsloader-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-18px); opacity: 1; }
+}
+`,i=(0,o.memo)(function(){let e,i,c,l,s,d=(0,n.c)(6),u=(0,r.useReducedMotion)(),m=(0,o.useRef)(null);d[0]===Symbol.for("react.memo_cache_sentinel")?(e=()=>{let e=document.createElement("style");return e.textContent=a,document.head.appendChild(e),m.current=e,()=>{m.current&&(document.head.removeChild(m.current),m.current=null)}},i=[],d[0]=e,d[1]=i):(e=d[0],i=d[1]),(0,o.useEffect)(e,i),d[2]===Symbol.for("react.memo_cache_sentinel")?(c=[0,1,2],d[2]=c):c=d[2];let h=c;return d[3]===Symbol.for("react.memo_cache_sentinel")?(l={width:"100%",height:220,display:"flex",alignItems:"center",justifyContent:"center",background:"var(--bg)",overflow:"hidden",position:"relative",gap:12},d[3]=l):l=d[3],d[4]!==u?(s=(0,t.jsx)("div",{style:l,children:h.map(e=>(0,t.jsx)("div",{style:{width:18,height:18,borderRadius:"50%",background:"var(--accent)",animation:u?"none":"dotsloader-bounce 1.4s ease-in-out infinite",animationDelay:`${.16*e}s`}},e))}),d[4]=u,d[5]=s):s=d[5],s});e.s(["default",0,i])}]);

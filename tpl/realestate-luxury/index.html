@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison | Luxury Properties</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A0A;--surface:#141414;--surface2:#1E1E1E;--border:#2A2A2A;--fg:#F5F0E8;--fg-muted:#8A8478;--gold:#C4A265;--gold-light:rgba(196,162,101,.08);--serif:'Cormorant Garamond',serif;--sans:'Montserrat',sans-serif}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--gold);color:var(--bg)}
+.nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,.9);backdrop-filter:blur(14px)}
+.nav-brand{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--gold);text-decoration:none;letter-spacing:3px;text-transform:uppercase}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px}.nav-links a:hover{color:var(--gold)}
+.nav-cta{color:var(--gold);border:1px solid var(--gold);padding:9px 22px;font-size:.78rem;font-weight:600;text-decoration:none;letter-spacing:1px;text-transform:uppercase}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:linear-gradient(180deg,transparent,var(--bg))}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.3}
+.hero-content{position:relative;z-index:1;padding:40px}
+.hero h1{font-family:var(--serif);font-size:clamp(3rem,7vw,5.5rem);font-weight:400;line-height:1.1;margin-bottom:16px;letter-spacing:2px}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{font-size:.95rem;color:var(--fg-muted);max-width:400px;margin:0 auto 36px;line-height:1.8;font-weight:400;letter-spacing:.5px}
+.btn-gold{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:14px 36px;font-size:.78rem;font-weight:600;text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:all .3s}
+.btn-gold:hover{background:var(--gold);color:var(--bg)}
+/* Properties */
+.properties{max-width:1100px;margin:0 auto;padding:100px 40px}
+.s-center{text-align:center;margin-bottom:60px}
+.s-tag{font-size:.7rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:3px;margin-bottom:12px}
+.s-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:400}
+.prop-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.prop-card{position:relative;overflow:hidden;border-radius:4px;height:400px}
+.prop-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.prop-card:hover img{transform:scale(1.05)}
+.prop-overlay{position:absolute;bottom:0;left:0;right:0;padding:30px;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.prop-overlay .po-price{font-family:var(--serif);font-size:1.6rem;color:var(--gold);margin-bottom:4px}
+.prop-overlay h3{font-size:.9rem;font-weight:600;margin-bottom:4px;letter-spacing:.5px}
+.prop-overlay .po-loc{font-size:.78rem;color:var(--fg-muted)}
+/* Services */
+.services{max-width:800px;margin:0 auto;padding:80px 40px}
+.serv-list{display:flex;flex-direction:column;gap:0}
+.serv-item{padding:28px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:60px 1fr;gap:20px;align-items:start}
+.serv-item:first-child{border-top:1px solid var(--border)}
+.serv-item .si-num{font-family:var(--serif);font-size:1.8rem;color:var(--gold)}
+.serv-item h3{font-size:.95rem;font-weight:600;margin-bottom:4px;letter-spacing:.5px}
+.serv-item p{font-size:.82rem;color:var(--fg-muted);line-height:1.7}
+/* CTA */
+.cta{padding:100px 40px;text-align:center}
+.cta h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;margin-bottom:16px}
+.cta p{color:var(--fg-muted);margin-bottom:28px;font-size:.9rem}
+footer{padding:40px;text-align:center;font-size:.75rem;color:var(--fg-muted);letter-spacing:1px;text-transform:uppercase;border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(24px);transition:all .8s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.nav-links{display:none}.prop-grid{grid-template-columns:1fr}.prop-card{height:300px}}
+</style>
+</head>
+<body>
+<nav class="nav"><a href="#" class="nav-brand">Maison</a><div class="nav-links"><a href="#properties">Properties</a><a href="#services">Services</a><a href="#" class="nav-cta">Inquire</a></div></nav>
+<section class="hero">
+<div class="hero-bg"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1400&h=900&fit=crop" alt="" loading="lazy"></div>
+<div class="hero-content">
+<h1 class="reveal"><em>Extraordinary</em><br>Properties</h1>
+<p class="reveal">Curating the world's finest residences for discerning buyers since 1998.</p>
+<a href="#properties" class="btn-gold reveal">View Collection</a>
+</div>
+</section>
+<section class="properties" id="properties">
+<div class="s-center"><div class="s-tag reveal">Collection</div><div class="s-title reveal">Exclusive Residences</div></div>
+<div class="prop-grid">
+<div class="prop-card reveal"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=800&fit=crop" alt="" loading="lazy"><div class="prop-overlay"><div class="po-price">$8,500,000</div><h3>Cliffside Villa</h3><div class="po-loc">Caesarea, Israel</div></div></div>
+<div class="prop-card reveal"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=800&fit=crop" alt="" loading="lazy"><div class="prop-overlay"><div class="po-price">$12,200,000</div><h3>Beachfront Penthouse</h3><div class="po-loc">Tel Aviv, Israel</div></div></div>
+</div>
+</section>
+<section class="services" id="services">
+<div class="s-center"><div class="s-tag reveal">Services</div><div class="s-title reveal">White Glove Experience</div></div>
+<div class="serv-list">
+<div class="serv-item reveal"><div class="si-num">I</div><div><h3>Private Viewings</h3><p>Exclusive, by-appointment-only property tours with our senior advisors.</p></div></div>
+<div class="serv-item reveal"><div class="si-num">II</div><div><h3>Discreet Sales</h3><p>Off-market transactions for clients who value privacy above all.</p></div></div>
+<div class="serv-item reveal"><div class="si-num">III</div><div><h3>Global Network</h3><p>Access to luxury properties in 40+ countries through our partner network.</p></div></div>
+</div>
+</section>
+<section class="cta"><h2 class="reveal">Begin Your Search</h2><p class="reveal">Schedule a private consultation with our luxury property advisors.</p><a href="#" class="btn-gold reveal">Request Consultation</a></section>
+<footer>Maison &copy; 2025. Luxury redefined.</footer>
+<script>
+const isPreview=(self!==top);
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>

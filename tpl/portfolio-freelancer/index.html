@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adi Rosen | Freelance UI Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FFF;--surface:#F8F9FA;--border:#E9ECEF;--fg:#212529;--fg-muted:#6C757D;--pink:#E91E63;--pink-light:#FCE4EC;--sans:'Poppins',sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+.nav{max-width:1000px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-name{font-weight:700;font-size:1rem}
+.nav-name span{color:var(--pink)}
+.nav-links{display:flex;gap:24px}.nav-links a{font-size:.82rem;color:var(--fg-muted);text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--fg)}
+.nav-btn{background:var(--pink);color:#fff;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:600;text-decoration:none}
+/* Hero */
+.hero{max-width:1000px;margin:0 auto;padding:60px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-img{position:relative}
+.hero-img img{width:100%;border-radius:20px;object-fit:cover;aspect-ratio:1}
+.hero-img .badge{position:absolute;bottom:16px;right:16px;background:#fff;padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.1);font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.hero-img .badge .dot{width:8px;height:8px;border-radius:50%;background:#22C55E}
+.hero-text .tag{font-size:.72rem;color:var(--pink);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.hero-text h1{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;line-height:1.2;margin-bottom:14px;letter-spacing:-.02em}
+.hero-text p{font-size:.95rem;color:var(--fg-muted);line-height:1.7;margin-bottom:24px}
+.hero-stats{display:flex;gap:28px;margin-bottom:24px}
+.hero-stats .stat .num{font-size:1.6rem;font-weight:800;color:var(--pink)}
+.hero-stats .stat .label{font-size:.72rem;color:var(--fg-muted)}
+.hero-btns{display:flex;gap:10px}
+.btn-pink{padding:12px 24px;background:var(--pink);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:.88rem;font-family:var(--sans);cursor:pointer}
+.btn-ghost{padding:12px 24px;background:transparent;border:2px solid var(--border);border-radius:50px;font-weight:600;font-size:.88rem;color:var(--fg);font-family:var(--sans);cursor:pointer}
+/* Work */
+.work{max-width:1000px;margin:0 auto;padding:60px 40px}
+.work-header{text-align:center;margin-bottom:40px}
+.work-header h2{font-size:1.6rem;font-weight:800}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.work-card{border-radius:14px;overflow:hidden;position:relative;cursor:pointer}
+.work-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .4s}
+.work-card:hover img{transform:scale(1.05)}
+.work-card .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:16px;opacity:0;transition:opacity .3s}
+.work-card:hover .overlay{opacity:1}
+.work-card .overlay h3{color:#fff;font-size:.88rem;font-weight:700}
+.work-card .overlay p{color:rgba(255,255,255,.7);font-size:.72rem}
+/* Services */
+.services{max-width:1000px;margin:0 auto;padding:60px 40px}
+.svc-header{text-align:center;margin-bottom:40px}
+.svc-header h2{font-size:1.6rem;font-weight:800}
+.svc-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.svc-item{background:var(--surface);border-radius:14px;padding:28px;text-align:center;transition:transform .2s}
+.svc-item:hover{transform:translateY(-4px)}
+.svc-item .icon{width:52px;height:52px;border-radius:50%;background:var(--pink-light);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.svc-item .icon svg{width:22px;height:22px}
+.svc-item h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.svc-item p{font-size:.8rem;color:var(--fg-muted);line-height:1.5}
+.svc-item .price{margin-top:12px;font-size:.82rem;font-weight:700;color:var(--pink)}
+/* CTA */
+.cta{max-width:700px;margin:0 auto;padding:60px 40px;text-align:center}
+.cta-box{background:var(--pink);border-radius:24px;padding:48px;color:#fff}
+.cta-box h2{font-size:1.5rem;font-weight:800;margin-bottom:8px}
+.cta-box p{opacity:.85;margin-bottom:24px;font-size:.9rem}
+.cta-box button{background:#fff;color:var(--pink);padding:12px 28px;border:none;border-radius:50px;font-weight:700;font-family:var(--sans);font-size:.9rem;cursor:pointer}
+.footer{max-width:1000px;margin:0 auto;padding:30px 40px;text-align:center;font-size:.72rem;color:var(--fg-muted);border-top:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:all .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.hero{grid-template-columns:1fr}.hero-img{order:-1}.work-grid,.svc-list{grid-template-columns:1fr}.hero-stats{flex-wrap:wrap}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-name">Adi<span>.</span></div><div class="nav-links"><a href="#">Work</a><a href="#">Services</a><a href="#">About</a><a href="#">Contact</a></div><a class="nav-btn" href="#">Let's Talk</a></nav>
+
+<section class="hero">
+<div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&h=500&fit=crop&crop=face" alt="" loading="lazy"><div class="badge"><div class="dot"></div>Available for work</div></div>
+<div class="hero-text reveal">
+<div class="tag">Freelance UI/UX Designer</div>
+<h1>I design digital products people love to use</h1>
+<p>Product designer specializing in SaaS, fintech, and mobile apps. Clean, functional, and delightful interfaces.</p>
+<div class="hero-stats"><div class="stat"><div class="num">80+</div><div class="label">Projects</div></div><div class="stat"><div class="num">4.9</div><div class="label">Avg. Rating</div></div><div class="stat"><div class="num">6</div><div class="label">Years Exp.</div></div></div>
+<div class="hero-btns"><button class="btn-pink">View Work</button><button class="btn-ghost">Download CV</button></div>
+</div>
+</section>
+
+<section class="work">
+<div class="work-header reveal"><h2>Selected Work</h2></div>
+<div class="work-grid">
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>FinTrack Dashboard</h3><p>Fintech &bull; UI Design</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>MealPlan App</h3><p>Health &bull; Mobile Design</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>Prism Analytics</h3><p>SaaS &bull; Dashboard</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1555421689-d68471e189f2?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>ShopEase</h3><p>E-commerce &bull; Web App</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>TeamSync</h3><p>Productivity &bull; SaaS</p></div></div>
+<div class="work-card reveal"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=400&h=300&fit=crop" alt="" loading="lazy"><div class="overlay"><h3>GreenHouse</h3><p>Real Estate &bull; Mobile</p></div></div>
+</div>
+</section>
+
+<section class="services">
+<div class="svc-header reveal"><h2>Services</h2></div>
+<div class="svc-list">
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="#E91E63" stroke-width="1.5"/><path d="M3 9h16" stroke="#E91E63" stroke-width="1.5"/></svg></div><h3>UI Design</h3><p>Pixel-perfect interfaces for web and mobile applications</p><div class="price">From $3,000</div></div>
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#E91E63" stroke-width="1.5"/><path d="M11 7v4l3 2" stroke="#E91E63" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>UX Research</h3><p>User interviews, testing, and data-driven design decisions</p><div class="price">From $2,000</div></div>
+<div class="svc-item reveal"><div class="icon"><svg viewBox="0 0 22 22" fill="none"><path d="M4 4h14v14H4z" stroke="#E91E63" stroke-width="1.5"/><path d="M4 11h14M11 4v14" stroke="#E91E63" stroke-width="1.5"/></svg></div><h3>Design System</h3><p>Scalable component libraries and brand guidelines</p><div class="price">From $5,000</div></div>
+</div>
+</section>
+
+<section class="cta">
+<div class="cta-box reveal"><h2>Have a project in mind?</h2><p>I'm currently accepting new projects. Let's create something great together.</p><button>Start a Project &rarr;</button></div>
+</section>
+
+<footer class="footer">&copy; 2025 Adi Rosen Design.</footer>
+
+<script>
+const isPreview=(self!==top);
+const obs=new IntersectionObserver(e=>{e.forEach(r=>{if(r.isIntersecting){r.target.classList.add('visible');obs.unobserve(r.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
