@@ -13,7 +13,7 @@ function QuoteSet() {
   return (
     <>
       {QUOTES.map((quote, i) => (
-        <span key={i} style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+        <span key={i} style={{ whiteSpace: 'nowrap', flexShrink: 0, direction: 'rtl', unicodeBidi: 'embed' }}>
           <span
             style={{
               color: 'var(--accent)',

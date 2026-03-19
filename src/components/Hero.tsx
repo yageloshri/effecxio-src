@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import HowItWorksModal from '@/components/HowItWorksModal';
 import FloatingBadges from '@/components/FloatingBadges';
@@ -37,6 +38,7 @@ function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string
 }
 
 export default function Hero() {
+  const router = useRouter();
   const prefersReduced = useReducedMotion();
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const heroContainerRef = useRef<HTMLDivElement>(null);
@@ -392,7 +394,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.15 }}
         >
           <button
-            onClick={scrollToFeatured}
+            onClick={() => router.push('/effects')}
             className="hero-cta-primary rounded-2xl cursor-pointer"
             style={{
               background: 'var(--accent)',
